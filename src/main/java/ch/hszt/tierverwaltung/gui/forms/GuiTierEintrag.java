@@ -33,7 +33,7 @@ public class GuiTierEintrag {
 
             fenster = new JFrame("Tiereintrag");
             fenster.setLocation(400, 300);
-            fenster.setDefaultCloseOperation(fenster.EXIT_ON_CLOSE);
+            fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             fenster.setLayout(new BorderLayout());
            
             panel = new JPanel(new SpringLayout());
