@@ -2,8 +2,6 @@ package ch.hszt.tierverwaltung.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,7 +26,7 @@ public class GuiTierEintrag {
 
             fensterErzeugen();
             //fenster.setSize(600, 400);
-            fenster.pack();
+            
       }
 
       private void fensterErzeugen() {
@@ -36,9 +34,10 @@ public class GuiTierEintrag {
             fenster = new JFrame("Tiereintrag");
             fenster.setLocation(400, 300);
             fenster.setDefaultCloseOperation(fenster.EXIT_ON_CLOSE);
-            fenster.setLayout(new BorderLayout(5,5));
+            fenster.setLayout(new BorderLayout());
            
             panel = new JPanel(new SpringLayout());
+            
             String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
             String[] petHeights = {"", "kleiner 30cm", "kleiner 60cm", "kleiner 1m", "1m"};
            
@@ -108,7 +107,9 @@ public class GuiTierEintrag {
             panel.add(zusatzText);
             
             fenster.getContentPane().add(panel);
-           
+            SpringUtilities.makeCompactGrid(panel, 12, 2, 5, 5, 5, 5);
+            
             fenster.setVisible(true);
+            fenster.pack();
       }
 } 
