@@ -1,11 +1,16 @@
 package ch.hszt.tierverwaltung.tier.backend;
 
+import java.sql.SQLException;
+
+import ch.hszt.tierverwaltung.backend.IDataRecord;
+import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
+
 /**
  * Klasse Tiereintrag, verwaltet einen einzelnen Eintrag aus der Datenbank Tier
  * @author prisi
  *
  */
-public class Tier {
+public class Tier implements IDataRecord {
 
 	private Integer tierID;
 	private Integer fkKunde;
@@ -85,6 +90,21 @@ public class Tier {
 		this(art, rasse, name, tieralter, groesseID, krankheitsbild, essgewohnheit, auslauf, umgangTier, umgangMensch, anmerkungen, zusatzkosten);
 		this.tierID = tierID;
 		this.fkKunde = fkKunde;
+	}
+	
+
+	@Override
+	public void save() throws SQLException {
+		if (getTierID() <= 0) {
+			setTierID(TierDatabaseAccess.getInstance().insert(this));
+		} else {
+			TierDatabaseAccess.getInstance().update(this);
+		}
+	}
+
+	@Override
+	public void delete() throws SQLException {
+		TierDatabaseAccess.getInstance().delete(this);
 	}
 
 	public String getArt() {
@@ -191,6 +211,9 @@ public class Tier {
 		return fkKunde;
 	}
 	
+	public void setTierID(Integer id) {
+		tierID = id;
+	}
 	
 
 }

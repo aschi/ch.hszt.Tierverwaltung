@@ -2,6 +2,7 @@ package ch.hszt.tierverwaltung.database.tier;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,8 +15,9 @@ import ch.hszt.tierverwaltung.tier.backend.Tier;
 public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 	private Connection conn;
+	private static TierDatabaseAccess instance;
 
-	public TierDatabaseAccess() {
+	private TierDatabaseAccess() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -33,6 +35,14 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 	}
 
+	public static synchronized TierDatabaseAccess getInstance() {
+		if (instance != null) {
+			return instance;
+		} else {
+			instance = new TierDatabaseAccess();
+			return instance;
+		}
+	}
 	/**
 	 * Fügt einen neuen Tiereintrag in die Datenbank tier ein.
 	 * 
@@ -40,8 +50,9 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	 * @throws SQLException
 	 */
 	@Override
-	public void insert(Tier entry) throws SQLException{
+	public int insert(Tier entry) throws SQLException{
 		String sql;
+		ResultSet rs = null;
 		sql = "INSERT INTO 'tier' VALUES (null, null, '" + entry.getArt() + "', "
 				+ "\'" + entry.getRasse() + "\', \'" + entry.getName() + "\', "
 				+ entry.getTieralter() + ", " + entry.getGroesseID() + ", \'"
@@ -52,7 +63,15 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 				+ entry.getZusatzkosten() + ");";
 		System.out.println(sql);
 		Statement stmt = conn.createStatement();
-		stmt.execute(sql);
+		stmt.executeUpdate(sql);
+		
+		PreparedStatement pstmt = conn.prepareStatement("select max(tierID) max from 'tier';");
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			return rs.getInt("max");
+		} else {
+			return 0;
+		}
 
 	}
 
