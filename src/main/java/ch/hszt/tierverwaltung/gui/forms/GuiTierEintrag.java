@@ -112,15 +112,18 @@ public class GuiTierEintrag {
     	  
       }
       
+      private void closeFenster() {
+    	  	fenster.dispose();
+      }
+      
       private void fensterErzeugen() {
 
             fenster = new JFrame("Tiereintrag");
             fenster.setLocation(400, 300);
-            fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             fenster.setLayout(new BorderLayout());
            
             panel = new JPanel(new SpringLayout());
-            
             
             
             String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
@@ -170,13 +173,10 @@ public class GuiTierEintrag {
             zusatz.setLabelFor(zusatzText);
             
             tierCombo = new JComboBox(petStrings);
-            //tierCombo.setPreferredSize(new Dimension(167,20));
             tierart.setLabelFor(tierCombo);
             
             groesseCombo = new JComboBox(petHeights);
-            //groesseCombo.setPreferredSize(new Dimension(167,20));
             groesse.setLabelFor(groesseCombo);
-            
             
             speichern.addActionListener(new ActionListener() {
               	@Override
@@ -205,6 +205,7 @@ public class GuiTierEintrag {
               	public void actionPerformed(ActionEvent e) {
               		try {
         					tier.delete();
+        					closeFenster();
         				} catch (SQLException e1) {
         					// TODO Auto-generated catch block
         					e1.printStackTrace();
