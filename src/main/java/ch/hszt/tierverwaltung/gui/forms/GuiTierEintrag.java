@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -70,8 +71,24 @@ public class GuiTierEintrag {
     	  umgangMenschText.setText(tier.getUmgangMensch());
     	  sonstigesText.setText(tier.getAnmerkungen());
     	  zusatzText.setText(String.valueOf(tier.getZusatzkosten()));
+      }
+      
+      private void createTierValue() {
+    	  tier.setRasse(rasseText.getText());
+    	  tier.setName(nameText.getText());
+    	  tier.setTieralter(Integer.parseInt(alterText.getText()));
+    	  tier.setGroesseID(Integer.parseInt(groesseCombo.getName()));
+    	  tier.setKrankheitsbild(krankText.getText());
+    	  tier.setEssgewohnheit(essText.getText());
+    	  //auslauf missing
+    	  tier.setUmgangTier(umgangTierText.getText());
+    	  tier.setUmgangMensch(umgangMenschText.getText());
+    	  tier.setAnmerkungen(sonstigesText.getText());
+    	  tier.setZusatzkosten(Integer.parseInt(zusatzText.getText()));
     	  
       }
+      
+      //tier.setName(nameText.getText());
 
       private void fensterErzeugen() {
 
@@ -134,13 +151,17 @@ public class GuiTierEintrag {
             groesseCombo.setPreferredSize(new Dimension(167,20));
             groesse.setLabelFor(groesseCombo);
             
+
+            
             speichern.addActionListener(new ActionListener() {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
         					tier.save();
         				} catch (SQLException e1) {
-        					e1.printStackTrace();
+        		            	String meldung = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: " + e1.getStackTrace();
+        		            	JOptionPane.showMessageDialog(null, meldung, "Betriebliche Benachrichtigung", JOptionPane.ERROR_MESSAGE);
+        					
         				}
               	}
               });
