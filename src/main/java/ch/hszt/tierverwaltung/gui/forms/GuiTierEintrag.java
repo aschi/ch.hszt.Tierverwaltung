@@ -61,6 +61,7 @@ public class GuiTierEintrag {
       }
       
       private void loadTierValue() {
+    	  tierCombo.setSelectedItem(tier.getArt());
     	  rasseText.setText(tier.getRasse());
     	  nameText.setText(tier.getName());
     	  alterText.setText(String.valueOf(tier.getTieralter()));
@@ -81,6 +82,7 @@ public class GuiTierEintrag {
       }
       
       private void createTierValue() {
+    	  tier.setArt(tierCombo.getSelectedItem().toString());
     	  tier.setRasse(rasseText.getText());
     	  tier.setName(nameText.getText());
     	  if (alterText.getText() == null || alterText.getText().equals("")) {
@@ -99,11 +101,13 @@ public class GuiTierEintrag {
     	  tier.setUmgangTier(umgangTierText.getText());
     	  tier.setUmgangMensch(umgangMenschText.getText());
     	  tier.setAnmerkungen(sonstigesText.getText());
-    	  if (zusatzText.getText() == null || zusatzText.getText().equals("")) {
+    	  if (zusatzText.getText() == null) {
     		  tier.setZusatzkosten(-1);
     	  }
-    	  else {
-    	  tier.setZusatzkosten(Integer.parseInt(zusatzText.getText()));
+    	  else if (zusatzText.getText().equals("")) {
+    		  tier.setZusatzkosten(0);
+    	  } else {
+    		  tier.setZusatzkosten(Integer.parseInt(zusatzText.getText()));
     	  }
     	  
       }
@@ -183,13 +187,15 @@ public class GuiTierEintrag {
 	              			}
               				createTierValue();
 							tier.save();
+							String meldung = "Erfolgreich gespeichert";
+							JOptionPane.showMessageDialog(null, meldung, "Information", JOptionPane.INFORMATION_MESSAGE);
               			} catch (SQLException e1) {
         		            	String meldung = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: " + e1.getStackTrace();
         		            	JOptionPane.showMessageDialog(null, meldung, "Betriebliche Benachrichtigung", JOptionPane.ERROR_MESSAGE);
         					
         				} catch (ValidationException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+								String meldung2 = e1.createErrorMsg(e1);
+								JOptionPane.showMessageDialog(null, meldung2, "Betriebliche Benachrichtigung", JOptionPane.ERROR_MESSAGE);
 						}
               	}
               });
@@ -202,10 +208,7 @@ public class GuiTierEintrag {
         				} catch (SQLException e1) {
         					// TODO Auto-generated catch block
         					e1.printStackTrace();
-        				} catch (ValidationException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+        				}
               	}
               });  
            
