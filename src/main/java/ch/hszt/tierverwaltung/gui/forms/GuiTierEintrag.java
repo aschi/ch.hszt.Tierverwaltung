@@ -1,12 +1,12 @@
 package ch.hszt.tierverwaltung.gui.forms;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class GuiTierEintrag {
@@ -31,13 +32,14 @@ public class GuiTierEintrag {
       private JComboBox tierCombo;
       private JTextField krankText;
       private JTextField essText;
-      private JTextField auslaufText;
+      private JCheckBox auslaufText;
       private JTextArea umgangTierText;
       private JTextArea umgangMenschText;
       private JTextArea sonstigesText;
       private JTextField zusatzText;
       private JButton speichern;
       private JButton loeschen;
+      
       
       
       public static void main(String[] args) {
@@ -62,10 +64,15 @@ public class GuiTierEintrag {
     	  rasseText.setText(tier.getRasse());
     	  nameText.setText(tier.getName());
     	  alterText.setText(String.valueOf(tier.getTieralter()));
-    	  groesseCombo.setName(String.valueOf(tier.getGroesseID()));
+    	  groesseCombo.setSelectedIndex(tier.getGroesseID());
     	  tierCombo.setName(tier.getArt());
     	  krankText.setText(tier.getKrankheitsbild());
     	  essText.setText(tier.getEssgewohnheit());
+    	  if (tier.getAuslauf() == '1') {
+    		  auslaufText.setSelected(true);
+    	  } else {
+    		  auslaufText.setSelected(false);
+    	  }
     	  auslaufText.setText(String.valueOf(tier.getAuslauf()));
     	  umgangTierText.setText(tier.getUmgangTier());
     	  umgangMenschText.setText(tier.getUmgangMensch());
@@ -76,15 +83,28 @@ public class GuiTierEintrag {
       private void createTierValue() {
     	  tier.setRasse(rasseText.getText());
     	  tier.setName(nameText.getText());
-    	  tier.setTieralter(Integer.parseInt(alterText.getText()));
-    	  tier.setGroesseID(Integer.parseInt(groesseCombo.getName()));
+    	  if (alterText.getText() == null || alterText.getText().equals("")) {
+    		  tier.setTieralter(-1);
+    	  } else {
+    		  tier.setTieralter(Integer.parseInt(alterText.getText()));
+    	  }
+    	  tier.setGroesseID(groesseCombo.getSelectedIndex());
     	  tier.setKrankheitsbild(krankText.getText());
     	  tier.setEssgewohnheit(essText.getText());
-    	  //auslauf missing
+    	  if (auslaufText.isSelected()) {
+    		  tier.setAuslauf('1');
+    	  } else {
+    		  tier.setAuslauf('0');
+    	  }
     	  tier.setUmgangTier(umgangTierText.getText());
     	  tier.setUmgangMensch(umgangMenschText.getText());
     	  tier.setAnmerkungen(sonstigesText.getText());
+    	  if (zusatzText.getText() == null || zusatzText.getText().equals("")) {
+    		  tier.setZusatzkosten(-1);
+    	  }
+    	  else {
     	  tier.setZusatzkosten(Integer.parseInt(zusatzText.getText()));
+    	  }
     	  
       }
       
@@ -97,8 +117,10 @@ public class GuiTierEintrag {
            
             panel = new JPanel(new SpringLayout());
             
+            
+            
             String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
-            String[] petHeights = {"", "kleiner 30cm", "kleiner 60cm", "kleiner 1m", "1m"};
+            String[] petHeights = {"", "< 30cm", "< 60cm", "> 100cm"};
            
             JLabel tierart = new JLabel("Tierart");
             JLabel rasse = new JLabel("Rasse");
@@ -129,7 +151,7 @@ public class GuiTierEintrag {
             essText = new JTextField();
             essText.setSize(20, 100);
             essen.setLabelFor(essText);
-            auslaufText = new JTextField();
+            auslaufText = new JCheckBox("Ja");
             auslauf.setLabelFor(auslaufText);
             umgangTierText = new JTextArea(3, 20);
             JScrollPane scrollTier = new JScrollPane(umgangTierText);
@@ -151,7 +173,6 @@ public class GuiTierEintrag {
             //groesseCombo.setPreferredSize(new Dimension(167,20));
             groesse.setLabelFor(groesseCombo);
             
-
             
             speichern.addActionListener(new ActionListener() {
               	@Override
@@ -161,13 +182,15 @@ public class GuiTierEintrag {
 	              				tier = new Tier();
 	              			}
               				createTierValue();
-              				tier.save();
-        				
+							tier.save();
               			} catch (SQLException e1) {
         		            	String meldung = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: " + e1.getStackTrace();
         		            	JOptionPane.showMessageDialog(null, meldung, "Betriebliche Benachrichtigung", JOptionPane.ERROR_MESSAGE);
         					
-        				}
+        				} catch (ValidationException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
               	}
               });
               
@@ -179,7 +202,10 @@ public class GuiTierEintrag {
         				} catch (SQLException e1) {
         					// TODO Auto-generated catch block
         					e1.printStackTrace();
-        				}
+        				} catch (ValidationException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
               	}
               });  
            
