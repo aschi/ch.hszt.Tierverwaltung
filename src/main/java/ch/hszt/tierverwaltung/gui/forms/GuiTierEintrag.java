@@ -24,6 +24,7 @@ public class GuiTierEintrag {
       private JPanel panel;
       private Tier tier;
       private JTextField nameText;
+      private JTextField rasseText;
       private JTextField alterText;
       private JComboBox groesseCombo;
       private JComboBox tierCombo;
@@ -57,6 +58,7 @@ public class GuiTierEintrag {
       }
       
       private void loadTierValue() {
+    	  rasseText.setText(tier.getRasse());
     	  nameText.setText(tier.getName());
     	  alterText.setText(String.valueOf(tier.getTieralter()));
     	  groesseCombo.setName(String.valueOf(tier.getGroesseID()));
@@ -84,6 +86,7 @@ public class GuiTierEintrag {
             String[] petHeights = {"", "kleiner 30cm", "kleiner 60cm", "kleiner 1m", "1m"};
            
             JLabel tierart = new JLabel("Tierart");
+            JLabel rasse = new JLabel("Rasse");
             JLabel name = new JLabel("Name");  
             JLabel alter = new JLabel("Alter");
             JLabel groesse = new JLabel("Groesse");
@@ -99,6 +102,8 @@ public class GuiTierEintrag {
             speichern = new JButton("Speichern");
             loeschen = new JButton("Loeschen");
             
+            rasseText = new JTextField();
+            rasse.setLabelFor(rasseText);
             nameText = new JTextField();
             name.setLabelFor(nameText);
             alterText = new JTextField();
@@ -154,6 +159,8 @@ public class GuiTierEintrag {
            
             panel.add(tierart);
             panel.add(tierCombo);
+            panel.add(rasse);
+            panel.add(rasseText);
             panel.add(name);
             panel.add(nameText);
             panel.add(alter);
@@ -176,11 +183,11 @@ public class GuiTierEintrag {
             panel.add(scrollSonst);
             panel.add(zusatz);
             panel.add(zusatzText);
-            panel.add(speichern, 24);
-            panel.add(loeschen, 25);
+            panel.add(speichern, 26);
+            panel.add(loeschen, 27);
             
             fenster.getContentPane().add(panel);
-            SpringUtilities.makeCompactGrid(panel, 13, 2, 5, 5, 5, 5);
+            SpringUtilities.makeCompactGrid(panel, 14, 2, 5, 5, 5, 5);
             
             fenster.setVisible(true);
             fenster.pack();
