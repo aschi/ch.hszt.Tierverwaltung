@@ -88,8 +88,6 @@ public class GuiTierEintrag {
     	  
       }
       
-      //tier.setName(nameText.getText());
-
       private void fensterErzeugen() {
 
             fenster = new JFrame("Tiereintrag");
@@ -120,6 +118,7 @@ public class GuiTierEintrag {
             loeschen = new JButton("Loeschen");
             
             rasseText = new JTextField();
+            //rasseText.setSize(new Dimension(250,20));
             rasse.setLabelFor(rasseText);
             nameText = new JTextField();
             name.setLabelFor(nameText);
@@ -128,27 +127,28 @@ public class GuiTierEintrag {
             krankText = new JTextField();
             krankheitsBild.setLabelFor(krankText);
             essText = new JTextField();
+            essText.setSize(20, 100);
             essen.setLabelFor(essText);
             auslaufText = new JTextField();
             auslauf.setLabelFor(auslaufText);
-            umgangTierText = new JTextArea();
+            umgangTierText = new JTextArea(3, 20);
             JScrollPane scrollTier = new JScrollPane(umgangTierText);
             umgangTier.setLabelFor(umgangTierText);
-            umgangMenschText = new JTextArea();
+            umgangMenschText = new JTextArea(3, 20);
             JScrollPane scrollMensch = new JScrollPane(umgangMenschText);
             umgangMensch.setLabelFor(umgangMenschText);
-            sonstigesText = new JTextArea();
+            sonstigesText = new JTextArea(3, 20);
             JScrollPane scrollSonst = new JScrollPane(sonstigesText);
             sonstiges.setLabelFor(sonstigesText);
             zusatzText = new JTextField();
             zusatz.setLabelFor(zusatzText);
             
             tierCombo = new JComboBox(petStrings);
-            //combo.setPreferredSize(new Dimension(167,20));
+            //tierCombo.setPreferredSize(new Dimension(167,20));
             tierart.setLabelFor(tierCombo);
             
             groesseCombo = new JComboBox(petHeights);
-            groesseCombo.setPreferredSize(new Dimension(167,20));
+            //groesseCombo.setPreferredSize(new Dimension(167,20));
             groesse.setLabelFor(groesseCombo);
             
 
