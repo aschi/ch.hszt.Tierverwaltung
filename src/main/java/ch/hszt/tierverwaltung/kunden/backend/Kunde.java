@@ -1,10 +1,12 @@
 package ch.hszt.tierverwaltung.kunden.backend;
 
+import java.sql.SQLException;
+
 import ch.hszt.tierverwaltung.database.IDatabaseAccess;
 
 public class Kunde {
 	
-	private IDatabaseAccess db;
+	private IDatabaseAccess<Kunde> db;
 	private int id;
 	
 	public Kunde() {
@@ -15,12 +17,12 @@ public class Kunde {
 		this.db = db;
 	}
 	
-	public void save() {
-		db.updateKunde(this);
+	public void save() throws SQLException {
+		db.update(this);
 	}
 	
-	public static Kunde open(int id, IDatabaseAccess db) {
-		return db.getKunde(id);
+	public static Kunde open(int id, IDatabaseAccess db) throws SQLException {
+		return (Kunde) db.getEntry(id);
 	}
 
 	public int getId() {

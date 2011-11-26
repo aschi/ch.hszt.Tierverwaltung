@@ -1,6 +1,9 @@
 package ch.hszt.tierverwaltung.kunden.backend;
 
 import static org.junit.Assert.fail;
+
+import java.sql.SQLException;
+
 import junit.framework.TestCase;
 
 import org.jmock.Expectations;
@@ -25,15 +28,15 @@ public class KundeTest {
     }
     
 	@Test
-	public void saveKundeTest() {
-		final IDatabaseAccess dba = context.mock(IDatabaseAccess.class);
+	public void saveKundeTest() throws SQLException {
+		final IDatabaseAccess<Kunde> dba = (IDatabaseAccess<Kunde>) context.mock(IDatabaseAccess.class);
 		instance.setDb(dba);
 		
         context.checking(new Expectations() {{
             // one and all the other invocation count methods
             // return an instance of the same class as it's
             // argument
-            one (dba).updateKunde(instance);
+            one (dba).update(instance);
         }});
         
 		instance.save();
@@ -42,7 +45,7 @@ public class KundeTest {
 	}
 	
 	@Test
-	public void openKundeTest() {
+	public void openKundeTest() throws SQLException {
 		final IDatabaseAccess dba = context.mock(IDatabaseAccess.class);
 		instance.setDb(dba);
 		instance.setId(1);
@@ -51,7 +54,7 @@ public class KundeTest {
             // one and all the other invocation count methods
             // return an instance of the same class as it's
             // argument
-            oneOf (dba).getKunde(1); will(returnValue(instance));
+            oneOf (dba).getEntry(1); will(returnValue(instance));
         }});
         
 		Kunde compare = Kunde.open(1, dba);
