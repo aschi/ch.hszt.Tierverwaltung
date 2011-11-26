@@ -20,12 +20,14 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("fehler db");
 		}
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:tierverwaltung.db");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("fehler jdbc");
 		}
 
 	}
@@ -39,7 +41,7 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	@Override
 	public void insert(Tier entry) throws SQLException{
 		String sql;
-		sql = "INSERT INTO 'tier' VALUES (null, null, null, '" + entry.getArt() + "', "
+		sql = "INSERT INTO 'tier' VALUES (null, null, '" + entry.getArt() + "', "
 				+ "\'" + entry.getRasse() + "\', \'" + entry.getName() + "\', "
 				+ entry.getTieralter() + ", " + entry.getGroesseID() + ", \'"
 				+ entry.getKrankheitsbild() + "\', \'" + entry.getEssgewohnheit()
@@ -88,7 +90,7 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	@Override
 	public void delete(Tier entry) throws SQLException{
 		String sql;
-		sql = "DELETE * FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
+		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
 		System.out.println(sql);
 		Statement stmt = conn.createStatement();
 		stmt.executeUpdate(sql);
@@ -123,9 +125,6 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 			tierarray.add(tier);
 		}
-
-		rs.close();
-		conn.close();
 
 		return tierarray;
 	}

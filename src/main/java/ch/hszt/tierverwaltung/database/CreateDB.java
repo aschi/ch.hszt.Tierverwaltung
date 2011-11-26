@@ -65,7 +65,6 @@ public class CreateDB {
     		String sql = "CREATE TABLE tier "
     				+ " (tierID integer PRIMARY KEY autoincrement, "
     								 +" fkKunde integer,"
-    								 +" fkAufenthalt integer(3),"
                                      +" art varchar(100), "
                                      +" rasse varchar(100), " 
                                      +" name varchar(255), " 
