@@ -7,6 +7,8 @@ package ch.hszt.tierverwaltung.tier.backend;
  */
 public class Tier {
 
+	private Integer tierID;
+	private Integer fkKunde;
 	private String art;
 	private String rasse;
 	private String name;
@@ -58,6 +60,31 @@ public class Tier {
 		this.umgangMensch = umgangMensch;
 		this.anmerkungen = anmerkungen;
 		this.zusatzkosten = zusatzkosten;
+	}
+	
+	/**
+	 * Konstruktor der Klasse Tiereintrag
+	 * @param tierID ID des Tabelleneintrages Tier
+	 * @param art Tabbbellenfeld art
+	 * @param rasse Tabellenfeld rasse
+	 * @param name Tabellenfeld name
+	 * @param tieralter Tabellenfeld tieralter
+	 * @param groesseID Tabellenfeld groesseID
+	 * @param krankheitsbild Tabellenfeld krankheitsbild
+	 * @param essgewohnheit Tabellenfeld essgewohnheit
+	 * @param auslauf Tabellenfeld auslauf
+	 * @param umgangTier Tabellenfeld umgangTier
+	 * @param umgangMensch Tabellenfeld umgangMensch
+	 * @param anmerkungen Tabellenfeld anmerkungen
+	 * @param zusatzkosten Tabellenfeld zusatztkosten
+	 */
+	public Tier(Integer tierID, Integer fkKunde,  String art, String rasse, String name, int tieralter,
+			int groesseID, String krankheitsbild, String essgewohnheit,
+			char auslauf, String umgangTier, String umgangMensch,
+			String anmerkungen, double zusatzkosten) {
+		this(art, rasse, name, tieralter, groesseID, krankheitsbild, essgewohnheit, auslauf, umgangTier, umgangMensch, anmerkungen, zusatzkosten);
+		this.tierID = tierID;
+		this.fkKunde = fkKunde;
 	}
 
 	public String getArt() {
@@ -154,6 +181,14 @@ public class Tier {
 
 	public void setZusatzkosten(double zusatzkosten) {
 		this.zusatzkosten = zusatzkosten;
+	}
+
+	public Integer getTierID() {
+		return tierID;
+	}
+	
+	public Integer getFkKunde() {
+		return fkKunde;
 	}
 	
 	

@@ -10,7 +10,7 @@ import java.util.List;
 
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
-final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
+public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 	private Connection conn;
 
@@ -39,7 +39,7 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	@Override
 	public void insert(Tier entry) throws SQLException{
 		String sql;
-		sql = "INSERT INTO 'tier' VALUES (null, '" + entry.getArt() + "', "
+		sql = "INSERT INTO 'tier' VALUES (null, null, null, '" + entry.getArt() + "', "
 				+ "\'" + entry.getRasse() + "\', \'" + entry.getName() + "\', "
 				+ entry.getTieralter() + ", " + entry.getGroesseID() + ", \'"
 				+ entry.getKrankheitsbild() + "\', \'" + entry.getEssgewohnheit()
@@ -55,7 +55,27 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 	@Override
 	public void update(Tier entry) throws SQLException{
-		// TODO Auto-generated method stub
+		String sql;
+		sql = "UPDATE 'tier' SET " +
+			 "fkKunde = " + entry.getFkKunde() + ", " + 
+			 "art = '" + entry.getArt() + "', " +
+			 "rasse = \'" + entry.getRasse() + "\', " +
+			 "name = \'" + entry.getName() + "\', " +
+			 "tieralter = " + entry.getTieralter() + ", " +
+			 "groesseID = " + entry.getGroesseID() + ", " + 
+			 "krankheitsbild = \'" + entry.getKrankheitsbild() + "\', " +
+			 "essgewohnheit = \'" + entry.getEssgewohnheit() + "\', "+ 
+			 "auslauf = \'" + entry.getAuslauf() + "\', " +
+			 "umgangTier = \'" + entry.getUmgangTier() + "\', " +
+			 "umgangMensch = \'" + entry.getUmgangMensch() + "\', " +
+			 "anmerkungen = \'" + entry.getAnmerkungen() + "\', " +
+			 "zusatzkosten = " + entry.getZusatzkosten() + 
+			 " WHERE tierID = " + entry.getTierID() +
+			 ";";
+				
+		System.out.println(sql);
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(sql);
 
 	}
 	
@@ -68,21 +88,10 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	@Override
 	public void delete(Tier entry) throws SQLException{
 		String sql;
-		sql = "DELETE FROM 'tier' t " + "WHERE t.art = \'" + entry.getArt()
-				+ "\' and" + " t.rassse = \'" + entry.getRasse() + "\' and"
-				+ " t.name = \'" + entry.getName() + "\' and"
-				+ " t.tieralter = " + entry.getTieralter() + " and "
-				+ " t.groesseID = " + entry.getGroesseID() + " and"
-				+ " t.krankheitsbild = \'" + entry.getKrankheitsbild()
-				+ "\' and" + " t.essgewohnheit = \'" + entry.getEssgewohnheit()
-				+ "\' and" + " t.auslauf = \'" + entry.getAuslauf() + "\' and"
-				+ " t.umgangTier = \'" + entry.getUmgangTier() + "\' and"
-				+ " t.umgangMensch = \'" + entry.getUmgangMensch() + "\' and"
-				+ " t.anmerkungen = \'" + entry.getAnmerkungen() + "\' and"
-				+ " t.zusatzkosten= \'" + entry.getZusatzkosten() + "\' ;";
+		sql = "DELETE * FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
 		System.out.println(sql);
 		Statement stmt = conn.createStatement();
-		stmt.execute(sql);
+		stmt.executeUpdate(sql);
 	}
 
 	/**
@@ -96,6 +105,7 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	public List<Tier> getList() throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier';";
+		System.out.println(sql);
 
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
@@ -104,7 +114,7 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 		while (rs.next()) {
 			char[] auslauf = rs.getString("auslauf").toCharArray();
 
-			Tier tier = new Tier(rs.getString("art"), rs.getString("rasse"),
+			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"), rs.getString("art"), rs.getString("rasse"),
 					rs.getString("name"), rs.getInt("tieralter"),
 					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
 					rs.getString("essgewohnheit"), auslauf[0],
@@ -122,7 +132,25 @@ final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 
 	@Override
 	public Tier getEntry(int id) throws SQLException{
-		// TODO Auto-generated method stub
+		String sql;
+		sql = "SELECT * FROM 'tier' WHERE tierID = " + id + ";";
+		System.out.println(sql);
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);;
+		
+		while (rs.next()) {
+			char[] auslauf = rs.getString("auslauf").toCharArray();
+
+			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"), rs.getString("art"), rs.getString("rasse"),
+					rs.getString("name"), rs.getInt("tieralter"),
+					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
+					rs.getString("essgewohnheit"), auslauf[0],
+					rs.getString("umgangTier"), rs.getString("umgangMensch"),
+					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
+
+			return tier;
+		}
+		
 		return null;
 	}
 

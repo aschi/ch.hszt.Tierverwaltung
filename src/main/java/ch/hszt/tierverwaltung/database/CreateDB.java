@@ -63,7 +63,9 @@ public class CreateDB {
     	try {
     		Statement stmt = conn.createStatement();
     		String sql = "CREATE TABLE tier "
-    				+ " (_id integer primary key autoincrement, "
+    				+ " (tierID integer PRIMARY KEY autoincrement, "
+    								 +" fkKunde integer,"
+    								 +" fkAufenthalt integer(3),"
                                      +" art varchar(100), "
                                      +" rasse varchar(100), " 
                                      +" name varchar(255), " 
