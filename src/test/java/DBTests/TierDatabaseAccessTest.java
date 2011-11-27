@@ -18,7 +18,7 @@ public class TierDatabaseAccessTest {
 		String fehlertext = "";
 		Tier tier =  null;
 
-		TierDatabaseAccess tba = new TierDatabaseAccess();
+		TierDatabaseAccess tba = TierDatabaseAccess.getInstance();
 
 
 		// INSERT Test
@@ -28,7 +28,8 @@ public class TierDatabaseAccessTest {
 				"Boese", "keine", 3.80);
 
 		// Tier in Datenbank schreiben
-		tba.insert(tier);
+		int id = tba.insert(tier);
+		System.out.println("tier id " + id);
 
 		List<Tier> tierList = tba.getList();
 		if (tierList == null || tierList.isEmpty()) {
@@ -60,6 +61,8 @@ public class TierDatabaseAccessTest {
 		if (tierDB == null) {
 			testOk = false;
 			fehlertext = fehlertext + " \n Insert war falsch, Tier nicht in Liste enthalten";
+		} else {
+			System.out.println("tier id dbtier " + tierDB.getTierID());
 		}
 
 		// Test UPDATE
@@ -139,7 +142,7 @@ public class TierDatabaseAccessTest {
 //	public static void main(String[] args) {
 //		TierDatabaseAccessTest test = new TierDatabaseAccessTest();
 //		try {
-//			test.tiertest();
+//			test.testInsertUpdateDeleteTier();
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

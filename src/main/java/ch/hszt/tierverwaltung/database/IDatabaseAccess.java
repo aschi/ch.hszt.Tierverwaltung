@@ -8,9 +8,10 @@ public interface IDatabaseAccess <T> {
 	/**
 	 * Fügt einen neuen Satz in die Tabelle ein
 	 * @param entry
+	 * @return id ID des neuen Satzes in der Tabelle
 	 * @throws SQLException
 	 */
-	public void insert(T entry) throws SQLException;
+	public int insert(T entry) throws SQLException;
 	/**
 	 * Macht einen UPDATE auf dem entsprechenden Satz inder Tabelle
 	 * @param entry
