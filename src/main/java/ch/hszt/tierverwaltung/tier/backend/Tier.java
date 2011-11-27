@@ -95,7 +95,7 @@ public class Tier implements IDataRecord {
 
 	@Override
 	public void save() throws SQLException {
-		if (getTierID() == 0) {
+		if (getTierID() <= 0) {
 			setTierID(TierDatabaseAccess.getInstance().insert(this));
 		} else {
 			TierDatabaseAccess.getInstance().update(this);
