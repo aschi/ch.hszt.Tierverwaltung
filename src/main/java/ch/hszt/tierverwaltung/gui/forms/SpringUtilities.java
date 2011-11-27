@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package layout;
+package ch.hszt.tierverwaltung.gui.forms;
 
 import javax.swing.*;
 import javax.swing.SpringLayout;
