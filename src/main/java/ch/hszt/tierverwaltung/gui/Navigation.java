@@ -2,6 +2,7 @@ package ch.hszt.tierverwaltung.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,7 +52,12 @@ public class Navigation {
 					System.out.println(node.toString());
 					if (node.toString().equals("Tiere")) {
 						System.out.println("load tier overview...");
-						gui.setCenterPane(new TierOverview());
+						try {
+							gui.setCenterPane(new TierOverview());
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					} else if (node.toString().equals("Kunden")) {
 						System.out.println("load kunden overview...");
 						gui.setCenterPane(new KundenOverview());

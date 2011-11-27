@@ -2,6 +2,7 @@ package ch.hszt.tierverwaltung.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -21,7 +22,12 @@ public class MainGui {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
 		
 		frame.getContentPane().add(new JScrollPane(new Navigation(this).getTree()), BorderLayout.WEST);
-		setCenterPane(new TierOverview());
+		try {
+			setCenterPane(new TierOverview());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		frame.setVisible(true);
 	}
