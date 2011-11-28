@@ -157,8 +157,13 @@ public class GuiTierEintrag {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
-        					tier.save();
-        				} catch (SQLException e1) {
+	              			if(tier == null){
+	              				tier = new Tier();
+	              			}
+              				createTierValue();
+              				tier.save();
+        				
+              			} catch (SQLException e1) {
         		            	String meldung = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: " + e1.getStackTrace();
         		            	JOptionPane.showMessageDialog(null, meldung, "Betriebliche Benachrichtigung", JOptionPane.ERROR_MESSAGE);
         					
