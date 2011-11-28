@@ -7,7 +7,6 @@ import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class TierOverview extends Overview<Tier>{
-
 	public TierOverview() throws SQLException{
 		List<Tier> al = TierDatabaseAccess.getInstance().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
