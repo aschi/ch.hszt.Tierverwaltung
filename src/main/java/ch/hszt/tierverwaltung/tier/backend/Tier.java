@@ -3,6 +3,7 @@ package ch.hszt.tierverwaltung.tier.backend;
 import java.sql.SQLException;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
+import ch.hszt.tierverwaltung.backend.IPublicCloneable;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
 
@@ -12,7 +13,7 @@ import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
  * @author prisi
  * 
  */
-public class Tier implements IDataRecord {
+public class Tier implements IDataRecord, IPublicCloneable {
 
 	private int tierID;
 	private int fkKunde;
@@ -401,6 +402,14 @@ public class Tier implements IDataRecord {
 
 	private void setTierID(Integer id) {
 		tierID = id;
+	}
+	
+	@Override
+	public Object clone(){
+		return new Tier(new String(this.getArt()), new String(this.getRasse()), new String(this.getName()), this.getTieralter(),
+				this.getGroesseID(), new String(this.getKrankheitsbild()), new String(this.getEssgewohnheit()),
+				this.getAuslauf(), new String(this.getUmgangTier()), new String(this.getUmgangMensch()),
+				new String(this.getAnmerkungen()), this.getZusatzkosten());
 	}
 
 }
