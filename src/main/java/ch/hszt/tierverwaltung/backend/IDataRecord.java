@@ -2,8 +2,6 @@ package ch.hszt.tierverwaltung.backend;
 
 import java.sql.SQLException;
 
-import com.sun.xml.internal.ws.developer.ValidationErrorHandler;
-
 
 /**
  * Dieses Interface wird von allen DataRecords (Tier, Kunde, Aufenthalt, Tierplatz) implementiert und beinhaltet
