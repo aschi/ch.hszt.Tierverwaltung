@@ -12,7 +12,7 @@ import com.sun.xml.internal.ws.developer.ValidationErrorHandler;
  *
  * @param <T> Ein dataRecord vom Typ Tier, Kunde, Tierplatz oder Aufenthalt
  */
-public interface IDataRecord {
+public interface IDataRecord extends IPublicCloneable{
 	
 	/**
 	 * Diese Methode speichert den DataRecord in die entsprechende Tabelle..
