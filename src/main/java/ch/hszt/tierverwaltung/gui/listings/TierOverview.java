@@ -1,20 +1,21 @@
 package ch.hszt.tierverwaltung.gui.listings;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 
+import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
-import ch.hszt.tierverwaltung.tier.backend.Tierart;
 
 public class TierOverview extends Overview<Tier>{
 
-	public TierOverview(){
-		ArrayList<Tier> al = new ArrayList<Tier>();
+	public TierOverview() throws SQLException{
+		List<Tier> al = TierDatabaseAccess.getInstance().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
 		createTable(columnNames, al);
 	}
 	
 	@Override
-	public void updateTableValues(ArrayList<Tier> input) {
+	public void updateTableValues(List<Tier> input) {
 		String[] row = new String[5];
 		for(Tier e : input){
 			row[0] = e.getName();

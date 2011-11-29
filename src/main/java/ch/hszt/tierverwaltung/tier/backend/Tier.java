@@ -14,8 +14,8 @@ import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
  */
 public class Tier implements IDataRecord {
 
-	private Integer tierID;
-	private Integer fkKunde;
+	private int tierID;
+	private int fkKunde;
 	private String art;
 	private String rasse;
 	private String name;
@@ -288,11 +288,11 @@ public class Tier implements IDataRecord {
 		this.zusatzkosten = zusatzkosten;
 	}
 
-	public Integer getTierID() {
+	public int getTierID() {
 		return tierID;
 	}
-
-	public Integer getFkKunde() {
+	
+	public int getFkKunde() {
 		return fkKunde;
 	}
 

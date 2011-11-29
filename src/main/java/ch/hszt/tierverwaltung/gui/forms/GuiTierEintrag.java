@@ -2,8 +2,6 @@ package ch.hszt.tierverwaltung.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,11 +12,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.hszt.tierverwaltung.tier.backend.Tier;
+
 public class GuiTierEintrag {
 
       private JFrame fenster;
       private JPanel panel;
-
+      private JTextField nameText;
+      private Tier tier;
+      
       public static void main(String[] args) {
 
             new GuiTierEintrag();
@@ -28,17 +30,30 @@ public class GuiTierEintrag {
 
             fensterErzeugen();
             //fenster.setSize(600, 400);
-            fenster.pack();
+            
+            
+      }
+      
+      public GuiTierEintrag (Tier tier) {
+    	  this();
+    	  this.tier = tier;
+    	  loadTierValue();
+    	  
+      }
+      
+      private void loadTierValue() {
+    	  nameText.setText(tier.getName());
       }
 
       private void fensterErzeugen() {
 
             fenster = new JFrame("Tiereintrag");
             fenster.setLocation(400, 300);
-            fenster.setDefaultCloseOperation(fenster.EXIT_ON_CLOSE);
-            fenster.setLayout(new BorderLayout(5,5));
+            fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            fenster.setLayout(new BorderLayout());
            
             panel = new JPanel(new SpringLayout());
+            
             String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
             String[] petHeights = {"", "kleiner 30cm", "kleiner 60cm", "kleiner 1m", "1m"};
            
@@ -50,7 +65,7 @@ public class GuiTierEintrag {
             panel.add(combo);
             JLabel name = new JLabel("Name");          
             panel.add(name);
-            JTextField nameText = new JTextField(15);
+            nameText = new JTextField(15);
             panel.add(nameText);
             name.setLabelFor(nameText);
             JLabel alter = new JLabel("Alter");
@@ -108,7 +123,9 @@ public class GuiTierEintrag {
             panel.add(zusatzText);
             
             fenster.getContentPane().add(panel);
-           
+            SpringUtilities.makeCompactGrid(panel, 12, 2, 5, 5, 5, 5);
+            
             fenster.setVisible(true);
+            fenster.pack();
       }
 } 
