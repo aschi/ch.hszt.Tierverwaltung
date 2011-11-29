@@ -2,6 +2,7 @@ package ch.hszt.tierverwaltung.gui;
 
 import java.sql.SQLException;
 
+import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Starter {
@@ -18,6 +19,9 @@ public class Starter {
 		try {
 			tier.save();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -10,17 +10,20 @@ public class TierOverview extends Overview<Tier>{
 	public TierOverview() throws SQLException{
 		List<Tier> al = TierDatabaseAccess.getInstance().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
-		createTable(columnNames, al);
+		createTable(columnNames, al, new Tier());
 	}
 	
 	@Override
 	public void updateTableValues(List<Tier> input) {
+		super.updateTableValues(input);
+		
 		String[] row = new String[5];
 		for(Tier e : input){
 			row[0] = e.getName();
 			row[1] = e.getAnmerkungen();
 			row[2] = e.getRasse();
 			row[3] = String.valueOf(e.getTieralter());
+			
 			switch(e.getGroesseID()){
 			case 1:
 				row[4] = "<= 30cm";

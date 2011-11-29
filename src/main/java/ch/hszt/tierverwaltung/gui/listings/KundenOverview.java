@@ -10,7 +10,7 @@ public class KundenOverview extends Overview<Kunde>{
 	public KundenOverview(){
 		ArrayList<Kunde> al = new ArrayList<Kunde>();
 		String[] columnNames = {"Name", "Adresse", "Blibla Kundendaten"};
-		createTable(columnNames, al);
+		createTable(columnNames, al, new Kunde());
 	}
 	
 	@Override

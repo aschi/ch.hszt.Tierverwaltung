@@ -34,7 +34,15 @@ public class Tier implements IDataRecord, IPublicCloneable {
 	 * Konstruktor der Klasse Tiereintrag
 	 */
 	public Tier() {
-
+		//Initialise strings
+		art = "";
+		rasse = "";
+		name = "";
+		krankheitsbild = "";
+		essgewohnheit = "";
+		umgangTier = "";
+		umgangMensch = "";
+		anmerkungen = "";
 	}
 
 	/**
