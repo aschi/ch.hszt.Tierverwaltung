@@ -134,8 +134,7 @@ public class Tier implements IDataRecord {
 	}
 
 	@Override
-	public void delete() throws SQLException, ValidationException {
-		validate();
+	public void delete() throws SQLException {
 		TierDatabaseAccess.getInstance().delete(this);
 	}
 
@@ -192,111 +191,215 @@ public class Tier implements IDataRecord {
 		}
 	}
 
+	/**
+	 * Returns art
+	 * @return art
+	 */
 	public String getArt() {
 		return art;
 	}
 
+	/**
+	 * Sets art
+	 * @param art to be set
+	 */
 	public void setArt(String art) {
 		this.art = art;
 	}
 
+	/**
+	 * Returns rasse
+	 * @return rasse
+	 */
 	public String getRasse() {
 		return rasse;
 	}
 
+	/**
+	 * Sets rasse
+	 * @param rasse to bet set
+	 */
 	public void setRasse(String rasse) {
 		this.rasse = rasse;
 	}
 
+	/**
+	 * Returns name
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets name
+	 * @param name to  be set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns tieralter
+	 * @return tieralter
+	 */
 	public int getTieralter() {
 		return tieralter;
 	}
 
+	/**
+	 * sets tieralter
+	 * @param tieralter to be set
+	 */
 	public void setTieralter(int tieralter) {
 		this.tieralter = tieralter;
 	}
 
+	/**
+	 * returns groesseID
+	 * @return groesseID
+	 */
 	public int getGroesseID() {
 		return groesseID;
 	}
 
+	/**
+	 * Sets groesseID
+	 * @param groesseID to be set
+	 */
 	public void setGroesseID(int groesseID) {
 		this.groesseID = groesseID;
 	}
 
+	/**
+	 * returns Krankheitsbild
+	 * @return krankheitsbild
+	 */
 	public String getKrankheitsbild() {
 		return krankheitsbild;
 	}
 
+	/**
+	 * 
+	 * @param krankheitsbild
+	 */
 	public void setKrankheitsbild(String krankheitsbild) {
 		this.krankheitsbild = krankheitsbild;
 	}
 
+	/**
+	 * Returns essgewohnheit
+	 * @return essgewohnheit
+	 */
 	public String getEssgewohnheit() {
 		return essgewohnheit;
 	}
 
+	/**
+	 * Sets essgewohnheit
+	 * @param essgewohnheit to be set
+	 */
 	public void setEssgewohnheit(String essgewohnheit) {
 		this.essgewohnheit = essgewohnheit;
 	}
 
+	/**
+	 * Returns auslauf
+	 * @return auslauf
+	 */
 	public char getAuslauf() {
 		return auslauf;
 	}
 
+	/**
+	 * Sets auslauf
+	 * @param auslauf to be set
+	 */
 	public void setAuslauf(char auslauf) {
 		this.auslauf = auslauf;
 	}
 
+	/**
+	 * Returns umgangTier
+	 * @return umgangTier
+	 */
 	public String getUmgangTier() {
 		return umgangTier;
 	}
 
+	/**
+	 * Sets umgangTier
+	 * @param umgangTier to be set
+	 */
 	public void setUmgangTier(String umgangTier) {
 		this.umgangTier = umgangTier;
 	}
 
+	/**
+	 * returns umgangMensch
+	 * @return umgangMensch
+	 */
 	public String getUmgangMensch() {
 		return umgangMensch;
 	}
 
+	/**
+	 * Sets umgangMensch
+	 * @param umgangMensch to be set
+	 */
 	public void setUmgangMensch(String umgangMensch) {
 		this.umgangMensch = umgangMensch;
 	}
 
+	/**
+	 * Returns anmerkungen
+	 * @return anmerkungen
+	 */
 	public String getAnmerkungen() {
 		return anmerkungen;
 	}
 
+	/**
+	 * Sets anmerkungen
+	 * @param anmerkungen to be set
+	 */
 	public void setAnmerkungen(String anmerkungen) {
 		this.anmerkungen = anmerkungen;
 	}
 
+	/**
+	 * returns zusatzkosten
+	 * @return zusatzkosten
+	 */
 	public double getZusatzkosten() {
 		return zusatzkosten;
 	}
 
+	/**
+	 * Sets zusatzkosten
+	 * @param zusatzkosten to be set
+	 */
 	public void setZusatzkosten(double zusatzkosten) {
 		this.zusatzkosten = zusatzkosten;
 	}
 
+	/**
+	 * Returns tierID
+	 * @return tierID
+	 */
 	public int getTierID() {
 		return tierID;
 	}
 	
+	/**
+	 * Returns fkKunde
+	 * @return fkKunde
+	 */
 	public int getFkKunde() {
 		return fkKunde;
 	}
 
-	public void setTierID(Integer id) {
+	private void setTierID(Integer id) {
 		tierID = id;
 	}
 

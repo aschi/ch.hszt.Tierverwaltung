@@ -28,7 +28,7 @@ public interface IDataRecord {
 	 * @throws ValidationException wenn die Validierung, welche vor dem Speichern gemacht
 	 * wird fehl schlug
 	 */
-	public void delete() throws SQLException, ValidationException;
+	public void delete() throws SQLException;
 	
 	/**
 	 * Die Methode validate validiert die Eingaben welche von der Benutzerschnittstelle gesetzt wurden.
