@@ -13,7 +13,7 @@ import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
  * @author prisi
  * 
  */
-public class Tier implements IDataRecord, IPublicCloneable {
+public class Tier implements IDataRecord {
 
 	private int tierID;
 	private int fkKunde;
@@ -144,7 +144,10 @@ public class Tier implements IDataRecord, IPublicCloneable {
 
 	@Override
 	public void delete() throws SQLException {
-		TierDatabaseAccess.getInstance().delete(this);
+		if (this.getTierID() > 0) {
+			TierDatabaseAccess.getInstance().delete(this);
+			this.setTierID(-1);
+		}
 	}
 
 	@Override
