@@ -14,7 +14,7 @@ import ch.hszt.tierverwaltung.database.IDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 
 public final class KundeDataMapper implements IDataMapper<Kunde> {
-	
+
 	DBConnection dbConnection = DBConnection.getInstance();
 
 	public KundeDataMapper() {
@@ -24,13 +24,13 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	/**
 	 * Fügt einen neuen Kundeneintrag in die Datenbank kunde ein.
 	 * 
-	 * @param tier
+	 * @param kunde
 	 *            Kundeneintrag welcher in die Datenbank eingefügt werden soll
 	 * @throws SQLException
 	 */
 	@Override
 	public int insert(Kunde entry) throws SQLException {
-		
+
 		String sql;
 		ResultSet rs = null;
 		sql = "INSERT INTO 'kunde' VALUES (null, '" + entry.getName() + "', "
@@ -42,10 +42,11 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 
-		PreparedStatement pstmt = dbConnection.getConn()
-				.prepareStatement("select max(tierID) max from 'tier';");
+		PreparedStatement pstmt = dbConnection.getConn().prepareStatement(
+				"select max(kundeID) max from 'kunde';");
 		rs = pstmt.executeQuery();
-		if (rs.next()) {;
+		if (rs.next()) {
+			;
 			return rs.getInt("max");
 		} else {
 			return 0;
@@ -69,10 +70,10 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	}
 
 	/**
-	 * Diese Methode löscht einen Tiereintrag aus der Tabelle tier
+	 * Diese Methode löscht einen Kundeneintrag aus der Tabelle kunde
 	 * 
-	 * @param tier
-	 *            Tiereintrag, welcher gelöscht werden soll
+	 * @param kunde
+	 *            Kundeneintrag, welcher gelöscht werden soll
 	 * @throws SQLException
 	 */
 	@Override
@@ -85,10 +86,10 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	}
 
 	/**
-	 * Diese Methode liefert eine ArrayList aller Tiereinträge zurück, welche in
-	 * der Tabelle tier enthalten sind
+	 * Diese Methode liefert eine ArrayList aller Kundeneinträge zurück, welche
+	 * in der Tabelle kunde enthalten sind
 	 * 
-	 * @return Tiereinträge, welche in der Tabelle tier enthalten sind
+	 * @return Kundeneinträge, welche in der Tabelle kunde enthalten sind
 	 * @throws SQLException
 	 */
 	@Override
@@ -108,8 +109,8 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 					rs.getString("plz"), rs.getString("ort"),
 					rs.getString("telefon"), rs.getString("eMail"));
 
-			kunde.setTiere(new TierDataMapper().getTiereZuKunde(
-					kunde.getKundeID()));
+			kunde.setTiere(new TierDataMapper().getTiereZuKunde(kunde
+					.getKundeID()));
 
 			kundenarray.add(kunde);
 		}
