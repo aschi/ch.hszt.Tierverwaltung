@@ -11,7 +11,7 @@ Usage
 
     git clone git://github.com/aschi/ch.hszt.Tierverwaltung.git
     cd ch.hszt.Tierverwaltung
-    mvn install
+    mvn install eclipse:eclipse
 
 Features
 --------
@@ -20,4 +20,5 @@ Features
 * Maven
 * Junit
 * Mock Objects
-* slf4j
+* SQLite JDBC Driver
+
