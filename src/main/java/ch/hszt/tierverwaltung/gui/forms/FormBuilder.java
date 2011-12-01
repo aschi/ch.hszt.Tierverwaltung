@@ -16,7 +16,7 @@ public class FormBuilder<T extends IPublicCloneable> {
 		if(object instanceof Tier){
 			new GuiTierEintrag((Tier)object, gui);
 		}else if(object instanceof Kunde){
-			//new GuiKundenEintrag((Kunde)object);
+			new GuiKundenEintrag((Kunde)object, gui);
 		}else{
 			System.out.println("NYI");
 		}

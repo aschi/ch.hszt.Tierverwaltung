@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
+import ch.hszt.tierverwaltung.database.IDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.forms.FormBuilder;
 
@@ -27,6 +28,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	private List<T> input;
 	private T emptyObject;
 	private JPanel buttonPane;
+	private IDataMapper<T> mapper;
 	
 	public Overview(MainGui gui){
 		this.gui = gui;
@@ -34,6 +36,14 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	
 	public ReadOnlyTableModel getModel(){
 		return model;
+	}
+	
+	public IDataMapper<T> getMapper(){
+		return mapper;
+	}
+	
+	public void setMapper(IDataMapper<T> mapper){
+		this.mapper = mapper;
 	}
 	
 	public void createTable(String[] columnNames, final List<T> input, final T emptyObject){
@@ -81,7 +91,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					input.get(overview.getSelectedRow()).delete();
+					mapper.delete(input.get(overview.getSelectedRow()));
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

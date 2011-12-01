@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.listings.ReadOnlyTableModel;
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
@@ -136,7 +137,12 @@ public class GuiKundenEintrag {
 	              				kunde = new Kunde();
 	              			}
             				createTierValue();
-							kunde.save();
+            				new KundeDataMapper().save(kunde);
+            				
+         					synchronized (gui.getOverviewUpdater()) {
+        						gui.getOverviewUpdater().notify();
+							}
+            				
 							String meldung = "Erfolgreich gespeichert";
 							JOptionPane.showMessageDialog(null, meldung, "Information", JOptionPane.INFORMATION_MESSAGE);
             			} catch (SQLException e1) {
@@ -154,7 +160,12 @@ public class GuiKundenEintrag {
             	@Override
             	public void actionPerformed(ActionEvent e) {
             		try {
-      					kunde.delete();
+      					new KundeDataMapper().delete(kunde);
+      					
+     					synchronized (gui.getOverviewUpdater()) {
+    						gui.getOverviewUpdater().notify();
+						}
+      					
       					closeFenster();
       				} catch (SQLException e1) {
       					// TODO Auto-generated catch block

@@ -10,6 +10,7 @@ import ch.hszt.tierverwaltung.tier.backend.Tier;
 public class TierOverview extends Overview<Tier>{
 	public TierOverview(MainGui gui) throws SQLException{
 		super(gui);
+		setMapper(new TierDataMapper());
 		List<Tier> al = new TierDataMapper().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
 		createTable(columnNames, al, new Tier());

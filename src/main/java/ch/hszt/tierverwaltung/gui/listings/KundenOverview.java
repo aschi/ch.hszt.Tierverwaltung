@@ -13,6 +13,7 @@ public class KundenOverview extends Overview<Kunde>{
 
 	public KundenOverview(MainGui gui){
 		super(gui);
+		setMapper(new KundeDataMapper());
 		ArrayList<Kunde> al = new ArrayList<Kunde>();
 		String[] columnNames = {"Name", "Vorname", "Ort", "Telefon Nr", "Tiere"};
 		createTable(columnNames, al, new Kunde());
