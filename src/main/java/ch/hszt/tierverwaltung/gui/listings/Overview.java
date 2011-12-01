@@ -42,6 +42,9 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		updateTableValues(input);
 	}
 	
+	/**
+	 * Creates the overview Buttons & adds actionlisteners for funktionality
+	 */
 	private void createButtonPane(){
 		// Buttons
 		buttonPane = new JPanel();
@@ -80,6 +83,10 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		});
 	}
 	
+	/**
+	 * Initialise jTable / create model
+	 * @param columnNames
+	 */
 	private void initTable(String[] columnNames){
 		model = new ReadOnlyTableModel();
 		model.setColumnIdentifiers(columnNames);

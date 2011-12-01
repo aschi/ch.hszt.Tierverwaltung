@@ -15,6 +15,12 @@ public class TierOverview extends Overview<Tier>{
 	
 	@Override
 	public void updateTableValues(List<Tier> input) {
+		try {
+			input = (input==null) ? TierDatabaseAccess.getInstance().getList() : input;
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		super.updateTableValues(input);
 		
 		String[] row = new String[5];

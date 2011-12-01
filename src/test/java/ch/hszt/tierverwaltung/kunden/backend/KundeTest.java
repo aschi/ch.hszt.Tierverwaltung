@@ -30,7 +30,6 @@ public class KundeTest {
 	@Test
 	public void saveKundeTest() throws SQLException {
 		final IDatabaseAccess<Kunde> dba = (IDatabaseAccess<Kunde>) context.mock(IDatabaseAccess.class);
-		instance.setDb(dba);
 		
         context.checking(new Expectations() {{
             // one and all the other invocation count methods
@@ -40,28 +39,22 @@ public class KundeTest {
         }});
         
 		instance.save();
-		
-		
 	}
 	
 	@Test
-	public void openKundeTest() throws SQLException {
-		final IDatabaseAccess dba = context.mock(IDatabaseAccess.class);
-		instance.setDb(dba);
-		instance.setId(1);
+	public void deleteKundeTest() throws SQLException {
+		final IDatabaseAccess<Kunde> dba = (IDatabaseAccess<Kunde>) context.mock(IDatabaseAccess.class);
 		
         context.checking(new Expectations() {{
             // one and all the other invocation count methods
             // return an instance of the same class as it's
             // argument
-            oneOf (dba).getEntry(1); will(returnValue(instance));
+            one (dba).delete(instance);
         }});
         
-		Kunde compare = Kunde.open(1, dba);
-		
-		TestCase.assertEquals(compare, instance);
-		
-		
+		instance.delete();
 	}
+
+
 
 }
