@@ -1,10 +1,6 @@
 package ch.hszt.tierverwaltung.kunden.backend;
 
-import static org.junit.Assert.fail;
-
 import java.sql.SQLException;
-
-import junit.framework.TestCase;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
