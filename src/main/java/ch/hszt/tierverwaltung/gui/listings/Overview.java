@@ -17,14 +17,24 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
+import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.forms.FormBuilder;
 
 public abstract class Overview <T extends IDataRecord> extends JPanel {
-	JTable overview;
-	ReadOnlyTableModel model;
-	List<T> input;
-	T emptyObject;
-	JPanel buttonPane;
+	private MainGui gui;
+	private JTable overview;
+	private ReadOnlyTableModel model;
+	private List<T> input;
+	private T emptyObject;
+	private JPanel buttonPane;
+	
+	public Overview(MainGui gui){
+		this.gui = gui;
+	}
+	
+	public ReadOnlyTableModel getModel(){
+		return model;
+	}
 	
 	public void createTable(String[] columnNames, final List<T> input, final T emptyObject){
 		this.input = input;
@@ -62,7 +72,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FormBuilder<T>().buildForm((T)emptyObject.clone());
+				new FormBuilder<T>().buildForm((T)emptyObject.clone(), gui);
 			}
 		});
 		
@@ -100,7 +110,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 			{
 				if(e.getClickCount() == 2){
 					int selRow = ((JTable) e.getComponent()).getSelectedRow();
-					new FormBuilder<T>().buildForm(input.get(selRow));
+					new FormBuilder<T>().buildForm(input.get(selRow), gui);
 				}
 			}
 		});

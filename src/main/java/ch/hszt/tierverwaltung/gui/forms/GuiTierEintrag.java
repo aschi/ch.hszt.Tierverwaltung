@@ -185,6 +185,9 @@ public class GuiTierEintrag {
 	              			}
               				createTierValue();
 							tier.save();
+							
+							gui.getOverviewUpdater().notify();
+							
 							String meldung = "Erfolgreich gespeichert";
 							JOptionPane.showMessageDialog(null, meldung, "Information", JOptionPane.INFORMATION_MESSAGE);
               			} catch (SQLException e1) {
@@ -203,6 +206,9 @@ public class GuiTierEintrag {
               	public void actionPerformed(ActionEvent e) {
               		try {
         					tier.delete();
+        					
+        					gui.getOverviewUpdater().notify();
+        					
         					closeFenster();
         				} catch (SQLException e1) {
         					// TODO Auto-generated catch block

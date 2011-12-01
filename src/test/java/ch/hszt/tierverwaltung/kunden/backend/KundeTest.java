@@ -12,6 +12,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.IDatabaseAccess;
 
 public class KundeTest {
@@ -38,7 +39,12 @@ public class KundeTest {
             one (dba).update(instance);
         }});
         
-		instance.save();
+		try {
+			instance.save();
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

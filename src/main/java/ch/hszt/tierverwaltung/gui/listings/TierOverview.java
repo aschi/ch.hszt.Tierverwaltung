@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
+import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class TierOverview extends Overview<Tier>{
-	public TierOverview() throws SQLException{
+	public TierOverview(MainGui gui) throws SQLException{
+		super(gui);
 		List<Tier> al = TierDatabaseAccess.getInstance().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
 		createTable(columnNames, al, new Tier());
@@ -41,7 +43,7 @@ public class TierOverview extends Overview<Tier>{
 				row[4] = "> 1m";
 				break;
 			}
-			model.addRow(row);
+			getModel().addRow(row);
 		}
 	}
 	

@@ -2,15 +2,14 @@ package ch.hszt.tierverwaltung.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import ch.hszt.tierverwaltung.gui.listings.KundenOverview;
-import ch.hszt.tierverwaltung.gui.listings.TierOverview;
+import ch.hszt.tierverwaltung.kunden.backend.Kunde;
+import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Navigation {
 	private JTree tree;
@@ -52,15 +51,10 @@ public class Navigation {
 					System.out.println(node.toString());
 					if (node.toString().equals("Tiere")) {
 						System.out.println("load tier overview...");
-						try {
-							gui.setCenterPane(new TierOverview());
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						gui.selectOverview(Tier.class.getSimpleName());
 					} else if (node.toString().equals("Kunden")) {
 						System.out.println("load kunden overview...");
-						gui.setCenterPane(new KundenOverview());
+						gui.selectOverview(Kunde.class.getSimpleName());
 					}
 				}
 			}
