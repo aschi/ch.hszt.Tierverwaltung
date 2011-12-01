@@ -113,6 +113,10 @@ public class Kunde implements IDataRecord {
 		if (getEMail() == null) {
 			ve.addErrorMessage("E-Mail-Adresse ist NULL");
 		}
+		
+		if (!ve.getErrorMsgs().isEmpty()) {
+			throw ve;
+		}
 	}
 
 	public int getKundeID() {

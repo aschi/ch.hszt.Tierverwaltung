@@ -109,7 +109,7 @@ public class KundeDatabaseAccessTest {
 		tba.delete(kundeDB);
 
 		// Wenn Kunde nun immernoch in Liste ist, war Test delete nicht
-		// erfolgreich
+		// erfolgreicht
 		List<Kunde> nachDeleteList = tba.getList();
 		for (Kunde t2 : nachDeleteList) {
 			if (kundeDB.getKundeID() == t2.getKundeID()) {
@@ -128,7 +128,7 @@ public class KundeDatabaseAccessTest {
 //			test.testInsertUpdateDeleteKunde();
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			  e.printStackTrace();
 //			System.out.println("feeehler");
 //		}
 //	}
