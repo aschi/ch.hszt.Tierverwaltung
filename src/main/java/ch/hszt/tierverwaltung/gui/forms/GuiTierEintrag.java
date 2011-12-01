@@ -17,10 +17,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class GuiTierEintrag {
 

@@ -3,9 +3,9 @@ package ch.hszt.tierverwaltung.gui.listings;
 import java.sql.SQLException;
 import java.util.List;
 
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class TierOverview extends Overview<Tier>{
 	public TierOverview(MainGui gui) throws SQLException{

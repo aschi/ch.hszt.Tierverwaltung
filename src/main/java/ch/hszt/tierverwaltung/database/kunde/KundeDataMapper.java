@@ -9,10 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
 
 public final class KundeDataMapper implements IDataMapper<Kunde> {
 

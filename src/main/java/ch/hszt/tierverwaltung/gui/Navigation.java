@@ -8,8 +8,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
 
 public class Navigation {
 	private JTree tree;

@@ -1,4 +1,4 @@
-package DBTests;
+package ch.hszt.tierverwaltung.database.tier;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
-public class TierDatabaseAccessTest {
+public class TierDataMapperDatabaseTest {
 
 	@Test
 	public void testInsertUpdateDeleteTier() throws Exception {

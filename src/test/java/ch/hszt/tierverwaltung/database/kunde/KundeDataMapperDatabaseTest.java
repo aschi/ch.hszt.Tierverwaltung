@@ -1,4 +1,4 @@
-package DBTests;
+package ch.hszt.tierverwaltung.database.kunde;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
 
-public class KundeDatabaseAccessTest {
+public class KundeDataMapperDatabaseTest {
 
 	@Test
 	public void testInsertUpdateDeleteKunde() throws Exception {

@@ -14,13 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.listings.ReadOnlyTableModel;
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class GuiKundenEintrag {
 	

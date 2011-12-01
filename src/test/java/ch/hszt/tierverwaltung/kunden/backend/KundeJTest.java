@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
 public class KundeJTest {

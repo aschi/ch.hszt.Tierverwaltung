@@ -11,11 +11,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.gui.listings.KundenOverview;
 import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class MainGui {
 	private JFrame frame;

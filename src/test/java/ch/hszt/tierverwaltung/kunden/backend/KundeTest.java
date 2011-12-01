@@ -8,6 +8,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 

@@ -1,10 +1,7 @@
-package ch.hszt.tierverwaltung.kunden.backend;
+package ch.hszt.tierverwaltung.backend;
 
 import java.util.ArrayList;
 
-import ch.hszt.tierverwaltung.backend.IDataRecord;
-import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Kunde implements IDataRecord {
 

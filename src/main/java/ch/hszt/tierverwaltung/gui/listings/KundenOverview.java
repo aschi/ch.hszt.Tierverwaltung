@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.kunden.backend.Kunde;
-import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class KundenOverview extends Overview<Kunde>{
 

@@ -1,7 +1,5 @@
-package ch.hszt.tierverwaltung.tier.backend;
+package ch.hszt.tierverwaltung.backend;
 
-import ch.hszt.tierverwaltung.backend.IDataRecord;
-import ch.hszt.tierverwaltung.backend.ValidationException;
 
 /**
  * Klasse Tiereintrag, verwaltet einen einzelnen Eintrag aus der Datenbank Tier
