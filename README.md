@@ -1,5 +1,5 @@
-Java / Maven Kickstart Project
-==============================
+Projektarbeit von Adrian Schmid, Priscilla Schneider und Corinne Zeugin
+=======================================================================
 
 Installation
 ------------
