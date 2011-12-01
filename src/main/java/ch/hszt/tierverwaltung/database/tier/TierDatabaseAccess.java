@@ -181,7 +181,7 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 	
 	public ArrayList<Tier> getTiereZuKunde(int kundeID) throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier' WHERE fkKundeID = " + kundeID + ";";
+		sql = "SELECT * FROM 'tier' WHERE fkKunde = " + kundeID + ";";
 		System.out.println(sql);
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(sql);

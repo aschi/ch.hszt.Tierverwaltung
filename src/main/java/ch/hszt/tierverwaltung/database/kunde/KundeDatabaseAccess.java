@@ -83,13 +83,13 @@ public final class KundeDatabaseAccess implements IDatabaseAccess<Kunde> {
 	public void update(Kunde entry) throws SQLException{
 		String sql;
 		sql = "UPDATE 'kunde' SET " +
-			 "name = " + entry.getName() + ", " + 
+			 "name = \'" + entry.getName() + "\', " + 
 			 "vorname = '" + entry.getVorname() + "', " +
 			 "adresse = \'" + entry.getAdresse() + "\', " +
 			 "plz = \'" + entry.getPlz() + "\', " + 
 			 "ort = \'" + entry.getOrt() + "\', " +
 			 "telefon = \'" + entry.getTelefon() + "\', "+ 
-			 "eMail = \'" + entry.getEMail() + "\', " +
+			 "eMail = \'" + entry.getEMail() + "\'" +
 			 ";";
 				
 		System.out.println(sql);
