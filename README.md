@@ -4,14 +4,13 @@ Java / Maven Kickstart Project
 Installation
 ------------
 
-You may fork this project using the github functionality and use it as a base
-for your own project.
+You may fork this project using the github functionality
 
 Usage
 -----
 
-    git clone git://github.com/panter/ch.panter.projectzero.git
-    cd ch.panter.projectzero
+    git clone git://github.com/aschi/ch.hszt.Tierverwaltung.git
+    cd ch.hszt.Tierverwaltung
     mvn install
 
 Features
