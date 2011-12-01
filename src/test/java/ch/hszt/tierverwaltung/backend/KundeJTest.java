@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.kunden.backend;
+package ch.hszt.tierverwaltung.backend;
 
 
 import java.util.List;
