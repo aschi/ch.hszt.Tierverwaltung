@@ -1,22 +1,40 @@
 package ch.hszt.tierverwaltung.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.CardLayout;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import ch.hszt.tierverwaltung.gui.listings.KundenOverview;
+import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
+import ch.hszt.tierverwaltung.kunden.backend.Kunde;
+import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class MainGui {
 	private JFrame frame;
+	private OverviewUpdater overviewUpdater;
+	private JPanel cards;
 	
-	MainGui(){
+	private final String TIERPANEL = "tier";
+	private final String KUNDENPANEL = "kunde";
+	
+	public MainGui(){
+		overviewUpdater = new OverviewUpdater();
+		
 		createFrame();
+		
+		new Thread(overviewUpdater).run();
+	}
+	
+	public OverviewUpdater getOverviewUpdater(){
+		return overviewUpdater;
 	}
 	
 	private void createFrame(){
@@ -25,22 +43,34 @@ public class MainGui {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Fullscreen
 		
 		frame.getContentPane().add(new JScrollPane(new Navigation(this).getTree()), BorderLayout.WEST);
-		try {
-			setCenterPane(new TierOverview());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
+		try {
+
+
+			
+			KundenOverview ko = new KundenOverview(this);
+			TierOverview to = new TierOverview(this);
+			overviewUpdater.registerOverview(to);
+			overviewUpdater.registerOverview(ko);
+			
+			cards = new JPanel(new CardLayout());
+			cards.add(to, Tier.class.getSimpleName());
+			cards.add(ko, Kunde.class.getSimpleName());
+						
+			frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
 		createMenuBar();
 		
 		frame.setVisible(true);
 	}
 	
-	public void setCenterPane(Component comp){
-		frame.getContentPane().add(new JScrollPane(comp), BorderLayout.CENTER);
-		frame.validate();
-		frame.repaint();
+	public void selectOverview(String panelSelection){
+		CardLayout cl = (CardLayout)(cards.getLayout());
+		cl.show(cards, panelSelection);
 	}
 
 	
