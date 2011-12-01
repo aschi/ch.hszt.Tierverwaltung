@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.IDatabaseAccess;
+import ch.hszt.tierverwaltung.database.IDataMapper;
 
 public class KundeTest {
 
@@ -26,7 +26,7 @@ public class KundeTest {
     
 	@Test
 	public void saveKundeTest() throws SQLException {
-		final IDatabaseAccess<Kunde> dba = (IDatabaseAccess<Kunde>) context.mock(IDatabaseAccess.class);
+		final IDataMapper<Kunde> dba = (IDataMapper<Kunde>) context.mock(IDataMapper.class);
 		
         context.checking(new Expectations() {{
             // one and all the other invocation count methods
@@ -45,7 +45,7 @@ public class KundeTest {
 	
 	@Test
 	public void deleteKundeTest() throws SQLException {
-		final IDatabaseAccess<Kunde> dba = (IDatabaseAccess<Kunde>) context.mock(IDatabaseAccess.class);
+		final IDataMapper<Kunde> dba = (IDataMapper<Kunde>) context.mock(IDataMapper.class);
 		
         context.checking(new Expectations() {{
             // one and all the other invocation count methods

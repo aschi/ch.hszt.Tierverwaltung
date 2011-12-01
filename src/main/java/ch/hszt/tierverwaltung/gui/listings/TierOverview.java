@@ -3,14 +3,14 @@ package ch.hszt.tierverwaltung.gui.listings;
 import java.sql.SQLException;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
+import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class TierOverview extends Overview<Tier>{
 	public TierOverview(MainGui gui) throws SQLException{
 		super(gui);
-		List<Tier> al = TierDatabaseAccess.getInstance().getList();
+		List<Tier> al = new TierDataMapper().getList();
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
 		createTable(columnNames, al, new Tier());
 	}
@@ -18,7 +18,7 @@ public class TierOverview extends Overview<Tier>{
 	@Override
 	public void updateTableValues(List<Tier> input) {
 		try {
-			input = (input==null) ? TierDatabaseAccess.getInstance().getList() : input;
+			input = (input==null) ? new TierDataMapper().getList() : input;
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -1,11 +1,9 @@
 package ch.hszt.tierverwaltung.kunden.backend;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.kunde.KundeDatabaseAccess;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Kunde implements IDataRecord {
@@ -65,24 +63,6 @@ public class Kunde implements IDataRecord {
 	}
 
 	@Override
-	public void save() throws SQLException, ValidationException {
-		validate();
-		if (getKundeID() <= 0) {
-			setKundeID(KundeDatabaseAccess.getInstance().insert(this));
-		} else {
-			KundeDatabaseAccess.getInstance().update(this);
-		}
-	}
-
-	@Override
-	public void delete() throws SQLException {
-		if (this.getKundeID() > 0) {
-			KundeDatabaseAccess.getInstance().delete(this);
-			this.setKundeID(-1);
-		}
-	}
-
-	@Override
 	public void validate() throws ValidationException {
 		ValidationException ve = new ValidationException();
 
@@ -123,7 +103,7 @@ public class Kunde implements IDataRecord {
 		return kundeID;
 	}
 
-	private void setKundeID(int kundeID) {
+	public void setKundeID(int kundeID) {
 		this.kundeID = kundeID;
 	}
 
@@ -196,6 +176,11 @@ public class Kunde implements IDataRecord {
 		return new Kunde(kundeID, new String(name), new String(vorname),
 				new String(adresse), new String(plz), new String(ort), new String(telefon),
 				new String(eMail), (ArrayList<Tier>) tiere.clone());
+	}
+
+	@Override
+	public int getID() {
+		return kundeID;
 	}
 
 }

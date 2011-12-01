@@ -1,11 +1,7 @@
 package ch.hszt.tierverwaltung.tier.backend;
 
-import java.sql.SQLException;
-
 import ch.hszt.tierverwaltung.backend.IDataRecord;
-import ch.hszt.tierverwaltung.backend.IPublicCloneable;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
 
 /**
  * Klasse Tiereintrag, verwaltet einen einzelnen Eintrag aus der Datenbank Tier
@@ -130,24 +126,6 @@ public class Tier implements IDataRecord {
 				zusatzkosten);
 		this.tierID = tierID;
 		this.fkKunde = fkKunde;
-	}
-
-	@Override
-	public void save() throws SQLException, ValidationException {
-		validate();
-		if (getTierID() <= 0) {
-			setTierID(TierDatabaseAccess.getInstance().insert(this));
-		} else {
-			TierDatabaseAccess.getInstance().update(this);
-		}
-	}
-
-	@Override
-	public void delete() throws SQLException {
-		if (this.getTierID() > 0) {
-			TierDatabaseAccess.getInstance().delete(this);
-			this.setTierID(-1);
-		}
 	}
 
 	@Override
@@ -410,9 +388,9 @@ public class Tier implements IDataRecord {
 	public int getFkKunde() {
 		return fkKunde;
 	}
-
-	private void setTierID(Integer id) {
-		tierID = id;
+	
+	public void setTierID(int tierID) {
+		this.tierID = tierID;
 	}
 	
 	@Override
@@ -421,6 +399,11 @@ public class Tier implements IDataRecord {
 				this.getGroesseID(), new String(this.getKrankheitsbild()), new String(this.getEssgewohnheit()),
 				this.getAuslauf(), new String(this.getUmgangTier()), new String(this.getUmgangMensch()),
 				new String(this.getAnmerkungen()), this.getZusatzkosten());
+	}
+
+	@Override
+	public int getID() {
+		return tierID;
 	}
 
 }

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.database.kunde.KundeDatabaseAccess;
+import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.kunden.backend.Kunde;
 
 public class KundeDatabaseAccessTest {
@@ -18,7 +18,7 @@ public class KundeDatabaseAccessTest {
 		String fehlertext = "";
 		Kunde kunde =  null;
 
-		KundeDatabaseAccess tba = KundeDatabaseAccess.getInstance();
+		KundeDataMapper tba = new KundeDataMapper();
 
 
 		// INSERT Test

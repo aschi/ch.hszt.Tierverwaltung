@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
@@ -42,12 +43,15 @@ public class GuiTierEintrag {
       private JButton speichern;
       private JButton loeschen;
       
+      private TierDataMapper tdm;
+      
      
 
       public GuiTierEintrag(MainGui gui) {
 
           this.gui = gui;  
     	  fensterErzeugen();
+    	  tdm = new TierDataMapper();
             
       }
       
@@ -55,6 +59,7 @@ public class GuiTierEintrag {
     	  this(gui);
     	  this.tier = tier;
     	  loadTierValue();
+    	  tdm = new TierDataMapper();
     	  
       }
       
@@ -184,7 +189,7 @@ public class GuiTierEintrag {
 	              				tier = new Tier();
 	              			}
               				createTierValue();
-							tier.save();
+							tdm.save(tier);
 							
 							synchronized (gui.getOverviewUpdater()) {
         						gui.getOverviewUpdater().notify();
@@ -207,7 +212,7 @@ public class GuiTierEintrag {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
-        					tier.delete();
+              				tdm.delete(tier);
         					
         					synchronized (gui.getOverviewUpdater()) {
         						gui.getOverviewUpdater().notify();

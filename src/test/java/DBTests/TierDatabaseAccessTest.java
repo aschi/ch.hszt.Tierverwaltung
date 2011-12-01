@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.database.tier.TierDatabaseAccess;
+import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class TierDatabaseAccessTest {
@@ -18,7 +18,7 @@ public class TierDatabaseAccessTest {
 		String fehlertext = "";
 		Tier tier =  null;
 
-		TierDatabaseAccess tba = TierDatabaseAccess.getInstance();
+		TierDataMapper tba = new TierDataMapper();
 
 
 		// INSERT Test

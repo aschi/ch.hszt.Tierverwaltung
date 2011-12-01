@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.database.kunde.KundeDatabaseAccess;
+import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.kunden.backend.Kunde;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
@@ -21,7 +21,8 @@ public class KundenOverview extends Overview<Kunde>{
 	@Override
 	public void updateTableValues(List<Kunde> input) {
 		try {
-			input = (input==null) ? KundeDatabaseAccess.getInstance().getList() : input;
+			KundeDataMapper kdm = new KundeDataMapper();
+			input = (input==null) ? kdm.getList() : input;
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
