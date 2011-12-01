@@ -22,7 +22,7 @@ import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.forms.FormBuilder;
 
 public abstract class Overview <T extends IDataRecord> extends JPanel {
-	private MainGui gui;
+	private MainGui gui; //Verwendet zum aktualisieren der Listenansichten
 	private JTable overview;
 	private ReadOnlyTableModel model;
 	private List<T> input;
