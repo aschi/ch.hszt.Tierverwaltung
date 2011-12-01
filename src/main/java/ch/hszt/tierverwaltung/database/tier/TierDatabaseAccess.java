@@ -40,7 +40,7 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
  	 * und gibt diese zurück
  	 * @return TierDatabaseAccess die einzige vorhandene Instanz dieser Klasse
  	 * 
- 	 * /
+ 	 */
 	public static synchronized TierDatabaseAccess getInstance() {
 		if (instance != null) {
 			return instance;
