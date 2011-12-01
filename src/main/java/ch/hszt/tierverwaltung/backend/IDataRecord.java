@@ -13,7 +13,9 @@ import java.sql.SQLException;
 public interface IDataRecord extends IPublicCloneable{
 	
 	/**
-	 * Diese Methode speichert den DataRecord in die entsprechende Tabelle..
+	 * Diese Methode speichert den DataRecord in die entsprechende Tabelle.
+	 * Sie unterscheidet selbstständig, ob der DataRecord bereits in der Tabelle ist (UPDATE)
+	 * oder ob der DataRecord eingefügt werden muss (INSERT). 
 	 * @throws SQLException wenn der Datenbankzugriff fehlerhaft war
 	 * @throws ValidationException wenn die Validierung, welche vor dem Speichern gemacht
 	 * wird fehl schlug
