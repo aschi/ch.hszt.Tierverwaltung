@@ -7,6 +7,7 @@ Installation
     git clone git://github.com/aschi/ch.hszt.Tierverwaltung.git
     cd ch.hszt.Tierverwaltung
     mvn install eclipse:eclipse
+    mvn test
     
 Inhalt
 ------
