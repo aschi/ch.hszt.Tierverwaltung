@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class GuiTierEintrag {
@@ -25,6 +26,7 @@ public class GuiTierEintrag {
       private JFrame fenster;
       private JPanel panel;
       private Tier tier;
+      private MainGui gui;
       private JTextField nameText;
       private JTextField rasseText;
       private JTextField alterText;
@@ -40,21 +42,17 @@ public class GuiTierEintrag {
       private JButton speichern;
       private JButton loeschen;
       
-      
-      
-      public static void main(String[] args) {
+     
 
-            new GuiTierEintrag();
-      }
+      public GuiTierEintrag(MainGui gui) {
 
-      public GuiTierEintrag() {
-
-            fensterErzeugen();
+          this.gui = gui;  
+    	  fensterErzeugen();
             
       }
       
-      public GuiTierEintrag (Tier tier) {
-    	  this();
+      public GuiTierEintrag(Tier tier, MainGui gui) {
+    	  this(gui);
     	  this.tier = tier;
     	  loadTierValue();
     	  
