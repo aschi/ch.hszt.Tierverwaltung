@@ -1,7 +1,5 @@
 package ch.hszt.tierverwaltung.database.tier;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,31 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 
 public final class TierDataMapper implements IDataMapper<Tier> {
 
-	private Connection conn;
-	private static TierDataMapper instance;
+	DBConnection dbConnection = DBConnection.getInstance();
 
 	public TierDataMapper() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fehler db");
-		}
-		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:tierverwaltung.db");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fehler jdbc");
-		}
 
 	}
 
@@ -57,10 +40,10 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 				+ entry.getUmgangMensch() + "\', \'" + entry.getAnmerkungen()
 				+ "\', " + entry.getZusatzkosten() + ");";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 
-		PreparedStatement pstmt = conn
+		PreparedStatement pstmt = dbConnection.getConn()
 				.prepareStatement("select max(tierID) max from 'tier';");
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
@@ -89,7 +72,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 				+ " WHERE tierID = " + entry.getTierID() + ";";
 
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 
 	}
@@ -106,7 +89,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		String sql;
 		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 	}
 
@@ -123,7 +106,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		sql = "SELECT * FROM 'tier';";
 		System.out.println(sql);
 
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		ArrayList<Tier> tierarray = new ArrayList<Tier>();
 
@@ -149,7 +132,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE tierID = " + id + ";";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		;
 
@@ -174,7 +157,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE fkKunde = " + kundeID + ";";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		ArrayList<Tier> tierArray = new ArrayList<Tier>();
 

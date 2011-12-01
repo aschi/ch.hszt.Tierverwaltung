@@ -1,7 +1,5 @@
 package ch.hszt.tierverwaltung.database.kunde;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,28 +9,15 @@ import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 
 public final class KundeDataMapper implements IDataMapper<Kunde> {
-
-	private Connection conn;
+	
+	DBConnection dbConnection = DBConnection.getInstance();
 
 	public KundeDataMapper() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fehler db");
-		}
-		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:tierverwaltung.db");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fehler jdbc");
-		}
 
 	}
 
@@ -45,6 +30,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	 */
 	@Override
 	public int insert(Kunde entry) throws SQLException {
+		
 		String sql;
 		ResultSet rs = null;
 		sql = "INSERT INTO 'kunde' VALUES (null, '" + entry.getName() + "', "
@@ -53,18 +39,17 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 				+ "\', \'" + entry.getTelefon() + "\', \'" + entry.getEMail()
 				+ "\');";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 
-		PreparedStatement pstmt = conn
+		PreparedStatement pstmt = dbConnection.getConn()
 				.prepareStatement("select max(tierID) max from 'tier';");
 		rs = pstmt.executeQuery();
-		if (rs.next()) {
+		if (rs.next()) {;
 			return rs.getInt("max");
 		} else {
 			return 0;
 		}
-
 	}
 
 	@Override
@@ -78,7 +63,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 				+ entry.getEMail() + "\'" + ";";
 
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 
 	}
@@ -95,7 +80,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 		String sql;
 		sql = "DELETE FROM 'kunde' WHERE kundeID = " + entry.getKundeID() + ";";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 	}
 
@@ -112,7 +97,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 		sql = "SELECT * FROM 'kunde';";
 		System.out.println(sql);
 
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		ArrayList<Kunde> kundenarray = new ArrayList<Kunde>();
 
@@ -128,7 +113,6 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 
 			kundenarray.add(kunde);
 		}
-
 		return kundenarray;
 	}
 
@@ -137,7 +121,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 		String sql;
 		sql = "SELECT * FROM 'kunde' WHERE kundeID = " + id + ";";
 		System.out.println(sql);
-		Statement stmt = conn.createStatement();
+		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		;
 
