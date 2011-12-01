@@ -2,54 +2,125 @@ package ch.hszt.tierverwaltung.kunden.backend;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
 import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.kunde.KundeDatabaseAccess;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Kunde implements IDataRecord {
 	
-	private int id;
+	private int kundeID;
 	private String name;
 	private String vorname;
-	private String addresse;
-	private int plz;
+	private String adresse;
+	private String plz;
 	private String ort;
-	private String telNo;
-	private String email;
+	private String telefon;
+	private String eMail;
 	private ArrayList<Tier> tiere;
 	
 	public Kunde() {
 		name = "";
 		vorname = "";
-		addresse = "";
+		adresse = "";
 		ort = "";
-		telNo = "";
-		email = "";
+		plz = "";
+		telefon = "";
+		eMail = "";
 		tiere = new ArrayList<Tier>();
 	}
 	
-	public Kunde(int id, String name, String vorname, String addresse, int plz,
-			String ort, String telNo, String email, ArrayList<Tier> tiere) {
+	public Kunde(String name, String vorname, String adresse, String plz,
+			String ort, String telefon, String eMail) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.vorname = vorname;
-		this.addresse = addresse;
+		this.adresse = adresse;
 		this.plz = plz;
 		this.ort = ort;
-		this.telNo = telNo;
-		this.email = email;
+		this.telefon = telefon;
+		this.eMail = eMail;
+		tiere = new ArrayList<Tier>();
+	}
+	
+	public Kunde(int id, String name, String vorname, String adresse, String plz,
+			String ort, String telefon, String eMail) {
+		this(name, vorname, adresse, plz, ort, telefon, eMail);
+		this.kundeID = id;
+		tiere = new ArrayList<Tier>();
+	}
+	
+	public Kunde(String name, String vorname, String adresse, String plz,
+			String ort, String telefon, String eMail, ArrayList<Tier> tiere) {
+		this(name, vorname, adresse, plz, ort, telefon, eMail);
 		this.tiere = tiere;
 	}
+	
+	public Kunde(int id, String name, String vorname, String adresse, String plz,
+			String ort, String telefon, String eMail, ArrayList<Tier> tiere) {
+		this(id, name, vorname, adresse, plz, ort, telefon, eMail);
+		this.tiere = tiere;
+	}
+	
 
-	public int getId() {
-		return id;
+	@Override
+	public void save() throws SQLException {
+		validate();
+		if (getKundeID() <= 0) {
+			setKundeID(KundeDatabaseAccess.getInstance().insert(this));
+		} else {
+			KundeDatabaseAccess.getInstance().update(this);
+		}
+	}
+	
+	@Override
+	public void delete() throws SQLException {
+		if (this.getKundeID() > 0) {
+			KundeDatabaseAccess.getInstance().delete(this);
+			this.setKundeID(-1);
+		}		
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	@Override
+	public void validate() throws ValidationException {
+	ValidationException ve = new ValidationException();
+
+	if (getName() == null || getName().equals("")) {
+		ve.addErrorMessage("Name nicht abgefüllt");
+	}
+
+	if (getVorname() == null || getVorname().equals("")) {
+		ve.addErrorMessage("Vorname nicht abgefüllt");
+	}
+
+	if (getAdresse() == null || getAdresse().equals("")) {
+		ve.addErrorMessage("Adresse nicht abgefüllt");
+	}
+
+	if (getPlz() == null || getPlz().equals("")) {
+		ve.addErrorMessage("PLZ nicht abgefüllt");
+	}
+
+	if (getOrt() == null || getOrt().equals("")) {
+		ve.addErrorMessage("Ort nicht abgefüllt");
+	}
+
+	if (getTelefon() == null || getTelefon().equals("")) {
+		ve.addErrorMessage("Telefonnummer nicht abgefüllt");
+	}
+
+	if (getEMail() == null) {
+		ve.addErrorMessage("E-Mail-Adresse ist NULL");
+	}
+	}
+
+	public int getKundeID() {
+		return kundeID;
+	}
+
+	private void setKundeID(int kundeID) {
+		this.kundeID = kundeID;
 	}
 
 	public String getName() {
@@ -68,19 +139,19 @@ public class Kunde implements IDataRecord {
 		this.vorname = vorname;
 	}
 
-	public String getAddresse() {
-		return addresse;
+	public String getAdresse() {
+		return adresse;
 	}
 
-	public void setAddresse(String addresse) {
-		this.addresse = addresse;
+	public void setAdresse(String addresse) {
+		this.adresse = addresse;
 	}
 
-	public int getPlz() {
+	public String getPlz() {
 		return plz;
 	}
 
-	public void setPlz(int plz) {
+	public void setPlz(String plz) {
 		this.plz = plz;
 	}
 
@@ -92,20 +163,20 @@ public class Kunde implements IDataRecord {
 		this.ort = ort;
 	}
 
-	public String getTelNo() {
-		return telNo;
+	public String getTelefon() {
+		return telefon;
 	}
 
-	public void setTelNo(String telNo) {
-		this.telNo = telNo;
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEMail() {
+		return eMail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEMail(String eMail) {
+		this.eMail = eMail;
 	}
 
 	public ArrayList<Tier> getTiere() {
@@ -116,26 +187,10 @@ public class Kunde implements IDataRecord {
 		this.tiere = tiere;
 	}
 
-	@Override
-	public void save() throws SQLException {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void delete() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void validate() throws ValidationException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public Object clone(){
-		return new Kunde(id, new String(name), new String(vorname), new String(addresse), plz,
+		return new Kunde(kundeID, new String(name), new String(vorname), new String(addresse), plz,
 				new String(ort), new String(telNo), new String(email), (ArrayList<Tier>)tiere.clone());
 	}
 	
