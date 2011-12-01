@@ -105,7 +105,7 @@ public class GuiTierEintrag {
     	  else if (zusatzText.getText().equals("")) {
     		  tier.setZusatzkosten(0);
     	  } else {
-    		  tier.setZusatzkosten(Integer.parseInt(zusatzText.getText()));
+    		  tier.setZusatzkosten(Double.parseDouble(zusatzText.getText()));
     	  }
     	  
       }
@@ -186,7 +186,9 @@ public class GuiTierEintrag {
               				createTierValue();
 							tier.save();
 							
-							gui.getOverviewUpdater().notify();
+							synchronized (gui.getOverviewUpdater()) {
+        						gui.getOverviewUpdater().notify();
+							}
 							
 							String meldung = "Erfolgreich gespeichert";
 							JOptionPane.showMessageDialog(null, meldung, "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -207,7 +209,9 @@ public class GuiTierEintrag {
               		try {
         					tier.delete();
         					
-        					gui.getOverviewUpdater().notify();
+        					synchronized (gui.getOverviewUpdater()) {
+        						gui.getOverviewUpdater().notify();
+							}
         					
         					closeFenster();
         				} catch (SQLException e1) {
