@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
@@ -29,6 +32,8 @@ public class MainGui {
 			e.printStackTrace();
 		}
 		
+		createMenuBar();
+		
 		frame.setVisible(true);
 	}
 	
@@ -38,6 +43,27 @@ public class MainGui {
 		frame.repaint();
 	}
 
+	
+	private void createMenuBar(){
+		JMenuBar menuBar = new JMenuBar();
+		
+		frame.setJMenuBar(menuBar);
+		
+		JMenu create = new JMenu("Erstellen");
+		JMenu edit = new JMenu("Bearbeiten");
+		
+		JMenuItem createTier = new JMenuItem("Tier");
+		JMenuItem createKunde = new JMenuItem("Kunde");
+		
+		JMenuItem delete = new JMenuItem("Eintrag löschen");
+		JMenuItem editEntry = new JMenuItem("Eintrag bearbeiten");
+		
+		menuBar.add(create);
+		menuBar.add(edit);
+		
+		create.add(createTier);
+		create.add(createKunde);
+	}
 	
 	
 	

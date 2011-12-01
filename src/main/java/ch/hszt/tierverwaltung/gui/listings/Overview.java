@@ -46,12 +46,11 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		// Buttons
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-		buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		JButton newButton = new JButton("Neu...");
 		JButton deleteButton = new JButton("Löschen");
 		
-		buttonPane.add(Box.createHorizontalGlue());
 		buttonPane.add(newButton);
 		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonPane.add(deleteButton);
@@ -82,8 +81,11 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	}
 	
 	private void initTable(String[] columnNames){
-		model = new ReadOnlyTableModel(columnNames, 0);
+		model = new ReadOnlyTableModel();
+		model.setColumnIdentifiers(columnNames);
+		
 		overview = new JTable(model);
+		
 		
 		//MouseListener to open an entry
 		overview.addMouseListener(new MouseAdapter(){
@@ -98,12 +100,11 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	}
 	
 	/**
-	 * Aktualisiere die Listenansicht aufgrund der gegebenen List
+	 * Aktualisiere die Listenansicht
 	 * @param input List welche die Daten enthält
 	 */
 	public void updateTableValues(List<T> input){
 		this.input = input;
-		
 		//Remove existing entries before refilling
 		while(model.getRowCount() > 0){
 			model.removeRow(0);
