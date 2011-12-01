@@ -32,7 +32,8 @@ public interface IDataRecord extends IPublicCloneable{
 	
 	/**
 	 * Die Methode validate validiert die Eingaben welche von der Benutzerschnittstelle gesetzt wurden.
-	 * Bei Fehlerhaften Eingaben wird eine Nachricht für den Benutzer lesbar aufbereitet und zurückgegeben.
+	 * Bei Fehlerhaften Eingaben wird eine Nachricht für den Benutzer lesbar aufbereitet und kann auf 
+	 * der Exception selber aufgerufen werden.
 	 * @throws ValidationException Wenn die validierung fehl schlug
 	 */
 	public void validate() throws ValidationException;
