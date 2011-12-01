@@ -3,6 +3,8 @@ package ch.hszt.tierverwaltung.database;
 import java.sql.SQLException;
 import java.util.List;
 
+import ch.hszt.tierverwaltung.kunden.backend.Kunde;
+
 public interface IDatabaseAccess <T> {
 	
 	/**

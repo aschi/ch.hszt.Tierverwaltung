@@ -9,7 +9,7 @@ import ch.hszt.tierverwaltung.database.kunde.KundeDatabaseAccess;
 import ch.hszt.tierverwaltung.tier.backend.Tier;
 
 public class Kunde implements IDataRecord {
-	
+
 	private int kundeID;
 	private String name;
 	private String vorname;
@@ -19,7 +19,7 @@ public class Kunde implements IDataRecord {
 	private String telefon;
 	private String eMail;
 	private ArrayList<Tier> tiere;
-	
+
 	public Kunde() {
 		name = "";
 		vorname = "";
@@ -30,7 +30,7 @@ public class Kunde implements IDataRecord {
 		eMail = "";
 		tiere = new ArrayList<Tier>();
 	}
-	
+
 	public Kunde(String name, String vorname, String adresse, String plz,
 			String ort, String telefon, String eMail) {
 		super();
@@ -43,29 +43,29 @@ public class Kunde implements IDataRecord {
 		this.eMail = eMail;
 		tiere = new ArrayList<Tier>();
 	}
-	
-	public Kunde(int id, String name, String vorname, String adresse, String plz,
-			String ort, String telefon, String eMail) {
+
+	public Kunde(int id, String name, String vorname, String adresse,
+			String plz, String ort, String telefon, String eMail) {
 		this(name, vorname, adresse, plz, ort, telefon, eMail);
 		this.kundeID = id;
 		tiere = new ArrayList<Tier>();
 	}
-	
+
 	public Kunde(String name, String vorname, String adresse, String plz,
 			String ort, String telefon, String eMail, ArrayList<Tier> tiere) {
 		this(name, vorname, adresse, plz, ort, telefon, eMail);
 		this.tiere = tiere;
 	}
-	
-	public Kunde(int id, String name, String vorname, String adresse, String plz,
-			String ort, String telefon, String eMail, ArrayList<Tier> tiere) {
+
+	public Kunde(int id, String name, String vorname, String adresse,
+			String plz, String ort, String telefon, String eMail,
+			ArrayList<Tier> tiere) {
 		this(id, name, vorname, adresse, plz, ort, telefon, eMail);
 		this.tiere = tiere;
 	}
-	
 
 	@Override
-	public void save() throws SQLException {
+	public void save() throws SQLException, ValidationException {
 		validate();
 		if (getKundeID() <= 0) {
 			setKundeID(KundeDatabaseAccess.getInstance().insert(this));
@@ -73,46 +73,46 @@ public class Kunde implements IDataRecord {
 			KundeDatabaseAccess.getInstance().update(this);
 		}
 	}
-	
+
 	@Override
 	public void delete() throws SQLException {
 		if (this.getKundeID() > 0) {
 			KundeDatabaseAccess.getInstance().delete(this);
 			this.setKundeID(-1);
-		}		
+		}
 	}
 
 	@Override
 	public void validate() throws ValidationException {
-	ValidationException ve = new ValidationException();
+		ValidationException ve = new ValidationException();
 
-	if (getName() == null || getName().equals("")) {
-		ve.addErrorMessage("Name nicht abgefüllt");
-	}
+		if (getName() == null || getName().equals("")) {
+			ve.addErrorMessage("Name nicht abgefüllt");
+		}
 
-	if (getVorname() == null || getVorname().equals("")) {
-		ve.addErrorMessage("Vorname nicht abgefüllt");
-	}
+		if (getVorname() == null || getVorname().equals("")) {
+			ve.addErrorMessage("Vorname nicht abgefüllt");
+		}
 
-	if (getAdresse() == null || getAdresse().equals("")) {
-		ve.addErrorMessage("Adresse nicht abgefüllt");
-	}
+		if (getAdresse() == null || getAdresse().equals("")) {
+			ve.addErrorMessage("Adresse nicht abgefüllt");
+		}
 
-	if (getPlz() == null || getPlz().equals("")) {
-		ve.addErrorMessage("PLZ nicht abgefüllt");
-	}
+		if (getPlz() == null || getPlz().equals("")) {
+			ve.addErrorMessage("PLZ nicht abgefüllt");
+		}
 
-	if (getOrt() == null || getOrt().equals("")) {
-		ve.addErrorMessage("Ort nicht abgefüllt");
-	}
+		if (getOrt() == null || getOrt().equals("")) {
+			ve.addErrorMessage("Ort nicht abgefüllt");
+		}
 
-	if (getTelefon() == null || getTelefon().equals("")) {
-		ve.addErrorMessage("Telefonnummer nicht abgefüllt");
-	}
+		if (getTelefon() == null || getTelefon().equals("")) {
+			ve.addErrorMessage("Telefonnummer nicht abgefüllt");
+		}
 
-	if (getEMail() == null) {
-		ve.addErrorMessage("E-Mail-Adresse ist NULL");
-	}
+		if (getEMail() == null) {
+			ve.addErrorMessage("E-Mail-Adresse ist NULL");
+		}
 	}
 
 	public int getKundeID() {
@@ -187,13 +187,11 @@ public class Kunde implements IDataRecord {
 		this.tiere = tiere;
 	}
 
-	
 	@Override
-	public Object clone(){
-		return new Kunde(kundeID, new String(name), new String(vorname), new String(addresse), plz,
-				new String(ort), new String(telNo), new String(email), (ArrayList<Tier>)tiere.clone());
+	public Object clone() {
+		return new Kunde(kundeID, new String(name), new String(vorname),
+				new String(adresse), new String(plz), new String(ort), new String(telefon),
+				new String(eMail), (ArrayList<Tier>) tiere.clone());
 	}
-	
-	
 
 }

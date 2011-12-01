@@ -178,5 +178,30 @@ public final class TierDatabaseAccess implements IDatabaseAccess<Tier> {
 		
 		return null;
 	}
+	
+	public ArrayList<Tier> getTiereZuKunde(int kundeID) throws SQLException {
+		String sql;
+		sql = "SELECT * FROM 'tier' WHERE fkKundeID = " + kundeID + ";";
+		System.out.println(sql);
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+		ArrayList<Tier> tierArray = new ArrayList<Tier>();
+		
+		while (rs.next()) {
+			char[] auslauf = rs.getString("auslauf").toCharArray();
+
+			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"), rs.getString("art"), rs.getString("rasse"),
+					rs.getString("name"), rs.getInt("tieralter"),
+					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
+					rs.getString("essgewohnheit"), auslauf[0],
+					rs.getString("umgangTier"), rs.getString("umgangMensch"),
+					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
+
+			tierArray.add(tier);
+		}
+		
+		return tierArray;
+		
+	}
 
 }
