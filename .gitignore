@@ -3,8 +3,10 @@ target/
 \#*\#
 *.class
 *.swp
+*.db
 nbproject
 .DS_Store
 .classpath
 .project
 .settings/
+
