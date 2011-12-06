@@ -30,12 +30,25 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	private JPanel buttonPane;
 	private IDataMapper<T> mapper;
 	
+	public Overview(MainGui gui, List<T> input){
+		this(gui);
+		this.input = input;
+	}
+	
 	public Overview(MainGui gui){
 		this.gui = gui;
 	}
 	
 	public ReadOnlyTableModel getModel(){
 		return model;
+	}
+	
+	public List<T> getInput(){
+		return input;
+	}
+	
+	public void setInput(List<T> input){
+		this.input = input;
 	}
 	
 	public IDataMapper<T> getMapper(){
@@ -136,5 +149,13 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		while(model.getRowCount() > 0){
 			model.removeRow(0);
 		}
+
+		
 	}
+	
+	/**
+	 * Aktualisiere die Listenansicht. Verwende Daten aus der Datenbank
+	 * 
+	 */
+	public abstract void updateTableValues();
 }

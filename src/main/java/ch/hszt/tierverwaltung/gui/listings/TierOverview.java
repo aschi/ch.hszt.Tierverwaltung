@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
@@ -11,19 +12,25 @@ public class TierOverview extends Overview<Tier>{
 	public TierOverview(MainGui gui) throws SQLException{
 		super(gui);
 		setMapper(new TierDataMapper());
-		List<Tier> al = new TierDataMapper().getList();
-		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
-		createTable(columnNames, al, new Tier());
+		setInput(getMapper().getList());
+		setUpTable();
 	}
 	
+	public TierOverview(MainGui gui, List<Tier> input){
+		super(gui, input);
+		setUpTable();
+	}
+	
+	private void setUpTable(){
+		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
+		createTable(columnNames, getInput(), new Tier());
+	}
+	
+	/**
+	 * Aktualisiere die Tabelle mit den Werten aus der gegebenen ArrayList
+	 */
 	@Override
 	public void updateTableValues(List<Tier> input) {
-		try {
-			input = (input==null) ? new TierDataMapper().getList() : input;
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		super.updateTableValues(input);
 		
 		String[] row = new String[5];
@@ -48,6 +55,19 @@ public class TierOverview extends Overview<Tier>{
 		}
 	}
 	
-	
-	
+	/**
+	 * Aktualisiere Tabelle mit Werten aus der Datenbank
+	 */
+	@Override
+	public void updateTableValues(){
+		try {
+			if(getMapper() == null){
+				setMapper(new TierDataMapper());
+			}
+			updateTableValues(getMapper().getList());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }

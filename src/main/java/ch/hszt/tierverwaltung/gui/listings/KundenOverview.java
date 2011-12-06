@@ -1,7 +1,6 @@
 package ch.hszt.tierverwaltung.gui.listings;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Kunde;
@@ -11,24 +10,29 @@ import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class KundenOverview extends Overview<Kunde>{
 
-	public KundenOverview(MainGui gui){
+	public KundenOverview(MainGui gui) throws SQLException{
 		super(gui);
 		setMapper(new KundeDataMapper());
-		ArrayList<Kunde> al = new ArrayList<Kunde>();
-		String[] columnNames = {"Name", "Vorname", "Ort", "Telefon Nr", "Tiere"};
-		createTable(columnNames, al, new Kunde());
+		setInput(getMapper().getList());
+		setUpTable();
 	}
 	
+	public KundenOverview(MainGui gui, List<Kunde> input){
+		super(gui, input);
+		setUpTable();
+	}
+	
+	private void setUpTable(){
+		String[] columnNames = {"Name", "Vorname", "Ort", "Telefon Nr", "Tiere"};
+		createTable(columnNames, getInput(), new Kunde());
+	}
+	
+	
+	/**
+	 * Tabelle aktualisieren mit der
+	 */
 	@Override
 	public void updateTableValues(List<Kunde> input) {
-		try {
-			KundeDataMapper kdm = new KundeDataMapper();
-			input = (input==null) ? kdm.getList() : input;
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		String[] row = new String[5];
 		String tNames;
 		
@@ -46,6 +50,21 @@ public class KundenOverview extends Overview<Kunde>{
 			
 			getModel().addRow(row);
 		}
+		
+	}
+	
+	@Override
+	public void updateTableValues(){
+		try {
+			if(getMapper() == null){
+				setMapper(new KundeDataMapper());
+			}
+			updateTableValues(getMapper().getList());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 	}
 	
