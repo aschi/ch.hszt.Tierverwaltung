@@ -26,6 +26,7 @@ public class GuiTierEintrag {
 
       private JFrame fenster;
       private JPanel panel;
+      private JPanel areaPanel;
       private Tier tier;
       private MainGui gui;
       private JTextField nameText;
@@ -125,10 +126,12 @@ public class GuiTierEintrag {
             fenster.setLocation(400, 300);
             fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             fenster.setLayout(new BorderLayout());
+            
+            JPanel contentPane = new JPanel(new BorderLayout());
            
             panel = new JPanel(new SpringLayout());
-            
-            
+            areaPanel = new JPanel(new SpringLayout());
+
             String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
             String[] petHeights = {"", "< 30cm", "< 60cm", "> 100cm"};
            
@@ -150,7 +153,6 @@ public class GuiTierEintrag {
             loeschen = new JButton("Loeschen");
             
             rasseText = new JTextField();
-            //rasseText.setSize(new Dimension(250,20));
             rasse.setLabelFor(rasseText);
             nameText = new JTextField();
             name.setLabelFor(nameText);
@@ -244,19 +246,22 @@ public class GuiTierEintrag {
             panel.add(essText);
             panel.add(auslauf);
             panel.add(auslaufText);
-            panel.add(umgangTier);
-            panel.add(scrollTier);
-            panel.add(umgangMensch);
-            panel.add(scrollMensch);
-            panel.add(sonstiges);
-            panel.add(scrollSonst);
             panel.add(zusatz);
             panel.add(zusatzText);
-            panel.add(speichern, 26);
-            panel.add(loeschen, 27);
+            areaPanel.add(umgangTier);
+            areaPanel.add(scrollTier);
+            areaPanel.add(umgangMensch);
+            areaPanel.add(scrollMensch);
+            areaPanel.add(sonstiges);
+            areaPanel.add(scrollSonst);
+            areaPanel.add(speichern, 6);
+            areaPanel.add(loeschen, 7);
             
-            fenster.getContentPane().add(panel);
-            SpringUtilities.makeCompactGrid(panel, 14, 2, 5, 5, 5, 5);
+            fenster.getContentPane().add(contentPane);
+            SpringUtilities.makeCompactGrid(panel, 10, 2, 5, 5, 5, 5);
+            SpringUtilities.makeCompactGrid(areaPanel, 4, 2, 5, 5, 5, 5);
+            contentPane.add(panel, BorderLayout.NORTH);
+            contentPane.add(areaPanel, BorderLayout.CENTER);
             
             fenster.setVisible(true);
             fenster.pack();

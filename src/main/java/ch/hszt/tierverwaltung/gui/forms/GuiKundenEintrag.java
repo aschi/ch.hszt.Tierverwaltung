@@ -88,8 +88,10 @@ public class GuiKundenEintrag {
           fenster.setLocation(400, 300);
           fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
           fenster.setLayout(new BorderLayout());
+          
+          JPanel contentPane = new JPanel(new BorderLayout());
          
-          panel = new JPanel(new SpringLayout());         
+          panel = new JPanel(new SpringLayout()); 
          
           JLabel name = new JLabel("Name");  
           JLabel vorname = new JLabel("Vorname");
@@ -194,8 +196,9 @@ public class GuiKundenEintrag {
           panel.add(speichern, 16);
           panel.add(loeschen, 17);
           
-          fenster.getContentPane().add(panel);
+          fenster.getContentPane().add(contentPane);
           SpringUtilities.makeCompactGrid(panel, 9, 2, 5, 5, 5, 5);
+          contentPane.add(panel, BorderLayout.CENTER);
           
           fenster.setVisible(true);
           fenster.pack();
