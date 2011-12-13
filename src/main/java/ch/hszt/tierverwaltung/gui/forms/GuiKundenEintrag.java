@@ -66,12 +66,15 @@ public class GuiKundenEintrag {
   	  
     }
     
-    private void createTierValue() {
+    private void createKundeValue() {
     	
     	kunde.setName(nameText.getText());
     	kunde.setVorname(vornameText.getText());
-    	
-
+    	kunde.setAdresse(adresseText.getText());
+    	kunde.setPlz(plzText.getText());
+    	kunde.setOrt(ortText.getText());
+    	kunde.setTelefon(telnoText.getText());
+    	kunde.setEMail(emailText.getText());
   	  
     }
     
@@ -124,8 +127,6 @@ public class GuiKundenEintrag {
 			e2.printStackTrace();
 		}
           tiereTable.updateTableValues(new ArrayList<Tier>());
-          ReadOnlyTableModel model;
-          
 
           tiere.setLabelFor(tiereTable);
           
@@ -136,7 +137,7 @@ public class GuiKundenEintrag {
 	              			if(kunde == null){
 	              				kunde = new Kunde();
 	              			}
-            				createTierValue();
+            				createKundeValue();
             				new KundeDataMapper().save(kunde);
             				
          					synchronized (gui.getOverviewUpdater()) {
