@@ -1,0 +1,108 @@
+package ch.hszt.tierverwaltung.gui.forms;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.gui.MainGui;
+import ch.hszt.tierverwaltung.gui.listings.AssignedTierOverview;
+import ch.hszt.tierverwaltung.gui.listings.Overview;
+import ch.hszt.tierverwaltung.gui.listings.UnassignedPetsOverview;
+
+public class AddPetToCustomerDialog {
+	private MainGui gui;
+	private JFrame frame;
+	private Overview<Tier> o;
+	private Kunde customer;
+	private AssignedTierOverview apo;
+	
+	public AddPetToCustomerDialog(MainGui gui, Kunde customer, AssignedTierOverview apo) {
+		this.gui = gui;
+		this.customer = customer;
+		this.apo = apo;
+		createFrame();
+		
+		// TODO Auto-generated constructor stub
+	}
+	
+	private void createFrame(){
+		frame = new JFrame("Tier auswählen...");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		try {
+			o = new UnassignedPetsOverview(gui, createPetDialogButtonPane());			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		frame.getContentPane().add(o, BorderLayout.CENTER);
+		frame.setSize(300, 400);
+		frame.setVisible(true);
+	}
+	
+	private JPanel createPetDialogButtonPane() {
+		// Buttons
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+		JButton addButton = new JButton("Dem Kunden hinzufügen");
+		JButton cancelButton = new JButton("Abbrechen");
+
+		buttonPane.add(addButton);
+		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonPane.add(cancelButton);
+
+		// Add
+		addButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Tier t = o.getInput().get(o.getSelectedRow());
+				t.setFkKunde(customer.getID());
+				
+				try {
+					new TierDataMapper().save(t);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(frame, "SQL Exception. Stirb");
+				} catch (ValidationException e) {
+					JOptionPane.showMessageDialog(frame, "Validation Exception. Stirb");
+				}
+				
+				customer.getTiere().add(t);
+				
+				frame.dispose();
+				apo.updateTableValues(customer.getTiere());
+			}
+
+		});
+
+		// Remove
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+
+		return buttonPane;
+	}
+
+}

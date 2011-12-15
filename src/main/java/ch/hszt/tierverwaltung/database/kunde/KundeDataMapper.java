@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
@@ -78,6 +79,17 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	 */
 	@Override
 	public void delete(Kunde entry) throws SQLException {
+		//Beziehungen zum Tier entfernen
+		for(Tier t : entry.getTiere()){
+			t.setFkKunde(-1);
+			try {
+				new TierDataMapper().save(t);
+			} catch (ValidationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 		String sql;
 		sql = "DELETE FROM 'kunde' WHERE kundeID = " + entry.getKundeID() + ";";
 		System.out.println(sql);
