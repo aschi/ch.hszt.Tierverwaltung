@@ -7,9 +7,10 @@ import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class FormBuilder<T extends IPublicCloneable> {
 	/**
-	 * buildForm
-	 * 
-	 * @param object
+	 * Öffnet das gegebene Objekt im dazugehörigen Formular.
+	 * Falls für das entsprechende Objekt kein Formular konfiguriert ist, gibt die Funktion "NYI" (not yet implemented) auf der Konsole aus
+	 * @param object Das zu öffnende Objekt
+	 * @param gui Referenz zum Hauptfenster
 	 */
 	public void buildForm(T object, MainGui gui){
 		
