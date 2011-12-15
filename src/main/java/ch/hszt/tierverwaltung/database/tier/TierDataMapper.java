@@ -76,6 +76,43 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		stmt.executeUpdate(sql);
 
 	}
+	
+	/**
+	 * This method returns an ArrayList with all Pets which aren't assigned yet to 
+	 * a customer
+	 * @return ArrayList with all pets which aren't asigned yet
+	 */
+	public ArrayList<Tier> getUnasignedPets(Tier entry) throws SQLException {
+		String sql;
+		sql = "SELECT * FROM 'tier' WHERE fkKundeID < 1;";
+		System.out.println(sql);
+
+		Statement stmt = dbConnection.getConn().createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+
+		return fillPets(rs);
+
+	}
+	
+	private ArrayList<Tier> fillPets(ResultSet rs) throws SQLException {
+		ArrayList<Tier> tierarray = new ArrayList<Tier>();
+		
+		while (rs.next()) {
+			char[] auslauf = rs.getString("auslauf").toCharArray();
+
+			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"),
+					rs.getString("art"), rs.getString("rasse"),
+					rs.getString("name"), rs.getInt("tieralter"),
+					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
+					rs.getString("essgewohnheit"), auslauf[0],
+					rs.getString("umgangTier"), rs.getString("umgangMensch"),
+					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
+
+			tierarray.add(tier);
+		}
+		
+		return tierarray;
+	}
 
 	/**
 	 * Diese Methode löscht einen Tiereintrag aus der Tabelle tier
@@ -108,23 +145,8 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
-		ArrayList<Tier> tierarray = new ArrayList<Tier>();
 
-		while (rs.next()) {
-			char[] auslauf = rs.getString("auslauf").toCharArray();
-
-			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"),
-					rs.getString("art"), rs.getString("rasse"),
-					rs.getString("name"), rs.getInt("tieralter"),
-					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
-					rs.getString("essgewohnheit"), auslauf[0],
-					rs.getString("umgangTier"), rs.getString("umgangMensch"),
-					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
-
-			tierarray.add(tier);
-		}
-
-		return tierarray;
+		return fillPets(rs);
 	}
 
 	@Override
@@ -159,23 +181,8 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
-		ArrayList<Tier> tierArray = new ArrayList<Tier>();
-
-		while (rs.next()) {
-			char[] auslauf = rs.getString("auslauf").toCharArray();
-
-			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"),
-					rs.getString("art"), rs.getString("rasse"),
-					rs.getString("name"), rs.getInt("tieralter"),
-					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
-					rs.getString("essgewohnheit"), auslauf[0],
-					rs.getString("umgangTier"), rs.getString("umgangMensch"),
-					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
-
-			tierArray.add(tier);
-		}
-
-		return tierArray;
+		
+		return fillPets(rs);
 
 	}
 
