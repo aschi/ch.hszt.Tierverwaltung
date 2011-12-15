@@ -15,7 +15,6 @@ public class Tierplatz implements IDataRecord {
 		ausstattung = "";
 	}
 	
-	
 
 	public Tierplatz(int geeignetFuerTierID, int groesse, String ausstattung,
 			int anzahlTiere, char auslauf, int auslaufGroesse) {
@@ -27,13 +26,11 @@ public class Tierplatz implements IDataRecord {
 		this.auslaufGroesse = auslaufGroesse;
 	}
 
-
 	public Tierplatz(int geeignetFuerTierID, int groesse, String ausstattung,
 			int anzahlTiere, char auslauf, int auslaufGroesse, int id) {
 		this(geeignetFuerTierID, groesse, ausstattung, anzahlTiere, auslauf, auslaufGroesse);
 		this.id = id;
 	}
-
 
 	public int getGeeignetFuerTierID() {
 		return geeignetFuerTierID;
@@ -87,15 +84,26 @@ public class Tierplatz implements IDataRecord {
 	public int getID() {
 		return id;
 	}
+	
+	public void setID(int id) {
+		this.id = id;
+	}
 
 	@Override
 	public void validate() throws ValidationException {
-		// TODO Auto-generated method stub
+		ValidationException ve = new ValidationException();
 		
+//		if (getGeeignetFuerTierID() != 1 && getGeeignetFuerTierID() != 2 && getGeeignetFuerTierID() != 3 && getGeeignetFuerTierID() && != 4 getGeeignetFuerTierID() != 5) {
+			
+//		}
+		
+//	}
+	
+	@Override
+	public Object clone(){
+		return new Tierplatz(this.getGeeignetFuerTierID(), this.getGroesse(), new String(this.getAusstattung()), 
+				this.getAnzahlTiere(), this.getAuslauf(), this.getAuslaufGroesse());
 	}
-	
-	
-	
 	
 
 }
