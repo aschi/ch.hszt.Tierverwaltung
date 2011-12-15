@@ -45,9 +45,6 @@ public class MainGui {
 		frame.getContentPane().add(new JScrollPane(new Navigation(this).getTree()), BorderLayout.WEST);
 		
 		try {
-
-
-			
 			KundenOverview ko = new KundenOverview(this);
 			TierOverview to = new TierOverview(this);
 			overviewUpdater.registerOverview(to);

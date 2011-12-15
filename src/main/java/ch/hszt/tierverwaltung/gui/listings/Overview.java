@@ -59,17 +59,39 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		this.mapper = mapper;
 	}
 	
+	/**
+	 * Standartbuttons verwenden
+	 * @param columnNames
+	 * @param input
+	 * @param emptyObject
+	 */
 	public void createTable(String[] columnNames, final List<T> input, final T emptyObject){
+		createTable(columnNames, input, emptyObject, null);
+	}
+	
+	/**
+	 * Eigene Buttons mitgeben
+	 * @param columnNames
+	 * @param input
+	 * @param emptyObject
+	 * @param buttonPane
+	 */
+	public void createTable(String[] columnNames, final List<T> input, final T emptyObject, JPanel buttonPane){
 		this.input = input;
 		this.emptyObject = emptyObject;
 		
 		//Create components
 		initTable(columnNames);
-		createButtonPane();
+		//Button Pane
+		if(buttonPane == null){
+			createButtonPane();
+		}else{
+			this.buttonPane = buttonPane;
+		}
 		
 		//build layout
 		this.setLayout(new BorderLayout());
-		this.add(buttonPane, BorderLayout.NORTH);
+		this.add(this.buttonPane, BorderLayout.NORTH);
 		this.add(overview, BorderLayout.CENTER);
 		
 		updateTableValues(input);
@@ -158,4 +180,13 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	 * 
 	 */
 	public abstract void updateTableValues();
+	
+	/**
+	 * Gibt den Index der ausgewählten Zeile der Tabelle zurück
+	 * @return Index der ausgewählten Zeile
+	 */
+	public int getSelectedRow(){
+		return overview.getSelectedRow();
+	}
+	
 }

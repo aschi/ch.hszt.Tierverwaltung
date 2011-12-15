@@ -1,11 +1,15 @@
 package ch.hszt.tierverwaltung.gui.forms;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,7 +23,6 @@ import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.gui.listings.ReadOnlyTableModel;
 import ch.hszt.tierverwaltung.gui.listings.TierOverview;
 
 public class GuiKundenEintrag {
@@ -38,18 +41,15 @@ public class GuiKundenEintrag {
     private TierOverview tiereTable;
     private JButton speichern;
     private JButton loeschen;
-
+    
     public GuiKundenEintrag(MainGui gui) {
-
-          fensterErzeugen();
-          
+    	createFrame();
     }
     
     public GuiKundenEintrag (Kunde kunde, MainGui gui) {
-  	  this(gui);
-  	  this.kunde = kunde;
-  	  loadKundeValue();
-  	  
+    	this.kunde = kunde;
+    	createFrame();
+  	   	loadKundeValue();
     }
     
     private void loadKundeValue() {
@@ -82,7 +82,7 @@ public class GuiKundenEintrag {
   	  	fenster.dispose();
     }
     
-    private void fensterErzeugen() {
+    private void createFrame() {
 
           fenster = new JFrame("Kundeneintrag");
           fenster.setLocation(400, 300);
@@ -90,7 +90,10 @@ public class GuiKundenEintrag {
           fenster.setLayout(new BorderLayout());
           
           JPanel contentPane = new JPanel(new BorderLayout());
-         
+          
+          JPanel tblPane = new JPanel();
+          JPanel buttonPane = new JPanel();
+                   
           panel = new JPanel(new SpringLayout()); 
          
           JLabel name = new JLabel("Name");  
@@ -106,6 +109,7 @@ public class GuiKundenEintrag {
           loeschen = new JButton("Loeschen");
           
           nameText = new JTextField();
+          nameText.setPreferredSize(new Dimension(200, 20));
           name.setLabelFor(nameText);
           vornameText = new JTextField();
           vorname.setLabelFor(vornameText);
@@ -121,16 +125,11 @@ public class GuiKundenEintrag {
           email.setLabelFor(emailText);
           
           String[] columnNames = {"Name", "Rasse"};
+       
+          tiereTable = new TierOverview(gui, kunde.getTiere(), createButtonPane());
+          //tiereTable.updateTableValues(new ArrayList<Tier>());
+          //tiereTable.setButtonPane(createButtonPane());
           
-          try {
-			tiereTable = new TierOverview(gui);
-		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-          tiereTable.updateTableValues(new ArrayList<Tier>());
-
-          tiere.setLabelFor(tiereTable);
           
           speichern.addActionListener(new ActionListener() {
             	@Override
@@ -191,17 +190,60 @@ public class GuiKundenEintrag {
           panel.add(telnoText);
           panel.add(email);
           panel.add(emailText);
-          panel.add(tiere);
-          panel.add(tiereTable);
-          panel.add(speichern, 16);
-          panel.add(loeschen, 17);
+          
+          
+          buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+          buttonPane.add(Box.createHorizontalGlue());
+          buttonPane.add(speichern);
+          buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+          buttonPane.add(loeschen);
+          
+          tblPane.add(tiereTable);
           
           fenster.getContentPane().add(contentPane);
-          SpringUtilities.makeCompactGrid(panel, 9, 2, 5, 5, 5, 5);
+          SpringUtilities.makeCompactGrid(panel, 7, 2, 5, 5, 5, 5);
           contentPane.add(panel, BorderLayout.CENTER);
-          
+          contentPane.add(tblPane, BorderLayout.EAST);
+          contentPane.add(buttonPane, BorderLayout.SOUTH);
           fenster.setVisible(true);
           fenster.pack();
     }    
+    
+    
+    private JPanel createButtonPane(){
+    	// Buttons
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+		JButton addButton = new JButton("Hinzufügen");
+		JButton removeButton = new JButton("Entfernen");
+		
+		buttonPane.add(addButton);
+		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonPane.add(removeButton);
+		
+		//Add
+		addButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		//Remove
+		removeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				kunde.getTiere().remove(tiereTable.getSelectedRow());
+				tiereTable.updateTableValues(kunde.getTiere());
+			}
+		});
+		
+		return buttonPane;
+	}
 
 }

@@ -3,8 +3,9 @@ package ch.hszt.tierverwaltung.gui.listings;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import ch.hszt.tierverwaltung.backend.Tier;
-import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
@@ -13,17 +14,22 @@ public class TierOverview extends Overview<Tier>{
 		super(gui);
 		setMapper(new TierDataMapper());
 		setInput(getMapper().getList());
-		setUpTable();
+		setUpTable(null);
+	}
+	
+	public TierOverview(MainGui gui, List<Tier> input, JPanel buttonPane){
+		super(gui, input);
+		setUpTable(buttonPane);
 	}
 	
 	public TierOverview(MainGui gui, List<Tier> input){
 		super(gui, input);
-		setUpTable();
+		setUpTable(null);
 	}
 	
-	private void setUpTable(){
+	private void setUpTable(JPanel buttonPane){
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
-		createTable(columnNames, getInput(), new Tier());
+		createTable(columnNames, getInput(), new Tier(), buttonPane);
 	}
 	
 	/**
