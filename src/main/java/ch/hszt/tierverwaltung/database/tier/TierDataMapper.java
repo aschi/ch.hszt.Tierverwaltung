@@ -84,7 +84,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	 */
 	public ArrayList<Tier> getUnassignedPets() throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier' WHERE fkKundeID < 1;";
+		sql = "SELECT * FROM 'tier' WHERE fkKunde < 1;";
 		System.out.println(sql);
 
 		Statement stmt = dbConnection.getConn().createStatement();
