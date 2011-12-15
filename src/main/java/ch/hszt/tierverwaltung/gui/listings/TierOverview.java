@@ -38,7 +38,7 @@ public class TierOverview extends Overview<Tier>{
 		String[] row = new String[5];
 		for(Tier e : input){
 			row[0] = e.getName();
-			row[1] = e.getAnmerkungen();
+			row[1] = e.getArt();
 			row[2] = e.getRasse();
 			row[3] = String.valueOf(e.getTieralter());
 			
