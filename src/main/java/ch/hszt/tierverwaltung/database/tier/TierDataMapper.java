@@ -80,9 +80,9 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	/**
 	 * This method returns an ArrayList with all Pets which aren't assigned yet to 
 	 * a customer
-	 * @return ArrayList with all pets which aren't asigned yet
+	 * @return ArrayList with all pets which aren't assigned yet
 	 */
-	public ArrayList<Tier> getUnasignedPets(Tier entry) throws SQLException {
+	public ArrayList<Tier> getUnassignedPets() throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE fkKundeID < 1;";
 		System.out.println(sql);
@@ -94,6 +94,8 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 
 	}
 	
+
+	//Returns an ArrayList with all Pets from the Resultset
 	private ArrayList<Tier> fillPets(ResultSet rs) throws SQLException {
 		ArrayList<Tier> tierarray = new ArrayList<Tier>();
 		
