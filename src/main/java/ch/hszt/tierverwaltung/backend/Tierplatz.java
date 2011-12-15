@@ -1,5 +1,12 @@
 package ch.hszt.tierverwaltung.backend;
 
+/**
+ * Klasse Tierplatz, verwaltet einen einzelnen Eintrag aus der Datenbank Tierplatz
+ * 
+ * @author corinne
+ * 
+ */
+
 public class Tierplatz implements IDataRecord {
 	
 	private int geeignetFuerTierID;
@@ -10,11 +17,30 @@ public class Tierplatz implements IDataRecord {
 	private int auslaufGroesse;
 	private int id;
 	
-
+	/**
+	 * Konstruktor der Klasse Tierplatz
+	 */
 	public Tierplatz() {
+		//Initialise String
 		ausstattung = "";
 	}
 	
+	/** 
+	 * Konstruktur der Klasse Tierplatz
+	 * 
+	 * @param geeignetFuerTierID
+	 * 			Tabellenfeld geeignetFuerTierID
+	 * @param groesse
+	 * 			Tabellenfeld groesse
+	 * @param ausstattung
+	 * 			Tabellenfeld ausstattung
+	 * @param anzahlTiere
+	 * 			Tabellenfeld anzahlTiere
+	 * @param auslauf
+	 * 			Tabellenfeld auslauf
+	 * @param auslaufGroesse
+	 * 			Tabellenfeld auslaufGroesse
+	 */
 
 	public Tierplatz(int geeignetFuerTierID, int groesse, String ausstattung,
 			int anzahlTiere, char auslauf, int auslaufGroesse) {
@@ -25,6 +51,23 @@ public class Tierplatz implements IDataRecord {
 		this.auslauf = auslauf;
 		this.auslaufGroesse = auslaufGroesse;
 	}
+	
+	/** 
+	 * Konstruktur der Klasse Tierplatz
+	 * 
+	 * @param geeignetFuerTierID
+	 * 			Tabellenfeld geeignetFuerTierID
+	 * @param groesse
+	 * 			Tabellenfeld groesse
+	 * @param ausstattung
+	 * 			Tabellenfeld ausstattung
+	 * @param anzahlTiere
+	 * 			Tabellenfeld anzahlTiere
+	 * @param auslauf
+	 * 			Tabellenfeld auslauf
+	 * @param auslaufGroesse
+	 * 			Tabellenfeld auslaufGroesse
+	 */
 
 	public Tierplatz(int geeignetFuerTierID, int groesse, String ausstattung,
 			int anzahlTiere, char auslauf, int auslaufGroesse, int id) {
@@ -32,59 +75,113 @@ public class Tierplatz implements IDataRecord {
 		this.id = id;
 	}
 
+	/** 
+	 * Returns geeignetFuerTierID
+	 * @return geeignetFuerTierID
+	 */
 	public int getGeeignetFuerTierID() {
 		return geeignetFuerTierID;
 	}
-
+	
+	/** 
+	 * Sets geeignetFuerTierID
+	 * @param geeignetFuerTierID
+	 */
 	public void setGeeignetFuerTierID(int geeignetFuerTierID) {
 		this.geeignetFuerTierID = geeignetFuerTierID;
 	}
-
+	/** Returns groesse
+	 * 
+	 * @return groesse
+	 */
 	public int getGroesse() {
 		return groesse;
 	}
-
+	
+	/** Sets groesse
+	 * 
+	 * @param groesse
+	 */
 	public void setGroesse(int groesse) {
 		this.groesse = groesse;
 	}
 
+	/** Returns ausstattung
+	 * 
+	 * @return ausstattung
+	 */
 	public String getAusstattung() {
 		return ausstattung;
 	}
 
+	/** Sets ausstattung
+	 * 
+	 * @param ausstattung
+	 */
 	public void setAusstattung(String ausstattung) {
 		this.ausstattung = ausstattung;
 	}
 
+	/** Returns anzahlTiere
+	 * 
+	 * @return anzahlTiere
+	 */
 	public int getAnzahlTiere() {
 		return anzahlTiere;
 	}
 
+	/** Sets anzahlTiere
+	 * 
+	 * @param anzahlTiere
+	 */
 	public void setAnzahlTiere(int anzahlTiere) {
 		this.anzahlTiere = anzahlTiere;
 	}
 
+	/** Returns auslauf
+	 * 
+	 * @return auslauf
+	 */
 	public char getAuslauf() {
 		return auslauf;
 	}
 
+	/** Sets auslauf
+	 * 
+	 * @param auslauf
+	 */
 	public void setAuslauf(char auslauf) {
 		this.auslauf = auslauf;
 	}
 
+	/** Returns auslaufGroesse
+	 * 
+	 * @return auslaufGroesse
+	 */
 	public int getAuslaufGroesse() {
 		return auslaufGroesse;
 	}
 
+	/** Sets auslaufGroesse
+	 * 
+	 * @param auslaufGroesse
+	 */
 	public void setAuslaufGroesse(int auslaufGroesse) {
 		this.auslaufGroesse = auslaufGroesse;
 	}
 
-	@Override
+	/** Returns id
+	 * 
+	 * @return id
+	 */
 	public int getID() {
 		return id;
 	}
 	
+	/** Sets id
+	 * 
+	 * @param id
+	 */
 	public void setID(int id) {
 		this.id = id;
 	}
@@ -93,11 +190,29 @@ public class Tierplatz implements IDataRecord {
 	public void validate() throws ValidationException {
 		ValidationException ve = new ValidationException();
 		
-//		if (getGeeignetFuerTierID() != 1 && getGeeignetFuerTierID() != 2 && getGeeignetFuerTierID() != 3 && getGeeignetFuerTierID() && != 4 getGeeignetFuerTierID() != 5) {
-			
-//		}
+		if (getGeeignetFuerTierID() > 1 && getGeeignetFuerTierID() < 4) {
+			ve.addErrorMessage("GeeignetFuerTierID muss Wert 1 (Hamster, Hase), 2 (Katze), 3 (kleine Hunde), 4 (grosse Hunde) enthalten");
+		}
+		if (getGroesse() < 0) {
+			ve.addErrorMessage("Groesse muss > 0 sein");
+		}
+		if (getAusstattung() == null || getAusstattung().equals("")) {
+			ve.addErrorMessage("Ausstattung ist NULL");
+		}
+		if (getAnzahlTiere() < 0) {
+			ve.addErrorMessage("Anzahl Tiere nicht abgefüllt");
+		}
+		if (getAuslauf() != '1' && getAuslauf() != '0') {
+			ve.addErrorMessage("Auslauf muss 0 (Nein) oder 1 (Ja) sein");
+		}
+		if (getAuslauf() == '1' && getAuslaufGroesse() <= 0) {
+			ve.addErrorMessage("Wenn Auslauf auf 1 (Ja) ist, dann muss die Auslaufgroesse abgefüllt werden");
+		}
+		if (getAuslauf() == '0' && getAuslaufGroesse() >=0) {
+			ve.addErrorMessage("Wenn Auslauf auf 0 (Nein) ist, dann muss die Auslaufgroesse leer sein");
+		}
 		
-//	}
+	}
 	
 	@Override
 	public Object clone(){
