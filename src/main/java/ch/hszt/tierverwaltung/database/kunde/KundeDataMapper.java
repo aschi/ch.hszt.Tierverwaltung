@@ -61,7 +61,8 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 				+ entry.getAdresse() + "\', " + "plz = \'" + entry.getPlz()
 				+ "\', " + "ort = \'" + entry.getOrt() + "\', "
 				+ "telefon = \'" + entry.getTelefon() + "\', " + "eMail = \'"
-				+ entry.getEMail() + "\'" + ";";
+				+ entry.getEMail() + "\'" + 
+				"WHERE kundeID = " + entry.getID() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
