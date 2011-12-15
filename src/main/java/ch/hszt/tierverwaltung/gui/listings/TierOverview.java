@@ -14,22 +14,18 @@ public class TierOverview extends Overview<Tier>{
 		super(gui);
 		setMapper(new TierDataMapper());
 		setInput(getMapper().getList());
-		setUpTable(null);
+		setUpTable();
 	}
 	
-	public TierOverview(MainGui gui, List<Tier> input, JPanel buttonPane){
-		super(gui, input);
-		setUpTable(buttonPane);
-	}
 	
 	public TierOverview(MainGui gui, List<Tier> input){
 		super(gui, input);
-		setUpTable(null);
+		setUpTable();
 	}
 	
-	private void setUpTable(JPanel buttonPane){
+	private void setUpTable(){
 		String[] columnNames = {"Name", "Art", "Rasse", "Alter", "Grösse"};
-		createTable(columnNames, getInput(), new Tier(), buttonPane);
+		createTable(columnNames, getInput(), new Tier(), null);
 	}
 	
 	/**
@@ -64,7 +60,6 @@ public class TierOverview extends Overview<Tier>{
 	/**
 	 * Aktualisiere Tabelle mit Werten aus der Datenbank
 	 */
-	@Override
 	public void updateTableValues(){
 		try {
 			if(getMapper() == null){

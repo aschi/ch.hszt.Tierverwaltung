@@ -53,7 +53,7 @@ public class KundenOverview extends Overview<Kunde>{
 		
 	}
 	
-	@Override
+	
 	public void updateTableValues(){
 		try {
 			if(getMapper() == null){

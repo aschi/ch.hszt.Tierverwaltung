@@ -171,15 +171,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		while(model.getRowCount() > 0){
 			model.removeRow(0);
 		}
-
-		
 	}
-	
-	/**
-	 * Aktualisiere die Listenansicht. Verwende Daten aus der Datenbank
-	 * 
-	 */
-	public abstract void updateTableValues();
 	
 	/**
 	 * Gibt den Index der ausgewählten Zeile der Tabelle zurück

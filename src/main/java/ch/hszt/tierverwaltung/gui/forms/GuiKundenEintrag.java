@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,13 +22,14 @@ import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.gui.listings.TierOverview;
+import ch.hszt.tierverwaltung.gui.listings.AssignedTierOverview;
+import ch.hszt.tierverwaltung.gui.listings.UnassignedPetsOverview;
 
 public class GuiKundenEintrag {
 	
-    private JFrame fenster;
+    private JFrame frame;
     private JPanel panel;
-    private Kunde kunde;
+    private Kunde customer;
     private MainGui gui;
     private JTextField nameText;
     private JTextField vornameText;
@@ -38,16 +38,16 @@ public class GuiKundenEintrag {
     private JTextField ortText;
     private JTextField telnoText;
     private JTextField emailText;
-    private TierOverview tiereTable;
-    private JButton speichern;
-    private JButton loeschen;
+    private AssignedTierOverview petTable;
+    private JButton save;
+    private JButton delete;
     
     public GuiKundenEintrag(MainGui gui) {
     	createFrame();
     }
     
     public GuiKundenEintrag (Kunde kunde, MainGui gui) {
-    	this.kunde = kunde;
+    	this.customer = kunde;
     	createFrame();
   	   	loadKundeValue();
     }
@@ -55,39 +55,39 @@ public class GuiKundenEintrag {
     private void loadKundeValue() {
     	
     	
-  	  nameText.setText(kunde.getName());
-  	  vornameText.setText(kunde.getVorname());
-  	  adresseText.setText(kunde.getAdresse());
-  	  plzText.setText(kunde.getPlz());
-  	  ortText.setText(kunde.getOrt());
-  	  telnoText.setText(kunde.getTelefon());
-  	  emailText.setText(kunde.getEMail());
-  	  tiereTable.updateTableValues(kunde.getTiere());
+  	  nameText.setText(customer.getName());
+  	  vornameText.setText(customer.getVorname());
+  	  adresseText.setText(customer.getAdresse());
+  	  plzText.setText(customer.getPlz());
+  	  ortText.setText(customer.getOrt());
+  	  telnoText.setText(customer.getTelefon());
+  	  emailText.setText(customer.getEMail());
+  	  petTable.updateTableValues(customer.getTiere());
   	  
     }
     
     private void createKundeValue() {
     	
-    	kunde.setName(nameText.getText());
-    	kunde.setVorname(vornameText.getText());
-    	kunde.setAdresse(adresseText.getText());
-    	kunde.setPlz(plzText.getText());
-    	kunde.setOrt(ortText.getText());
-    	kunde.setTelefon(telnoText.getText());
-    	kunde.setEMail(emailText.getText());
+    	customer.setName(nameText.getText());
+    	customer.setVorname(vornameText.getText());
+    	customer.setAdresse(adresseText.getText());
+    	customer.setPlz(plzText.getText());
+    	customer.setOrt(ortText.getText());
+    	customer.setTelefon(telnoText.getText());
+    	customer.setEMail(emailText.getText());
   	  
     }
     
     private void closeFenster() {
-  	  	fenster.dispose();
+  	  	frame.dispose();
     }
     
     private void createFrame() {
 
-          fenster = new JFrame("Kundeneintrag");
-          fenster.setLocation(400, 300);
-          fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-          fenster.setLayout(new BorderLayout());
+          frame = new JFrame("Kundeneintrag");
+          frame.setLocation(400, 300);
+          frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          frame.setLayout(new BorderLayout());
           
           JPanel contentPane = new JPanel(new BorderLayout());
           
@@ -103,10 +103,9 @@ public class GuiKundenEintrag {
           JLabel ort = new JLabel("Ort");
           JLabel telno = new JLabel("Telefonnummer");
           JLabel email = new JLabel("E-Mail Adresse");
-          JLabel tiere = new JLabel("Tiere");
           
-          speichern = new JButton("Speichern");
-          loeschen = new JButton("Loeschen");
+          save = new JButton("Speichern");
+          delete = new JButton("Loeschen");
           
           nameText = new JTextField();
           nameText.setPreferredSize(new Dimension(200, 20));
@@ -123,23 +122,21 @@ public class GuiKundenEintrag {
           telno.setLabelFor(telnoText);
           emailText = new JTextField();
           email.setLabelFor(emailText);
-          
-          String[] columnNames = {"Name", "Rasse"};
-       
-          tiereTable = new TierOverview(gui, kunde.getTiere(), createButtonPane());
+                 
+          petTable = new AssignedTierOverview(gui, customer.getTiere(), createPetTableButtonPane());
           //tiereTable.updateTableValues(new ArrayList<Tier>());
           //tiereTable.setButtonPane(createButtonPane());
           
           
-          speichern.addActionListener(new ActionListener() {
+          save.addActionListener(new ActionListener() {
             	@Override
             	public void actionPerformed(ActionEvent e) {
             		try {
-	              			if(kunde == null){
-	              				kunde = new Kunde();
+	              			if(customer == null){
+	              				customer = new Kunde();
 	              			}
             				createKundeValue();
-            				new KundeDataMapper().save(kunde);
+            				new KundeDataMapper().save(customer);
             				
          					synchronized (gui.getOverviewUpdater()) {
         						gui.getOverviewUpdater().notify();
@@ -158,11 +155,11 @@ public class GuiKundenEintrag {
             	}
             });
             
-            loeschen.addActionListener(new ActionListener() {
+            delete.addActionListener(new ActionListener() {
             	@Override
             	public void actionPerformed(ActionEvent e) {
             		try {
-      					new KundeDataMapper().delete(kunde);
+      					new KundeDataMapper().delete(customer);
       					
      					synchronized (gui.getOverviewUpdater()) {
     						gui.getOverviewUpdater().notify();
@@ -194,23 +191,24 @@ public class GuiKundenEintrag {
           
           buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
           buttonPane.add(Box.createHorizontalGlue());
-          buttonPane.add(speichern);
+          buttonPane.add(save);
           buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-          buttonPane.add(loeschen);
+          buttonPane.add(delete);
           
-          tblPane.add(tiereTable);
+          tblPane.add(petTable);
           
-          fenster.getContentPane().add(contentPane);
+          
+          frame.getContentPane().add(contentPane);
           SpringUtilities.makeCompactGrid(panel, 7, 2, 5, 5, 5, 5);
           contentPane.add(panel, BorderLayout.CENTER);
           contentPane.add(tblPane, BorderLayout.EAST);
           contentPane.add(buttonPane, BorderLayout.SOUTH);
-          fenster.setVisible(true);
-          fenster.pack();
+          frame.setVisible(true);
+          frame.pack();
     }    
     
     
-    private JPanel createButtonPane(){
+    private JPanel createPetTableButtonPane(){
     	// Buttons
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
@@ -238,12 +236,33 @@ public class GuiKundenEintrag {
 		removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				kunde.getTiere().remove(tiereTable.getSelectedRow());
-				tiereTable.updateTableValues(kunde.getTiere());
+				customer.getTiere().remove(petTable.getSelectedRow());
+				petTable.updateTableValues(customer.getTiere());
 			}
 		});
 		
 		return buttonPane;
 	}
+    
+    private JPanel createPetDialogButtonPane(){
+    	return null;
+    }
+    
+    private Tier getPetFromDialog(){
+    	JFrame popup = new JFrame("Tier auswählen...");
+    	UnassignedPetsOverview po = null;
+		try {
+			po = new UnassignedPetsOverview(gui, createPetDialogButtonPane());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	popup.getContentPane().add(po, BorderLayout.CENTER);
+    	
+    	
+    	return null;
+    	
+    }
 
 }
