@@ -16,6 +16,7 @@ public class UnassignedPetsOverview extends Overview<Tier> {
 		super(gui);
 		setMapper(new TierDataMapper());
 		setInput(((TierDataMapper)getMapper()).getUnassignedPets());
+		System.out.println("Unassigned pets: " + ((TierDataMapper)getMapper()).getUnassignedPets().size());
 		setUpTable(buttonPane);		
 	}
 
@@ -43,6 +44,7 @@ public class UnassignedPetsOverview extends Overview<Tier> {
 				setMapper(new TierDataMapper());
 			}
 			updateTableValues(((TierDataMapper)getMapper()).getUnassignedPets());
+			System.out.println("Unassigned pets: " + ((TierDataMapper)getMapper()).getUnassignedPets().size());
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

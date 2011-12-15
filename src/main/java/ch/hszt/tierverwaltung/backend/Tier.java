@@ -387,10 +387,14 @@ public class Tier implements IDataRecord {
 		return fkKunde;
 	}
 	
+	public void setFkKunde(int fkKunde) {
+		this.fkKunde = fkKunde;
+	}
+	
 	public void setTierID(int tierID) {
 		this.tierID = tierID;
 	}
-	
+
 	@Override
 	public Object clone(){
 		return new Tier(new String(this.getArt()), new String(this.getRasse()), new String(this.getName()), this.getTieralter(),
