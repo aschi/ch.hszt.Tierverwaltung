@@ -58,7 +58,7 @@ public class CreateTierplatzDB implements ICreateDB {
     				+ " (tierplatzID integer PRIMARY KEY autoincrement, "
     								 +" geeignetFuerTierID integer,"
                                      +" groesse integer, "
-                                     +" austattung varchar(150), " 
+                                     +" ausstattung varchar(150), " 
                                      +" anzahlTiere integer, " 
                                      +" auslauf char(1), " 
                                      +" auslaufGroesse integer)"
