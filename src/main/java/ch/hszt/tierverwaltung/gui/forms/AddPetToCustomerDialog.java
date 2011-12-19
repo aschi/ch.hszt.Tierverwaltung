@@ -19,7 +19,7 @@ import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.gui.listings.AssignedTierOverview;
+import ch.hszt.tierverwaltung.gui.listings.AssignedPetsOverview;
 import ch.hszt.tierverwaltung.gui.listings.Overview;
 import ch.hszt.tierverwaltung.gui.listings.UnassignedPetsOverview;
 
@@ -28,9 +28,9 @@ public class AddPetToCustomerDialog {
 	private JFrame frame;
 	private Overview<Tier> o;
 	private Kunde customer;
-	private AssignedTierOverview apo;
+	private AssignedPetsOverview apo;
 	
-	public AddPetToCustomerDialog(MainGui gui, Kunde customer, AssignedTierOverview apo) {
+	public AddPetToCustomerDialog(MainGui gui, Kunde customer, AssignedPetsOverview apo) {
 		this.gui = gui;
 		this.customer = customer;
 		this.apo = apo;
@@ -53,7 +53,7 @@ public class AddPetToCustomerDialog {
 		
 		
 		frame.getContentPane().add(o, BorderLayout.CENTER);
-		frame.setSize(300, 400);
+		frame.setSize(230, 300);
 		frame.setVisible(true);
 	}
 	
@@ -64,11 +64,7 @@ public class AddPetToCustomerDialog {
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		JButton addButton = new JButton("Dem Kunden hinzufügen");
-		JButton cancelButton = new JButton("Abbrechen");
-
 		buttonPane.add(addButton);
-		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-		buttonPane.add(cancelButton);
 
 		// Add
 		addButton.addActionListener(new ActionListener() {
@@ -94,13 +90,6 @@ public class AddPetToCustomerDialog {
 
 		});
 
-		// Remove
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-			}
-		});
 
 		return buttonPane;
 	}

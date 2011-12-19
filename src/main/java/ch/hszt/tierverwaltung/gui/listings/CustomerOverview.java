@@ -8,16 +8,16 @@ import ch.hszt.tierverwaltung.backend.Tier;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
-public class KundenOverview extends Overview<Kunde>{
+public class CustomerOverview extends Overview<Kunde>{
 
-	public KundenOverview(MainGui gui) throws SQLException{
+	public CustomerOverview(MainGui gui) throws SQLException{
 		super(gui);
 		setMapper(new KundeDataMapper());
 		setInput(getMapper().getList());
 		setUpTable();
 	}
 	
-	public KundenOverview(MainGui gui, List<Kunde> input){
+	public CustomerOverview(MainGui gui, List<Kunde> input){
 		super(gui, input);
 		setUpTable();
 	}
@@ -53,7 +53,7 @@ public class KundenOverview extends Overview<Kunde>{
 		
 	}
 	
-	
+	@Override
 	public void updateTableValues(){
 		try {
 			if(getMapper() == null){

@@ -38,7 +38,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 				+ entry.getEssgewohnheit() + "\', \'" + entry.getAuslauf()
 				+ "\', \'" + entry.getUmgangTier() + "\', \'"
 				+ entry.getUmgangMensch() + "\', \'" + entry.getAnmerkungen()
-				+ "\', " + entry.getZusatzkosten() + ");";
+				+ "\', " + entry.getAdditionalCosts() + ");";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
@@ -68,7 +68,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 				+ "umgangTier = \'" + entry.getUmgangTier() + "\', "
 				+ "umgangMensch = \'" + entry.getUmgangMensch() + "\', "
 				+ "anmerkungen = \'" + entry.getAnmerkungen() + "\', "
-				+ "zusatzkosten = " + entry.getZusatzkosten()
+				+ "zusatzkosten = " + entry.getAdditionalCosts()
 				+ " WHERE tierID = " + entry.getTierID() + ";";
 
 		System.out.println(sql);

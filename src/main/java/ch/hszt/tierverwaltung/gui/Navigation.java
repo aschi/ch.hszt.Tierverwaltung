@@ -10,6 +10,7 @@ import javax.swing.tree.TreePath;
 
 import ch.hszt.tierverwaltung.backend.Kunde;
 import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Tierplatz;
 
 public class Navigation {
 	private JTree tree;
@@ -30,9 +31,11 @@ public class Navigation {
 		// Nodes for listings
 		DefaultMutableTreeNode tierList = new DefaultMutableTreeNode("Tiere");
 		DefaultMutableTreeNode kundeList = new DefaultMutableTreeNode("Kunden");
-
+		DefaultMutableTreeNode tierPlatz = new DefaultMutableTreeNode("Tierplatz");
+		
 		top.add(tierList);
 		top.add(kundeList);
+		top.add(tierPlatz);
 
 		tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
 		addListener();
@@ -55,6 +58,9 @@ public class Navigation {
 					} else if (node.toString().equals("Kunden")) {
 						System.out.println("load kunden overview...");
 						gui.selectOverview(Kunde.class.getSimpleName());
+					} else if (node.toString().equals("Tierplatz")) {
+						System.out.println("load tierplatz overview...");
+						gui.selectOverview(Tierplatz.class.getSimpleName());
 					}
 				}
 			}

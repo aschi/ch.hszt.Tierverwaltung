@@ -22,7 +22,7 @@ public class Tier implements IDataRecord {
 	private String umgangTier;
 	private String umgangMensch;
 	private String anmerkungen;
-	private double zusatzkosten;
+	private double additionalCosts;
 
 	/**
 	 * Konstruktor der Klasse Tiereintrag
@@ -82,7 +82,7 @@ public class Tier implements IDataRecord {
 		this.umgangTier = umgangTier;
 		this.umgangMensch = umgangMensch;
 		this.anmerkungen = anmerkungen;
-		this.zusatzkosten = zusatzkosten;
+		this.additionalCosts = zusatzkosten;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class Tier implements IDataRecord {
 			ve.addErrorMessage("Umgang mit Tier ist NULL");
 		}
 		
-		if (getZusatzkosten() < 0) {
+		if (getAdditionalCosts() < 0) {
 			ve.addErrorMessage("Zusatzkosten müssen > 0 sein");
 		}
 		
@@ -356,19 +356,19 @@ public class Tier implements IDataRecord {
 	}
 
 	/**
-	 * returns zusatzkosten
-	 * @return zusatzkosten
+	 * returns additionalCosts
+	 * @return additionalCosts
 	 */
-	public double getZusatzkosten() {
-		return zusatzkosten;
+	public double getAdditionalCosts() {
+		return additionalCosts;
 	}
 
 	/**
-	 * Sets zusatzkosten
-	 * @param zusatzkosten to be set
+	 * Sets additionalCosts
+	 * @param Additional Costs to be set
 	 */
-	public void setZusatzkosten(double zusatzkosten) {
-		this.zusatzkosten = zusatzkosten;
+	public void setAdditionalCosts(double additionalCosts) {
+		this.additionalCosts = additionalCosts;
 	}
 
 	/**
@@ -400,7 +400,7 @@ public class Tier implements IDataRecord {
 		return new Tier(new String(this.getArt()), new String(this.getRasse()), new String(this.getName()), this.getTieralter(),
 				this.getGroesseID(), new String(this.getKrankheitsbild()), new String(this.getEssgewohnheit()),
 				this.getAuslauf(), new String(this.getUmgangTier()), new String(this.getUmgangMensch()),
-				new String(this.getAnmerkungen()), this.getZusatzkosten());
+				new String(this.getAnmerkungen()), this.getAdditionalCosts());
 	}
 
 	@Override

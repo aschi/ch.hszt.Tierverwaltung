@@ -14,6 +14,7 @@ public class Starter {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		/*
 		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
@@ -27,6 +28,7 @@ public class Starter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		new MainGui();
 	}
 

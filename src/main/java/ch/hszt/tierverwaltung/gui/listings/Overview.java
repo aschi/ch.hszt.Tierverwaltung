@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ch.hszt.tierverwaltung.backend.IDataRecord;
@@ -92,7 +93,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		//build layout
 		this.setLayout(new BorderLayout());
 		this.add(this.buttonPane, BorderLayout.NORTH);
-		this.add(overview, BorderLayout.CENTER);
+		this.add(new JScrollPane(overview), BorderLayout.CENTER);
 		
 		updateTableValues(input);
 	}
@@ -173,6 +174,8 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 		}
 	}
 	
+	public abstract void updateTableValues();
+	
 	/**
 	 * Gibt den Index der ausgewählten Zeile der Tabelle zurück
 	 * @return Index der ausgewählten Zeile
@@ -180,5 +183,8 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	public int getSelectedRow(){
 		return overview.getSelectedRow();
 	}
+
+
+
 	
 }

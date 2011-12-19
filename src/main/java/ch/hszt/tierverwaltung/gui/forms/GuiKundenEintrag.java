@@ -23,7 +23,7 @@ import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.gui.listings.AssignedTierOverview;
+import ch.hszt.tierverwaltung.gui.listings.AssignedPetsOverview;
 
 public class GuiKundenEintrag {
 
@@ -38,7 +38,7 @@ public class GuiKundenEintrag {
 	private JTextField ortText;
 	private JTextField telnoText;
 	private JTextField emailText;
-	private AssignedTierOverview petTable;
+	private AssignedPetsOverview petTable;
 	private JButton save;
 	private JButton delete;
 	private JButton addPetButton;
@@ -89,13 +89,11 @@ public class GuiKundenEintrag {
 	private void createFrame() {
 
 		frame = new JFrame("Kundeneintrag");
-		frame.setLocation(400, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
 		JPanel contentPane = new JPanel(new BorderLayout());
 
-		JPanel tblPane = new JPanel();
 		JPanel buttonPane = new JPanel();
 
 		panel = new JPanel(new SpringLayout());
@@ -127,7 +125,7 @@ public class GuiKundenEintrag {
 		emailText = new JTextField();
 		email.setLabelFor(emailText);
 
-		petTable = new AssignedTierOverview(gui, customer.getTiere(),
+		petTable = new AssignedPetsOverview(gui, customer.getTiere(),
 				createPetTableButtonPane());
 		// tiereTable.updateTableValues(new ArrayList<Tier>());
 		// tiereTable.setButtonPane(createButtonPane());
@@ -206,12 +204,16 @@ public class GuiKundenEintrag {
 		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonPane.add(delete);
 
-		tblPane.add(petTable);
+		petTable.setPreferredSize(new Dimension(300, 100));
 
 		frame.getContentPane().add(contentPane);
 		SpringUtilities.makeCompactGrid(panel, 7, 2, 5, 5, 5, 5);
-		contentPane.add(panel, BorderLayout.CENTER);
-		contentPane.add(tblPane, BorderLayout.EAST);
+		
+		JPanel sa = new JPanel(new BorderLayout());
+		sa.add(panel, BorderLayout.NORTH);
+		
+		contentPane.add(sa, BorderLayout.CENTER);
+		contentPane.add(petTable, BorderLayout.EAST);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 		frame.setVisible(true);
 		frame.pack();
