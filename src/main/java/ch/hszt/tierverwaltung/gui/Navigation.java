@@ -31,8 +31,9 @@ public class Navigation {
 		// Nodes for listings
 		DefaultMutableTreeNode tierList = new DefaultMutableTreeNode("Tiere");
 		DefaultMutableTreeNode kundeList = new DefaultMutableTreeNode("Kunden");
-		DefaultMutableTreeNode tierPlatz = new DefaultMutableTreeNode("Tierplatz");
-		
+		DefaultMutableTreeNode tierPlatz = new DefaultMutableTreeNode(
+				"Tierplatz");
+
 		top.add(tierList);
 		top.add(kundeList);
 		top.add(tierPlatz);
@@ -47,25 +48,23 @@ public class Navigation {
 				if (e.getClickCount() == 2) {
 					// Get location
 					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
-					TreeNode node = (TreeNode) p.getLastPathComponent();
+					if (p != null) {
+						TreeNode node = (TreeNode) p.getLastPathComponent();
 
-					// Add actions
-					// TODO: Better way to do this without if / else if?
-					System.out.println(node.toString());
-					if (node.toString().equals("Tiere")) {
-						System.out.println("load tier overview...");
-						gui.selectOverview(Tier.class.getSimpleName());
-					} else if (node.toString().equals("Kunden")) {
-						System.out.println("load kunden overview...");
-						gui.selectOverview(Kunde.class.getSimpleName());
-					} else if (node.toString().equals("Tierplatz")) {
-						System.out.println("load tierplatz overview...");
-						gui.selectOverview(Tierplatz.class.getSimpleName());
+						// Add actions
+						// TODO: Better way to do this without if / else if?
+						System.out.println(node.toString());
+						if (node.toString().equals("Tiere")) {
+							gui.selectOverview(Tier.class.getSimpleName());
+						} else if (node.toString().equals("Kunden")) {
+							gui.selectOverview(Kunde.class.getSimpleName());
+						} else if (node.toString().equals("Tierplatz")) {
+							gui.selectOverview(Tierplatz.class.getSimpleName());
+						}
 					}
 				}
 			}
 		});
-
 	}
 
 	/**

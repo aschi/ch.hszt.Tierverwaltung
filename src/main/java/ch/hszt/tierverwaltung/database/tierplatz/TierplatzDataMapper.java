@@ -60,7 +60,8 @@ public final class TierplatzDataMapper implements IDataMapper<Tierplatz> {
 				+ "ausstattung = \'"	+ entry.getAusstattung() + "\', " 
 				+ "anzahlTiere = " + entry.getAnzahlTiere() + ", " 
 				+ "auslauf = \'" + entry.getAuslauf() + "\', "
-				+ "auslaufGroesse = " + entry.getAuslaufGroesse() + ";";
+				+ "auslaufGroesse = " + entry.getAuslaufGroesse() + " "
+				+ "WHERE tierplatzID = " + entry.getID() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();

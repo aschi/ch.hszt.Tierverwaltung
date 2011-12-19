@@ -33,6 +33,7 @@ public class CustomerOverview extends Overview<Kunde>{
 	 */
 	@Override
 	public void updateTableValues(List<Kunde> input) {
+		super.updateTableValues(input);
 		String[] row = new String[5];
 		String tNames;
 		

@@ -42,7 +42,7 @@ public class PetSpaceOverview extends Overview<Tierplatz>{
 				row[2] = Integer.toString(e.getAnzahlTiere());
 				row[3] = e.getAusstattung();
 				row[4] = (e.getAuslauf() == '1' ? "Ja" : "Nein");
-				row[5] = Integer.toString(e.getAuslaufGroesse()) + "m²";
+				row[5] = e.getAuslaufGroesse() >= 0 ? Integer.toString(e.getAuslaufGroesse()) + "m²" : "";
 				getModel().addRow(row);
 			}
 		}

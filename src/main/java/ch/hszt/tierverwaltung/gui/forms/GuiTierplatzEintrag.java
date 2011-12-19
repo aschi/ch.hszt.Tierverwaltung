@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
@@ -43,19 +44,15 @@ public class GuiTierplatzEintrag {
 	private Tierplatz petSpace;
 
 	public GuiTierplatzEintrag(MainGui gui) {
-
 		this.gui = gui;
 		fensterErzeugen();
 		tdm = new TierplatzDataMapper();
-
 	}
 
 	public GuiTierplatzEintrag(Tierplatz petSpace, MainGui gui) {
 		this(gui);
 		this.petSpace = petSpace;
 		loadPetSpace();
-		tdm = new TierplatzDataMapper();
-
 	}
 
 	private void loadPetSpace() {
@@ -65,7 +62,7 @@ public class GuiTierplatzEintrag {
 		noPetsCbx.setSelectedIndex(petSpace.getAnzahlTiere());
 	
 		runCbx.setSelectedIndex(petSpace.getAuslauf() == '1' ? 0 : 1);
-		runSizeTxt.setText(Integer.toString(petSpace.getAuslaufGroesse()));
+		runSizeTxt.setText((petSpace.getAuslaufGroesse() >= 0) ? Integer.toString(petSpace.getAuslaufGroesse()): "");	
 		
 		equipmentTxt.setText(petSpace.getAusstattung());
 	}
@@ -74,12 +71,12 @@ public class GuiTierplatzEintrag {
 		petSpace.setGeeignetFuerTierID(suitableForCbx.getSelectedIndex());
 		petSpace.setGroesse(Integer.valueOf(cageSizeTxt.getText()));
 		
-		petSpace.setAuslauf(runCbx.getSelectedIndex() == 0 ? '1' : 0);
-		petSpace.setAuslaufGroesse(Integer.valueOf(runSizeTxt.getText()));
+		petSpace.setAuslauf(runCbx.getSelectedIndex() == 0 ? '1' : '0');
+		petSpace.setAuslaufGroesse(runSizeTxt.getText().equals("") ? -1 : Integer.valueOf(runSizeTxt.getText()));
 		
 		petSpace.setAnzahlTiere(noPetsCbx.getSelectedIndex());
 		
-		petSpace.setAusstattung(equipmentTxt.getText());		
+		petSpace.setAusstattung(equipmentTxt.getText());	
 	}
 
 	private void closeWindow() {
@@ -87,7 +84,6 @@ public class GuiTierplatzEintrag {
 	}
 
 	private void fensterErzeugen() {
-
 		frame = new JFrame("Tierplatzeintrag");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -98,16 +94,82 @@ public class GuiTierplatzEintrag {
 		panel = new JPanel(new SpringLayout());
 		JPanel areaPanel = new JPanel(new SpringLayout());
 
-		JLabel suitableForLbl = new JLabel("Geeignet für: ");
-		JLabel cageSizeLbl = new JLabel("Grösse");
-		JLabel equipmentLbl = new JLabel("Ausstattung");
-		JLabel noPetsLbl = new JLabel("Anzahl Tiere");
-		JLabel runLbl = new JLabel("Auslauf");
-		JLabel runSizeLbl = new JLabel("Auslauf Grösse");
+		JLabel suitableForLbl = new JLabel("Geeignet für:");
+		JLabel cageSizeLbl = new JLabel("Grösse:");
+		JLabel noPetsLbl = new JLabel("Anzahl Tiere:");
+		JLabel runLbl = new JLabel("Auslauf:");
+		JLabel runSizeLbl = new JLabel("Auslaufgrösse:");
+		JLabel equipmentLbl = new JLabel("Ausstattung:   ");
+		
+		createButtons();
 
+		suitableForCbx = new JComboBox(Config.petSpaceSize);
+		cageSizeTxt = new JTextField();
+		noPetsCbx = new JComboBox(new String[] {"", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
+		runCbx = new JComboBox(new String[] {"Ja", "Nein"});
+		runSizeTxt = new JTextField();
+		equipmentTxt = new JTextArea();
+		equipmentTxt.setRows(10);
+		
+		suitableForLbl.setLabelFor(suitableForCbx);
+		cageSizeLbl.setLabelFor(cageSizeTxt);
+		equipmentLbl.setLabelFor(equipmentTxt);
+		noPetsLbl.setLabelFor(noPetsCbx);
+		runLbl.setLabelFor(runCbx);
+		runSizeLbl.setLabelFor(runSizeTxt);
+		
+		panel.add(suitableForLbl);
+		panel.add(suitableForCbx);
+		panel.add(cageSizeLbl);
+		panel.add(createSizePanel(cageSizeTxt));
+		panel.add(noPetsLbl);
+		panel.add(noPetsCbx);
+		panel.add(runLbl);
+		panel.add(runCbx);
+		panel.add(runSizeLbl);
+		panel.add(createSizePanel(runSizeTxt));
+		
+		areaPanel.add(equipmentLbl);
+		areaPanel.add(new JScrollPane(equipmentTxt));
+		
+		frame.getContentPane().add(contentPane);
+		SpringUtilities.makeCompactGrid(panel, 5, 2, 5, 5, 5, 5);
+		SpringUtilities.makeCompactGrid(areaPanel, 1, 2, 5, 5, 5, 5);
+
+		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+		buttonPane.add(Box.createHorizontalGlue());
+		buttonPane.add(saveButton);
+		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonPane.add(deleteButton);
+
+		contentPane.add(panel, BorderLayout.NORTH);
+		contentPane.add(areaPanel, BorderLayout.CENTER);
+		contentPane.add(buttonPane, BorderLayout.SOUTH);
+
+		frame.setVisible(true);
+		frame.pack();
+	}
+
+	/**
+	 * Create a Panel containing the given field + a "m²" label
+	 * @param field input field
+	 * @return JPanel containing the field
+	 */
+	private JPanel createSizePanel(JTextField field){
+		JPanel sizePane = new JPanel(new SpringLayout());
+		sizePane.add(field);
+		sizePane.add(new JLabel("m²"));
+		SpringUtilities.makeCompactGrid(sizePane, 1, 2, 0, 5, 5, 5);
+		return sizePane;
+	}
+	
+	/**
+	 * Create our save & delete buttons / add action listeners
+	 */
+	private void createButtons(){
 		saveButton = new JButton("Speichern");
 		deleteButton = new JButton("Loeschen");
-
+		
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -158,51 +220,6 @@ public class GuiTierplatzEintrag {
 				}
 			}
 		});
-
-		suitableForCbx = new JComboBox(Config.petSpaceSize);
-		cageSizeTxt = new JTextField();
-		noPetsCbx = new JComboBox(new String[] {"", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
-		runCbx = new JComboBox(new String[] {"Ja", "Nein"});
-		runSizeTxt = new JTextField();
-		equipmentTxt = new JTextArea();
-		
-		suitableForLbl.setLabelFor(suitableForCbx);
-		cageSizeLbl.setLabelFor(cageSizeTxt);
-		equipmentLbl.setLabelFor(equipmentTxt);
-		noPetsLbl.setLabelFor(noPetsCbx);
-		runLbl.setLabelFor(runCbx);
-		runSizeLbl.setLabelFor(runSizeTxt);
-		
-		panel.add(suitableForLbl);
-		panel.add(suitableForCbx);
-		panel.add(cageSizeLbl);
-		panel.add(cageSizeTxt);
-		panel.add(noPetsLbl);
-		panel.add(noPetsCbx);
-		panel.add(runLbl);
-		panel.add(runCbx);
-		panel.add(runSizeLbl);
-		panel.add(runSizeTxt);
-		
-		areaPanel.add(equipmentLbl);
-		areaPanel.add(equipmentTxt);
-		
-		frame.getContentPane().add(contentPane);
-		SpringUtilities.makeCompactGrid(panel, 5, 2, 5, 5, 5, 5);
-		SpringUtilities.makeCompactGrid(areaPanel, 1, 2, 5, 5, 5, 5);
-
-		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-		buttonPane.add(Box.createHorizontalGlue());
-		buttonPane.add(saveButton);
-		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-		buttonPane.add(deleteButton);
-
-		contentPane.add(panel, BorderLayout.NORTH);
-		contentPane.add(areaPanel, BorderLayout.CENTER);
-		contentPane.add(buttonPane, BorderLayout.SOUTH);
-
-		frame.setVisible(true);
-		frame.pack();
 	}
-
+	
 }
