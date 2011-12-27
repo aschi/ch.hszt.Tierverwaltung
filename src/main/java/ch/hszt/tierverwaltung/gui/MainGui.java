@@ -11,8 +11,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Tierplatz;
 import ch.hszt.tierverwaltung.gui.listings.CustomerOverview;
 import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
@@ -56,8 +56,8 @@ public class MainGui {
 			overviewUpdater.registerOverview(pso);
 			
 			cards = new JPanel(new CardLayout());
-			cards.add(to, Tier.class.getSimpleName());
-			cards.add(ko, Kunde.class.getSimpleName());
+			cards.add(to, Pet.class.getSimpleName());
+			cards.add(ko, Customer.class.getSimpleName());
 			cards.add(pso, Tierplatz.class.getSimpleName());
 						
 			frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);

@@ -8,8 +8,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Tierplatz;
 
 public class Navigation {
@@ -55,9 +55,9 @@ public class Navigation {
 						// TODO: Better way to do this without if / else if?
 						System.out.println(node.toString());
 						if (node.toString().equals("Tiere")) {
-							gui.selectOverview(Tier.class.getSimpleName());
+							gui.selectOverview(Pet.class.getSimpleName());
 						} else if (node.toString().equals("Kunden")) {
-							gui.selectOverview(Kunde.class.getSimpleName());
+							gui.selectOverview(Customer.class.getSimpleName());
 						} else if (node.toString().equals("Tierplatz")) {
 							gui.selectOverview(Tierplatz.class.getSimpleName());
 						}

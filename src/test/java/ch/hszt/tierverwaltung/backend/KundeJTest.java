@@ -7,14 +7,14 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
 public class KundeJTest {
 
 	@Test
 	public void validateOkTest() {
-		Kunde kunde = new Kunde("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
 		
 		ValidationException ve = null;
 		try {
@@ -29,7 +29,7 @@ public class KundeJTest {
 
 	@Test
 	public void validateArtNokTest() {
-		Kunde kunde = new Kunde("", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
 		
 		List<String> ve = null;
 		try {
@@ -43,7 +43,7 @@ public class KundeJTest {
 	
 	@Test
 	public void validateRasseNokTest() {
-		Kunde kunde = new Kunde("Hans", "", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("Hans", "", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
 		
 		List<String> ve = null;
 		try {
@@ -57,7 +57,7 @@ public class KundeJTest {
 
 	@Test
 	public void validateNameNokTest() {
-		Kunde kunde = new Kunde("Hans", "Muster", null, "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("Hans", "Muster", null, "ZH-8000", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
 		
 		List<String> ve = null;
 		try {
@@ -71,7 +71,7 @@ public class KundeJTest {
 	
 	@Test
 	public void validateAuslaufNokTest() {
-		Kunde kunde = new Kunde("Hans", "Muster", "Mustergasse 5", "", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("Hans", "Muster", "Mustergasse 5", "", "Zürich", "0441001010", "hans.muster@mustdomain.mu");
 		
 		List<String> ve = null;
 		try {
@@ -85,7 +85,7 @@ public class KundeJTest {
 	
 	@Test
 	public void validateAnmerkungNokTest() {
-		Kunde kunde = new Kunde("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", null, "hans.muster@mustdomain.mu");
+		Customer kunde = new Customer("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", null, "hans.muster@mustdomain.mu");
 		
 		List<String> ve = null;
 		try {
@@ -99,7 +99,7 @@ public class KundeJTest {
 
 	@Test
 	public void validateEssgewohnheitNokTest() {
-		Kunde kunde = new Kunde("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", null);
+		Customer kunde = new Customer("Hans", "Muster", "Mustergasse 5", "ZH-8000", "Zürich", "0441001010", null);
 		
 		List<String> ve = null;
 		try {

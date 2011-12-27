@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
-public class UnassignedPetsOverview extends Overview<Tier> {
+public class UnassignedPetsOverview extends Overview<Pet> {
 	
 	public UnassignedPetsOverview(MainGui gui, JPanel buttonPane) throws SQLException {
 		super(gui);
@@ -22,17 +22,17 @@ public class UnassignedPetsOverview extends Overview<Tier> {
 
 	private void setUpTable(JPanel buttonPane){
 		String[] columnNames = {"Name", "Art"};
-		createTable(columnNames, getInput(), new Tier(), buttonPane);
+		createTable(columnNames, getInput(), new Pet(), buttonPane);
 	}
 
 	@Override
-	public void updateTableValues(List<Tier> input) {
+	public void updateTableValues(List<Pet> input) {
 		super.updateTableValues(input);
 		
 		String[] row = new String[2];
-		for(Tier e : input){
+		for(Pet e : input){
 			row[0] = e.getName();
-			row[1] = e.getArt();			
+			row[1] = e.getSpecies();			
 			getModel().addRow(row);
 		}
 		

@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.hszt.tierverwaltung.backend.Config;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
@@ -31,7 +31,7 @@ public class GuiTierEintrag {
       private JFrame frame;
       private JPanel panel;
       private JPanel areaPanel;
-      private Tier tier;
+      private Pet tier;
       private MainGui gui;
       private JTextField nameText;
       private JTextField rasseText;
@@ -60,7 +60,7 @@ public class GuiTierEintrag {
             
       }
       
-      public GuiTierEintrag(Tier tier, MainGui gui) {
+      public GuiTierEintrag(Pet tier, MainGui gui) {
     	  this(gui);
     	  this.tier = tier;
     	  loadTierValue();
@@ -69,46 +69,46 @@ public class GuiTierEintrag {
       }
       
       private void loadTierValue() {
-    	  tierCombo.setSelectedItem(tier.getArt());
-    	  rasseText.setText(tier.getRasse());
+    	  tierCombo.setSelectedItem(tier.getSpecies());
+    	  rasseText.setText(tier.getRace());
     	  nameText.setText(tier.getName());
-    	  alterText.setText(String.valueOf(tier.getTieralter()));
-    	  groesseCombo.setSelectedIndex(tier.getGroesseID());
-    	  tierCombo.setName(tier.getArt());
-    	  krankText.setText(tier.getKrankheitsbild());
-    	  essText.setText(tier.getEssgewohnheit());
-    	  if (tier.getAuslauf() == '1') {
+    	  alterText.setText(String.valueOf(tier.getAge()));
+    	  groesseCombo.setSelectedIndex(tier.getSizeId());
+    	  tierCombo.setName(tier.getSpecies());
+    	  krankText.setText(tier.getDiseasePattern());
+    	  essText.setText(tier.getEatingHabits());
+    	  if (tier.getRun() == '1') {
     		  auslaufText.setSelected(true);
     	  } else {
     		  auslaufText.setSelected(false);
     	  }
-    	  auslaufText.setText(String.valueOf(tier.getAuslauf()));
-    	  umgangTierText.setText(tier.getUmgangTier());
-    	  umgangMenschText.setText(tier.getUmgangMensch());
-    	  sonstigesText.setText(tier.getAnmerkungen());
+    	  auslaufText.setText(String.valueOf(tier.getRun()));
+    	  umgangTierText.setText(tier.getContactOtherPets());
+    	  umgangMenschText.setText(tier.getContactPeople());
+    	  sonstigesText.setText(tier.getRemarks());
     	  zusatzText.setText(String.valueOf(tier.getAdditionalCosts()));
       }
       
       private void createTierValue() {
-    	  tier.setArt(tierCombo.getSelectedItem().toString());
-    	  tier.setRasse(rasseText.getText());
+    	  tier.setSpecies(tierCombo.getSelectedItem().toString());
+    	  tier.setRace(rasseText.getText());
     	  tier.setName(nameText.getText());
     	  if (alterText.getText() == null || alterText.getText().equals("")) {
-    		  tier.setTieralter(-1);
+    		  tier.setAge(-1);
     	  } else {
-    		  tier.setTieralter(Integer.parseInt(alterText.getText()));
+    		  tier.setAge(Integer.parseInt(alterText.getText()));
     	  }
-    	  tier.setGroesseID(groesseCombo.getSelectedIndex());
-    	  tier.setKrankheitsbild(krankText.getText());
-    	  tier.setEssgewohnheit(essText.getText());
+    	  tier.setSizeId(groesseCombo.getSelectedIndex());
+    	  tier.setDiseasePattern(krankText.getText());
+    	  tier.setEatingHabits(essText.getText());
     	  if (auslaufText.isSelected()) {
-    		  tier.setAuslauf('1');
+    		  tier.setRun('1');
     	  } else {
-    		  tier.setAuslauf('0');
+    		  tier.setRun('0');
     	  }
-    	  tier.setUmgangTier(umgangTierText.getText());
-    	  tier.setUmgangMensch(umgangMenschText.getText());
-    	  tier.setAnmerkungen(sonstigesText.getText());
+    	  tier.setContactOtherPets(umgangTierText.getText());
+    	  tier.setContactPeople(umgangMenschText.getText());
+    	  tier.setRemarks(sonstigesText.getText());
     	  if (zusatzText.getText() == null) {
     		  tier.setAdditionalCosts(-1);
     	  }
@@ -190,7 +190,7 @@ public class GuiTierEintrag {
               	public void actionPerformed(ActionEvent e) {
               		try {
 	              			if(tier == null){
-	              				tier = new Tier();
+	              				tier = new Pet();
 	              			}
               				createTierValue();
 							tdm.save(tier);

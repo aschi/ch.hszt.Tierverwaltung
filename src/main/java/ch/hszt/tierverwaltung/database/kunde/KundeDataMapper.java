@@ -7,14 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 
-public final class KundeDataMapper implements IDataMapper<Kunde> {
+public final class KundeDataMapper implements IDataMapper<Customer> {
 
 	DBConnection dbConnection = DBConnection.getInstance();
 
@@ -30,14 +30,14 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	 * @throws SQLException
 	 */
 	@Override
-	public int insert(Kunde entry) throws SQLException {
+	public int insert(Customer entry) throws SQLException {
 
 		String sql;
 		ResultSet rs = null;
 		sql = "INSERT INTO 'kunde' VALUES (null, '" + entry.getName() + "', "
-				+ "\'" + entry.getVorname() + "\', \'" + entry.getAdresse()
-				+ "\', '" + entry.getPlz() + "\', \'" + entry.getOrt()
-				+ "\', \'" + entry.getTelefon() + "\', \'" + entry.getEMail()
+				+ "\'" + entry.getFirstName() + "\', \'" + entry.getAddress()
+				+ "\', '" + entry.getZip() + "\', \'" + entry.getCity()
+				+ "\', \'" + entry.getPhoneNo() + "\', \'" + entry.getEMail()
 				+ "\');";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -55,13 +55,13 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	}
 
 	@Override
-	public void update(Kunde entry) throws SQLException {
+	public void update(Customer entry) throws SQLException {
 		String sql;
 		sql = "UPDATE 'kunde' SET " + "name = \'" + entry.getName() + "\', "
-				+ "vorname = '" + entry.getVorname() + "', " + "adresse = \'"
-				+ entry.getAdresse() + "\', " + "plz = \'" + entry.getPlz()
-				+ "\', " + "ort = \'" + entry.getOrt() + "\', "
-				+ "telefon = \'" + entry.getTelefon() + "\', " + "eMail = \'"
+				+ "vorname = '" + entry.getFirstName() + "', " + "adresse = \'"
+				+ entry.getAddress() + "\', " + "plz = \'" + entry.getZip()
+				+ "\', " + "ort = \'" + entry.getCity() + "\', "
+				+ "telefon = \'" + entry.getPhoneNo() + "\', " + "eMail = \'"
 				+ entry.getEMail() + "\'" + ";";
 
 		System.out.println(sql);
@@ -78,9 +78,9 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	 * @throws SQLException
 	 */
 	@Override
-	public void delete(Kunde entry) throws SQLException {
+	public void delete(Customer entry) throws SQLException {
 		//Beziehungen zum Tier entfernen
-		for(Tier t : entry.getTiere()){
+		for(Pet t : entry.getPets()){
 			t.setFkKunde(-1);
 			try {
 				new TierDataMapper().save(t);
@@ -91,7 +91,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 		}
 		
 		String sql;
-		sql = "DELETE FROM 'kunde' WHERE kundeID = " + entry.getKundeID() + ";";
+		sql = "DELETE FROM 'kunde' WHERE kundeID = " + entry.getCustomerId() + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
@@ -105,24 +105,24 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<Kunde> getList() throws SQLException {
+	public List<Customer> getList() throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'kunde';";
 		System.out.println(sql);
 
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
-		ArrayList<Kunde> kundenarray = new ArrayList<Kunde>();
+		ArrayList<Customer> kundenarray = new ArrayList<Customer>();
 
 		while (rs.next()) {
 
-			Kunde kunde = new Kunde(rs.getInt("kundeID"), rs.getString("name"),
+			Customer kunde = new Customer(rs.getInt("kundeID"), rs.getString("name"),
 					rs.getString("vorname"), rs.getString("adresse"),
 					rs.getString("plz"), rs.getString("ort"),
 					rs.getString("telefon"), rs.getString("eMail"));
 
-			kunde.setTiere(new TierDataMapper().getTiereZuKunde(kunde
-					.getKundeID()));
+			kunde.setPets(new TierDataMapper().getTiereZuKunde(kunde
+					.getCustomerId()));
 
 			kundenarray.add(kunde);
 		}
@@ -130,7 +130,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	}
 
 	@Override
-	public Kunde getEntry(int id) throws SQLException {
+	public Customer getEntry(int id) throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'kunde' WHERE kundeID = " + id + ";";
 		System.out.println(sql);
@@ -140,7 +140,7 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 
 		while (rs.next()) {
 
-			Kunde kunde = new Kunde(rs.getInt("kundeID"), rs.getString("name"),
+			Customer kunde = new Customer(rs.getInt("kundeID"), rs.getString("name"),
 					rs.getString("vorname"), rs.getString("adresse"),
 					rs.getString("plz"), rs.getString("ort"),
 					rs.getString("telefon"), rs.getString("eMail"));
@@ -152,10 +152,10 @@ public final class KundeDataMapper implements IDataMapper<Kunde> {
 	}
 
 	@Override
-	public void save(Kunde entry) throws SQLException, ValidationException {
+	public void save(Customer entry) throws SQLException, ValidationException {
 		entry.validate();
-		if (entry.getKundeID() <= 0) {
-			entry.setKundeID(insert(entry));
+		if (entry.getCustomerId() <= 0) {
+			entry.setCustomerId(insert(entry));
 		} else {
 			update(entry);
 		}

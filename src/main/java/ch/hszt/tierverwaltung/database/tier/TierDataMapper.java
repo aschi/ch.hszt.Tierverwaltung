@@ -7,12 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 
-public final class TierDataMapper implements IDataMapper<Tier> {
+public final class TierDataMapper implements IDataMapper<Pet> {
 
 	DBConnection dbConnection = DBConnection.getInstance();
 
@@ -28,16 +28,16 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	 * @throws SQLException
 	 */
 	@Override
-	public int insert(Tier entry) throws SQLException {
+	public int insert(Pet entry) throws SQLException {
 		String sql;
 		ResultSet rs = null;
-		sql = "INSERT INTO 'tier' VALUES (null, null, '" + entry.getArt()
-				+ "', " + "\'" + entry.getRasse() + "\', \'" + entry.getName()
-				+ "\', " + entry.getTieralter() + ", " + entry.getGroesseID()
-				+ ", \'" + entry.getKrankheitsbild() + "\', \'"
-				+ entry.getEssgewohnheit() + "\', \'" + entry.getAuslauf()
-				+ "\', \'" + entry.getUmgangTier() + "\', \'"
-				+ entry.getUmgangMensch() + "\', \'" + entry.getAnmerkungen()
+		sql = "INSERT INTO 'tier' VALUES (null, null, '" + entry.getSpecies()
+				+ "', " + "\'" + entry.getRace() + "\', \'" + entry.getName()
+				+ "\', " + entry.getAge() + ", " + entry.getSizeId()
+				+ ", \'" + entry.getDiseasePattern() + "\', \'"
+				+ entry.getEatingHabits() + "\', \'" + entry.getRun()
+				+ "\', \'" + entry.getContactOtherPets() + "\', \'"
+				+ entry.getContactPeople() + "\', \'" + entry.getRemarks()
 				+ "\', " + entry.getAdditionalCosts() + ");";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -55,19 +55,19 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	}
 
 	@Override
-	public void update(Tier entry) throws SQLException {
+	public void update(Pet entry) throws SQLException {
 		String sql;
 		sql = "UPDATE 'tier' SET " + "fkKunde = " + entry.getFkKunde() + ", "
-				+ "art = '" + entry.getArt() + "', " + "rasse = \'"
-				+ entry.getRasse() + "\', " + "name = \'" + entry.getName()
-				+ "\', " + "tieralter = " + entry.getTieralter() + ", "
-				+ "groesseID = " + entry.getGroesseID() + ", "
-				+ "krankheitsbild = \'" + entry.getKrankheitsbild() + "\', "
-				+ "essgewohnheit = \'" + entry.getEssgewohnheit() + "\', "
-				+ "auslauf = \'" + entry.getAuslauf() + "\', "
-				+ "umgangTier = \'" + entry.getUmgangTier() + "\', "
-				+ "umgangMensch = \'" + entry.getUmgangMensch() + "\', "
-				+ "anmerkungen = \'" + entry.getAnmerkungen() + "\', "
+				+ "art = '" + entry.getSpecies() + "', " + "rasse = \'"
+				+ entry.getRace() + "\', " + "name = \'" + entry.getName()
+				+ "\', " + "tieralter = " + entry.getAge() + ", "
+				+ "groesseID = " + entry.getSizeId() + ", "
+				+ "krankheitsbild = \'" + entry.getDiseasePattern() + "\', "
+				+ "essgewohnheit = \'" + entry.getEatingHabits() + "\', "
+				+ "auslauf = \'" + entry.getRun() + "\', "
+				+ "umgangTier = \'" + entry.getContactOtherPets() + "\', "
+				+ "umgangMensch = \'" + entry.getContactPeople() + "\', "
+				+ "anmerkungen = \'" + entry.getRemarks() + "\', "
 				+ "zusatzkosten = " + entry.getAdditionalCosts()
 				+ " WHERE tierID = " + entry.getTierID() + ";";
 
@@ -82,7 +82,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	 * a customer
 	 * @return ArrayList with all pets which aren't assigned yet
 	 */
-	public ArrayList<Tier> getUnassignedPets() throws SQLException {
+	public ArrayList<Pet> getUnassignedPets() throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE fkKunde < 1 OR fkKunde is null;";
 		System.out.println(sql);
@@ -96,13 +96,13 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	
 
 	//Returns an ArrayList with all Pets from the Resultset
-	private ArrayList<Tier> fillPets(ResultSet rs) throws SQLException {
-		ArrayList<Tier> tierarray = new ArrayList<Tier>();
+	private ArrayList<Pet> fillPets(ResultSet rs) throws SQLException {
+		ArrayList<Pet> tierarray = new ArrayList<Pet>();
 		
 		while (rs.next()) {
 			char[] auslauf = rs.getString("auslauf").toCharArray();
 
-			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"),
+			Pet tier = new Pet(rs.getInt("tierID"), rs.getInt("fkKunde"),
 					rs.getString("art"), rs.getString("rasse"),
 					rs.getString("name"), rs.getInt("tieralter"),
 					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
@@ -124,7 +124,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	 * @throws SQLException
 	 */
 	@Override
-	public void delete(Tier entry) throws SQLException {
+	public void delete(Pet entry) throws SQLException {
 		String sql;
 		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
 		System.out.println(sql);
@@ -140,7 +140,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<Tier> getList() throws SQLException {
+	public List<Pet> getList() throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier';";
 		System.out.println(sql);
@@ -152,7 +152,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	}
 
 	@Override
-	public Tier getEntry(int id) throws SQLException {
+	public Pet getEntry(int id) throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE tierID = " + id + ";";
 		System.out.println(sql);
@@ -163,7 +163,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		while (rs.next()) {
 			char[] auslauf = rs.getString("auslauf").toCharArray();
 
-			Tier tier = new Tier(rs.getInt("tierID"), rs.getInt("fkKunde"),
+			Pet tier = new Pet(rs.getInt("tierID"), rs.getInt("fkKunde"),
 					rs.getString("art"), rs.getString("rasse"),
 					rs.getString("name"), rs.getInt("tieralter"),
 					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
@@ -177,7 +177,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 		return null;
 	}
 
-	public ArrayList<Tier> getTiereZuKunde(int kundeID) throws SQLException {
+	public ArrayList<Pet> getTiereZuKunde(int kundeID) throws SQLException {
 		String sql;
 		sql = "SELECT * FROM 'tier' WHERE fkKunde = " + kundeID + ";";
 		System.out.println(sql);
@@ -189,7 +189,7 @@ public final class TierDataMapper implements IDataMapper<Tier> {
 	}
 
 	@Override
-	public void save(Tier entry) throws SQLException, ValidationException {
+	public void save(Pet entry) throws SQLException, ValidationException {
 		entry.validate();
 		if (entry.getTierID() <= 0) {
 			entry.setTierID(insert(entry));

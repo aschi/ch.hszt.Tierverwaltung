@@ -6,11 +6,11 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import ch.hszt.tierverwaltung.backend.Config;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
-public class PetOverview extends Overview<Tier> {
+public class PetOverview extends Overview<Pet> {
 	public PetOverview(MainGui gui) throws SQLException {
 		super(gui);
 		setMapper(new TierDataMapper());
@@ -18,31 +18,31 @@ public class PetOverview extends Overview<Tier> {
 		setUpTable();
 	}
 
-	public PetOverview(MainGui gui, List<Tier> input) {
+	public PetOverview(MainGui gui, List<Pet> input) {
 		super(gui, input);
 		setUpTable();
 	}
 
 	private void setUpTable() {
 		String[] columnNames = { "Name", "Art", "Rasse", "Alter", "Grösse" };
-		createTable(columnNames, getInput(), new Tier(), null);
+		createTable(columnNames, getInput(), new Pet(), null);
 	}
 
 	/**
 	 * Aktualisiere die Tabelle mit den Werten aus der gegebenen ArrayList
 	 */
 	@Override
-	public void updateTableValues(List<Tier> input) {
+	public void updateTableValues(List<Pet> input) {
 		super.updateTableValues(input);
 
 		String[] row = new String[5];
 		if (input != null && input.size() > 0) {
-			for (Tier e : input) {
+			for (Pet e : input) {
 				row[0] = e.getName();
-				row[1] = e.getArt();
-				row[2] = e.getRasse();
-				row[3] = String.valueOf(e.getTieralter());
-				row[4] = Config.petSize[e.getGroesseID()];
+				row[1] = e.getSpecies();
+				row[2] = e.getRace();
+				row[3] = String.valueOf(e.getAge());
+				row[4] = Config.petSize[e.getSizeId()];
 				getModel().addRow(row);
 			}
 		}

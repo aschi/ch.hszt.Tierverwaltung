@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
@@ -29,7 +29,7 @@ public class GuiKundenEintrag {
 
 	private JFrame frame;
 	private JPanel panel;
-	private Kunde customer;
+	private Customer customer;
 	private MainGui gui;
 	private JTextField nameText;
 	private JTextField vornameText;
@@ -50,7 +50,7 @@ public class GuiKundenEintrag {
 		createFrame();
 	}
 
-	public GuiKundenEintrag(Kunde kunde, MainGui gui) {
+	public GuiKundenEintrag(Customer kunde, MainGui gui) {
 		this.customer = kunde;
 		this.gui = gui;
 		createFrame();
@@ -60,24 +60,24 @@ public class GuiKundenEintrag {
 	private void loadKundeValue() {
 
 		nameText.setText(customer.getName());
-		vornameText.setText(customer.getVorname());
-		adresseText.setText(customer.getAdresse());
-		plzText.setText(customer.getPlz());
-		ortText.setText(customer.getOrt());
-		telnoText.setText(customer.getTelefon());
+		vornameText.setText(customer.getFirstName());
+		adresseText.setText(customer.getAddress());
+		plzText.setText(customer.getZip());
+		ortText.setText(customer.getCity());
+		telnoText.setText(customer.getPhoneNo());
 		emailText.setText(customer.getEMail());
-		petTable.updateTableValues(customer.getTiere());
+		petTable.updateTableValues(customer.getPets());
 
 	}
 
 	private void createKundeValue() {
 
 		customer.setName(nameText.getText());
-		customer.setVorname(vornameText.getText());
-		customer.setAdresse(adresseText.getText());
-		customer.setPlz(plzText.getText());
-		customer.setOrt(ortText.getText());
-		customer.setTelefon(telnoText.getText());
+		customer.setFirstName(vornameText.getText());
+		customer.setAddress(adresseText.getText());
+		customer.setZip(plzText.getText());
+		customer.setCity(ortText.getText());
+		customer.setPhoneNo(telnoText.getText());
 		customer.setEMail(emailText.getText());
 
 	}
@@ -125,7 +125,7 @@ public class GuiKundenEintrag {
 		emailText = new JTextField();
 		email.setLabelFor(emailText);
 
-		petTable = new AssignedPetsOverview(gui, customer.getTiere(),
+		petTable = new AssignedPetsOverview(gui, customer.getPets(),
 				createPetTableButtonPane());
 		// tiereTable.updateTableValues(new ArrayList<Tier>());
 		// tiereTable.setButtonPane(createButtonPane());
@@ -135,7 +135,7 @@ public class GuiKundenEintrag {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (customer == null) {
-						customer = new Kunde();
+						customer = new Customer();
 					}
 					createKundeValue();
 					new KundeDataMapper().save(customer);
@@ -246,7 +246,7 @@ public class GuiKundenEintrag {
 		removePetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Tier t = customer.getTiere().get(petTable.getSelectedRow());
+				Pet t = customer.getPets().get(petTable.getSelectedRow());
 				t.setFkKunde(-1);
 				try {
 					new TierDataMapper().save(t);
@@ -257,8 +257,8 @@ public class GuiKundenEintrag {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				customer.getTiere().remove(t);
-				petTable.updateTableValues(customer.getTiere());
+				customer.getPets().remove(t);
+				petTable.updateTableValues(customer.getPets());
 			}
 		});
 		

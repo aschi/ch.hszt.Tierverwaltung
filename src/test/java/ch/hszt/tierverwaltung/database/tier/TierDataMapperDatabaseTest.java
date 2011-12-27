@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 
 public class TierDataMapperDatabaseTest {
@@ -16,14 +16,14 @@ public class TierDataMapperDatabaseTest {
 
 		boolean testOk = true;
 		String fehlertext = "";
-		Tier tier =  null;
+		Pet tier =  null;
 
 		TierDataMapper tba = new TierDataMapper();
 
 
 		// INSERT Test
 		//--------------
-		tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 
@@ -31,27 +31,27 @@ public class TierDataMapperDatabaseTest {
 		int id = tba.insert(tier);
 		System.out.println("tier id " + id);
 
-		List<Tier> tierList = tba.getList();
+		List<Pet> tierList = tba.getList();
 		if (tierList == null || tierList.isEmpty()) {
 			testOk = false;
 			fehlertext = fehlertext + " \n Methodenaufruf getList war falsch";
 		}
 
-		Tier tierDB = null;
+		Pet tierDB = null;
 
 		// Tier aus DB ermitteln
-		for (Tier t : tierList) {
-			if ((tier.getArt().equals(t.getArt())
-					&& tier.getRasse().equals(t.getRasse())
+		for (Pet t : tierList) {
+			if ((tier.getSpecies().equals(t.getSpecies())
+					&& tier.getRace().equals(t.getRace())
 					&& tier.getName().equals(t.getName())
-					&& tier.getTieralter() == t.getTieralter()
-					&& tier.getGroesseID() == t.getGroesseID()
-					&& tier.getKrankheitsbild().equals(t.getKrankheitsbild())
-					&& tier.getEssgewohnheit().equals(t.getEssgewohnheit())
-					&& tier.getAuslauf() == t.getAuslauf()
-					&& tier.getUmgangMensch().equals(t.getUmgangMensch())
-					&& tier.getUmgangTier().equals(t.getUmgangTier())
-					&& tier.getAnmerkungen().equals(t.getAnmerkungen()) && tier
+					&& tier.getAge() == t.getAge()
+					&& tier.getSizeId() == t.getSizeId()
+					&& tier.getDiseasePattern().equals(t.getDiseasePattern())
+					&& tier.getEatingHabits().equals(t.getEatingHabits())
+					&& tier.getRun() == t.getRun()
+					&& tier.getContactPeople().equals(t.getContactPeople())
+					&& tier.getContactOtherPets().equals(t.getContactOtherPets())
+					&& tier.getRemarks().equals(t.getRemarks()) && tier
 						.getZusatzkosten() == t.getZusatzkosten())) {
 				tierDB = t;
 			}
@@ -67,26 +67,26 @@ public class TierDataMapperDatabaseTest {
 
 		// Test UPDATE
 		//------------------
-		tierDB.setAnmerkungen("anmerkungupdate");
+		tierDB.setRemarks("anmerkungupdate");
 		tba.update(tierDB);
 
-		List<Tier> tierListupdate = tba.getList();
-		Tier tierDBUpdate = null;
+		List<Pet> tierListupdate = tba.getList();
+		Pet tierDBUpdate = null;
 		if (tierListupdate != null || !tierListupdate.isEmpty()) {
 
 			// Tier aus DB ermitteln
-			for (Tier t : tierListupdate) {
-				if ((tierDB.getArt().equals(t.getArt())
-						&& tierDB.getRasse().equals(t.getRasse())
+			for (Pet t : tierListupdate) {
+				if ((tierDB.getSpecies().equals(t.getSpecies())
+						&& tierDB.getRace().equals(t.getRace())
 						&& tierDB.getName().equals(t.getName())
-						&& tierDB.getTieralter() == t.getTieralter()
-						&& tierDB.getGroesseID() == t.getGroesseID()
-						&& tierDB.getKrankheitsbild().equals(t.getKrankheitsbild())
-						&& tierDB.getEssgewohnheit().equals(t.getEssgewohnheit())
-						&& tierDB.getAuslauf() == t.getAuslauf()
-						&& tierDB.getUmgangMensch().equals(t.getUmgangMensch())
-						&& tierDB.getUmgangTier().equals(t.getUmgangTier())
-						&& tierDB.getAnmerkungen().equals(t.getAnmerkungen()) 
+						&& tierDB.getAge() == t.getAge()
+						&& tierDB.getSizeId() == t.getSizeId()
+						&& tierDB.getDiseasePattern().equals(t.getDiseasePattern())
+						&& tierDB.getEatingHabits().equals(t.getEatingHabits())
+						&& tierDB.getRun() == t.getRun()
+						&& tierDB.getContactPeople().equals(t.getContactPeople())
+						&& tierDB.getContactOtherPets().equals(t.getContactOtherPets())
+						&& tierDB.getRemarks().equals(t.getRemarks()) 
 						&& tierDB.getZusatzkosten() == t.getZusatzkosten())) {
 					tierDBUpdate = t;
 				}
@@ -100,22 +100,22 @@ public class TierDataMapperDatabaseTest {
 
 		//Test der Methode getEntry
 		//----------------------------------
-		Tier t = tba.getEntry(tierDB.getTierID());
+		Pet t = tba.getEntry(tierDB.getTierID());
 
 		// Wenn das Tier von getEntry nicht gleich unserem Tier ist, war Test
 		// falsch
 		if (t == null
-				|| !(tierDB.getArt().equals(t.getArt())
-						&& tierDB.getRasse().equals(t.getRasse())
+				|| !(tierDB.getSpecies().equals(t.getSpecies())
+						&& tierDB.getRace().equals(t.getRace())
 						&& tierDB.getName().equals(t.getName())
-						&& tierDB.getTieralter() == t.getTieralter()
-						&& tierDB.getGroesseID() == t.getGroesseID()
-						&& tierDB.getKrankheitsbild().equals(t.getKrankheitsbild())
-						&& tierDB.getEssgewohnheit().equals(t.getEssgewohnheit())
-						&& tierDB.getAuslauf() == t.getAuslauf()
-						&& tierDB.getUmgangMensch().equals(t.getUmgangMensch())
-						&& tierDB.getUmgangTier().equals(t.getUmgangTier())
-						&& tierDB.getAnmerkungen().equals(t.getAnmerkungen()) 
+						&& tierDB.getAge() == t.getAge()
+						&& tierDB.getSizeId() == t.getSizeId()
+						&& tierDB.getDiseasePattern().equals(t.getDiseasePattern())
+						&& tierDB.getEatingHabits().equals(t.getEatingHabits())
+						&& tierDB.getRun() == t.getRun()
+						&& tierDB.getContactPeople().equals(t.getContactPeople())
+						&& tierDB.getContactOtherPets().equals(t.getContactOtherPets())
+						&& tierDB.getRemarks().equals(t.getRemarks()) 
 						&& tierDB.getZusatzkosten() == t.getZusatzkosten())) {
 			testOk = false;
 			fehlertext = fehlertext + " \n getEntry Aufruf war falsch, nicht richtiges Tier ermittelt";
@@ -127,8 +127,8 @@ public class TierDataMapperDatabaseTest {
 
 		// Wenn Tier nun immernoch in Liste ist, war Test delete nicht
 		// erfolgreich
-		List<Tier> nachDeleteList = tba.getList();
-		for (Tier t2 : nachDeleteList) {
+		List<Pet> nachDeleteList = tba.getList();
+		for (Pet t2 : nachDeleteList) {
 			if (tierDB.getTierID() == t2.getTierID()) {
 				testOk = false;
 				fehlertext = fehlertext + " \n Deletemethode war falsch, tier immernoch in DB";

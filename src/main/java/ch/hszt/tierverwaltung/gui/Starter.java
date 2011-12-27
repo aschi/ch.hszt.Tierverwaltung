@@ -2,7 +2,7 @@ package ch.hszt.tierverwaltung.gui;
 
 import java.sql.SQLException;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 

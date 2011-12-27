@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 
 public class KundeDataMapperDatabaseTest {
@@ -16,35 +16,35 @@ public class KundeDataMapperDatabaseTest {
 
 		boolean testOk = true;
 		String fehlertext = "";
-		Kunde kunde =  null;
+		Customer kunde =  null;
 
 		KundeDataMapper tba = new KundeDataMapper();
 
 
 		// INSERT Test
 		//--------------
-		kunde = new Kunde("Schmid", "Adrian", "IrgendwoimAG", "AG-9999", "Baden", "0793003030", "Aaaaschiiiii@gmx.ch");
+		kunde = new Customer("Schmid", "Adrian", "IrgendwoimAG", "AG-9999", "Baden", "0793003030", "Aaaaschiiiii@gmx.ch");
 
 		// kunde in Datenbank schreiben
 		int id = tba.insert(kunde);
 		System.out.println("kunde id " + id);
 
-		List<Kunde> kundeList = tba.getList();
+		List<Customer> kundeList = tba.getList();
 		if (kundeList == null || kundeList.isEmpty()) {
 			testOk = false;
 			fehlertext = fehlertext + " \n Methodenaufruf getList war falsch";
 		}
 
-		Kunde kundeDB = null;
+		Customer kundeDB = null;
 
 		// kunde aus DB ermitteln
-		for (Kunde t : kundeList) {
+		for (Customer t : kundeList) {
 			if ((kunde.getName().equals(t.getName())
-					&& kunde.getVorname().equals(t.getVorname())
-					&& kunde.getAdresse().equals(t.getAdresse())
-					&& kunde.getPlz().equals(t.getPlz())
-					&& kunde.getOrt().equals(t.getOrt())
-					&& kunde.getTelefon().equals(t.getTelefon())
+					&& kunde.getFirstName().equals(t.getFirstName())
+					&& kunde.getAddress().equals(t.getAddress())
+					&& kunde.getZip().equals(t.getZip())
+					&& kunde.getCity().equals(t.getCity())
+					&& kunde.getPhoneNo().equals(t.getPhoneNo())
 					&& kunde.getEMail().equals(t.getEMail()))) {
 				kundeDB = t;
 			}
@@ -55,7 +55,7 @@ public class KundeDataMapperDatabaseTest {
 			testOk = false;
 			fehlertext = fehlertext + " \n Insert war falsch, Kunde nicht in Liste enthalten";
 		} else {
-			System.out.println("kunde id dbkunde " + kundeDB.getKundeID());
+			System.out.println("kunde id dbkunde " + kundeDB.getCustomerId());
 		}
 
 		// Test UPDATE
@@ -63,18 +63,18 @@ public class KundeDataMapperDatabaseTest {
 		kundeDB.setEMail("neueEmail@haha.de");
 		tba.update(kundeDB);
 
-		List<Kunde> kundeListUpdate = tba.getList();
-		Kunde kundeDBUpdate = null;
+		List<Customer> kundeListUpdate = tba.getList();
+		Customer kundeDBUpdate = null;
 		if (kundeListUpdate != null || !kundeListUpdate.isEmpty()) {
 
 			// kunde aus DB ermitteln
-			for (Kunde t : kundeListUpdate) {
+			for (Customer t : kundeListUpdate) {
 				if ((kundeDB.getName().equals(t.getName())
-						&& kundeDB.getVorname().equals(t.getVorname())
-						&& kundeDB.getAdresse().equals(t.getAdresse())
-						&& kundeDB.getPlz().equals(t.getPlz())
-						&& kundeDB.getOrt().equals(t.getOrt())
-						&& kundeDB.getTelefon().equals(t.getTelefon())
+						&& kundeDB.getFirstName().equals(t.getFirstName())
+						&& kundeDB.getAddress().equals(t.getAddress())
+						&& kundeDB.getZip().equals(t.getZip())
+						&& kundeDB.getCity().equals(t.getCity())
+						&& kundeDB.getPhoneNo().equals(t.getPhoneNo())
 						&& kundeDB.getEMail().equals(t.getEMail()))) {
 					kundeDBUpdate = t;
 				}
@@ -88,17 +88,17 @@ public class KundeDataMapperDatabaseTest {
 
 		//Test der Methode getEntry
 		//----------------------------------
-		Kunde t = tba.getEntry(kundeDB.getKundeID());
+		Customer t = tba.getEntry(kundeDB.getCustomerId());
 
 		// Wenn das kunde von getEntry nicht gleich unserem kunde ist, war Test
 		// falsch
 		if (t == null
 				|| !(kundeDB.getName().equals(t.getName())
-						&& kundeDB.getVorname().equals(t.getVorname())
-						&& kundeDB.getAdresse().equals(t.getAdresse())
-						&& kundeDB.getPlz().equals(t.getPlz())
-						&& kundeDB.getOrt().equals(t.getOrt())
-						&& kundeDB.getTelefon().equals(t.getTelefon())
+						&& kundeDB.getFirstName().equals(t.getFirstName())
+						&& kundeDB.getAddress().equals(t.getAddress())
+						&& kundeDB.getZip().equals(t.getZip())
+						&& kundeDB.getCity().equals(t.getCity())
+						&& kundeDB.getPhoneNo().equals(t.getPhoneNo())
 						&& kundeDB.getEMail().equals(t.getEMail()))) {
 			testOk = false;
 			fehlertext = fehlertext + " \n getEntry Aufruf war falsch, nicht richtiger Kunde ermittelt";
@@ -110,9 +110,9 @@ public class KundeDataMapperDatabaseTest {
 
 		// Wenn Kunde nun immernoch in Liste ist, war Test delete nicht
 		// erfolgreicht
-		List<Kunde> nachDeleteList = tba.getList();
-		for (Kunde t2 : nachDeleteList) {
-			if (kundeDB.getKundeID() == t2.getKundeID()) {
+		List<Customer> nachDeleteList = tba.getList();
+		for (Customer t2 : nachDeleteList) {
+			if (kundeDB.getCustomerId() == t2.getCustomerId()) {
 				testOk = false;
 				fehlertext = fehlertext + " \n Deletemethode war falsch, Kunde immernoch in DB";
 			}

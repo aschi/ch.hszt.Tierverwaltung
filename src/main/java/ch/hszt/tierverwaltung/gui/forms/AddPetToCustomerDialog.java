@@ -14,8 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
@@ -26,11 +26,11 @@ import ch.hszt.tierverwaltung.gui.listings.UnassignedPetsOverview;
 public class AddPetToCustomerDialog {
 	private MainGui gui;
 	private JFrame frame;
-	private Overview<Tier> o;
-	private Kunde customer;
+	private Overview<Pet> o;
+	private Customer customer;
 	private AssignedPetsOverview apo;
 	
-	public AddPetToCustomerDialog(MainGui gui, Kunde customer, AssignedPetsOverview apo) {
+	public AddPetToCustomerDialog(MainGui gui, Customer customer, AssignedPetsOverview apo) {
 		this.gui = gui;
 		this.customer = customer;
 		this.apo = apo;
@@ -71,7 +71,7 @@ public class AddPetToCustomerDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Tier t = o.getInput().get(o.getSelectedRow());
+				Pet t = o.getInput().get(o.getSelectedRow());
 				t.setFkKunde(customer.getID());
 				
 				try {
@@ -82,10 +82,10 @@ public class AddPetToCustomerDialog {
 					JOptionPane.showMessageDialog(frame, "Validation Exception. Stirb");
 				}
 				
-				customer.getTiere().add(t);
+				customer.getPets().add(t);
 				
 				frame.dispose();
-				apo.updateTableValues(customer.getTiere());
+				apo.updateTableValues(customer.getPets());
 			}
 
 		});
