@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Config;
-import ch.hszt.tierverwaltung.backend.Petplace;
-import ch.hszt.tierverwaltung.database.tierplatz.PetplaceDataMapper;
+import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 /**
@@ -13,7 +13,7 @@ import ch.hszt.tierverwaltung.gui.MainGui;
  * @author Aschi
  *
  */
-public class PetSpaceOverview extends Overview<Petplace>{
+public class PetSpaceOverview extends Overview<Petspace>{
 
 	/**
 	 * 
@@ -27,17 +27,18 @@ public class PetSpaceOverview extends Overview<Petplace>{
 	 */
 	public PetSpaceOverview(MainGui gui) throws SQLException {
 		super(gui);
-		setMapper(new PetplaceDataMapper());
+		setMapper(new PetspaceDataMapper());
 		setInput(getMapper().getList());
 		setUpTable();
 	}
 
 	/**
-	 * Constructor
+	 * Constructors
+	 * 
 	 * @param gui
 	 * @param input
 	 */
-	public PetSpaceOverview(MainGui gui, List<Petplace> input) {
+	public PetSpaceOverview(MainGui gui, List<Petspace> input) {
 		super(gui, input);
 		setUpTable();
 	}
@@ -47,16 +48,16 @@ public class PetSpaceOverview extends Overview<Petplace>{
 	 */
 	private void setUpTable() {
 		String[] columnNames = {"Geeignet für", "Grösse", "Anzahl Tiere", "Ausstattung", "Auslauf", "Auslauf Grösse"};
-		createTable(columnNames, getInput(), new Petplace(), null);
+		createTable(columnNames, getInput(), new Petspace(), null);
 	}
 	
 	@Override
-	public void updateTableValues(List<Petplace> input) {
+	public void updateTableValues(List<Petspace> input) {
 		super.updateTableValues(input);
 
 		String[] row = new String[6];
 		if (input != null && input.size() > 0) {
-			for (Petplace e : input) {
+			for (Petspace e : input) {
 				row[0] = Config.petSpaceSize[e.getAdaptedForPetID()];
 				row[1] = Integer.toString(e.getSize()) + "m²";
 				row[2] = Integer.toString(e.getNoOfPets());
@@ -72,7 +73,7 @@ public class PetSpaceOverview extends Overview<Petplace>{
 	public void updateTableValues() {
 		try {
 			if (getMapper() == null) {
-				setMapper(new PetplaceDataMapper());
+				setMapper(new PetspaceDataMapper());
 			}
 			updateTableValues(getMapper().getList());
 		} catch (SQLException e1) {

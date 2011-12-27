@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.tier;
+package ch.hszt.tierverwaltung.database.pet;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,26 +12,28 @@ import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 
-public final class TierDataMapper implements IDataMapper<Pet> {
+/**
+ * 
+ * @author prisi
+ *
+ */
+public final class PetDataMapper implements IDataMapper<Pet> {
 
 	DBConnection dbConnection = DBConnection.getInstance();
 
-	public TierDataMapper() {
+	/**
+	 * Default Constructor
+	 */
+	public PetDataMapper() {
 
 	}
 
-	/**
-	 * Fügt einen neuen Tiereintrag in die Datenbank tier ein.
-	 * 
-	 * @param tier
-	 *            Tiereintrag welcher in die Datenbank eingefügt werden soll
-	 * @throws SQLException
-	 */
+
 	@Override
 	public int insert(Pet entry) throws SQLException {
 		String sql;
 		ResultSet rs = null;
-		sql = "INSERT INTO 'tier' VALUES (null, null, '" + entry.getSpecies()
+		sql = "INSERT INTO 'pet' VALUES (null, null, '" + entry.getSpecies()
 				+ "', " + "\'" + entry.getRace() + "\', \'" + entry.getName()
 				+ "\', " + entry.getAge() + ", " + entry.getSizeId()
 				+ ", \'" + entry.getDiseasePattern() + "\', \'"
@@ -44,7 +46,7 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 		stmt.executeUpdate(sql);
 
 		PreparedStatement pstmt = dbConnection.getConn()
-				.prepareStatement("select max(tierID) max from 'tier';");
+				.prepareStatement("select max(petId) max from 'pet';");
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
 			return rs.getInt("max");
@@ -57,19 +59,19 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	@Override
 	public void update(Pet entry) throws SQLException {
 		String sql;
-		sql = "UPDATE 'tier' SET " + "fkKunde = " + entry.getFkCustomer() + ", "
-				+ "art = '" + entry.getSpecies() + "', " + "rasse = \'"
+		sql = "UPDATE 'pet' SET " + "fkCustomer = " + entry.getFkCustomer() + ", "
+				+ "species = '" + entry.getSpecies() + "', " + "race = \'"
 				+ entry.getRace() + "\', " + "name = \'" + entry.getName()
-				+ "\', " + "tieralter = " + entry.getAge() + ", "
-				+ "groesseID = " + entry.getSizeId() + ", "
-				+ "krankheitsbild = \'" + entry.getDiseasePattern() + "\', "
-				+ "essgewohnheit = \'" + entry.getEatingHabits() + "\', "
-				+ "auslauf = \'" + entry.getRun() + "\', "
-				+ "umgangTier = \'" + entry.getContactOtherPets() + "\', "
-				+ "umgangMensch = \'" + entry.getContactPeople() + "\', "
-				+ "anmerkungen = \'" + entry.getRemarks() + "\', "
-				+ "zusatzkosten = " + entry.getAdditionalCosts()
-				+ " WHERE tierID = " + entry.getPetId() + ";";
+				+ "\', " + "age = " + entry.getAge() + ", "
+				+ "sizeId = " + entry.getSizeId() + ", "
+				+ "diseasePattern = \'" + entry.getDiseasePattern() + "\', "
+				+ "eatingHabits = \'" + entry.getEatingHabits() + "\', "
+				+ "run = \'" + entry.getRun() + "\', "
+				+ "contactOtherPets = \'" + entry.getContactOtherPets() + "\', "
+				+ "contactPeople = \'" + entry.getContactPeople() + "\', "
+				+ "remarks = \'" + entry.getRemarks() + "\', "
+				+ "additionalCosts = " + entry.getAdditionalCosts()
+				+ " WHERE petId = " + entry.getPetId() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -84,7 +86,7 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	 */
 	public ArrayList<Pet> getUnassignedPets() throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier' WHERE fkKunde < 1 OR fkKunde is null;";
+		sql = "SELECT * FROM 'pet' WHERE fkCustomer < 1 OR fkCustomer is null;";
 		System.out.println(sql);
 
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -100,15 +102,15 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 		ArrayList<Pet> tierarray = new ArrayList<Pet>();
 		
 		while (rs.next()) {
-			char[] auslauf = rs.getString("auslauf").toCharArray();
+			char[] run = rs.getString("run").toCharArray();
 
-			Pet tier = new Pet(rs.getInt("tierID"), rs.getInt("fkKunde"),
-					rs.getString("art"), rs.getString("rasse"),
-					rs.getString("name"), rs.getInt("tieralter"),
-					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
-					rs.getString("essgewohnheit"), auslauf[0],
-					rs.getString("umgangTier"), rs.getString("umgangMensch"),
-					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
+			Pet tier = new Pet(rs.getInt("petId"), rs.getInt("fkCustomer"),
+					rs.getString("species"), rs.getString("race"),
+					rs.getString("name"), rs.getInt("age"),
+					rs.getInt("sizeId"), rs.getString("diseasePattern"),
+					rs.getString("eatingHabits"), run[0],
+					rs.getString("contactOtherPets"), rs.getString("contactPeople"),
+					rs.getString("remarks"), rs.getDouble("additionalCosts"));
 
 			tierarray.add(tier);
 		}
@@ -116,33 +118,19 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 		return tierarray;
 	}
 
-	/**
-	 * Diese Methode löscht einen Tiereintrag aus der Tabelle tier
-	 * 
-	 * @param tier
-	 *            Tiereintrag, welcher gelöscht werden soll
-	 * @throws SQLException
-	 */
 	@Override
 	public void delete(Pet entry) throws SQLException {
 		String sql;
-		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getPetId() + ";";
+		sql = "DELETE FROM 'pet' WHERE petId = " + entry.getPetId() + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 	}
 
-	/**
-	 * Diese Methode liefert eine ArrayList aller Tiereinträge zurück, welche in
-	 * der Tabelle tier enthalten sind
-	 * 
-	 * @return Tiereinträge, welche in der Tabelle tier enthalten sind
-	 * @throws SQLException
-	 */
 	@Override
 	public List<Pet> getList() throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier';";
+		sql = "SELECT * FROM 'pet';";
 		System.out.println(sql);
 
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -154,22 +142,22 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	@Override
 	public Pet getEntry(int id) throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier' WHERE tierID = " + id + ";";
+		sql = "SELECT * FROM 'pet' WHERE petId = " + id + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		;
 
 		while (rs.next()) {
-			char[] auslauf = rs.getString("auslauf").toCharArray();
+			char[] run = rs.getString("run").toCharArray();
 
-			Pet tier = new Pet(rs.getInt("tierID"), rs.getInt("fkKunde"),
-					rs.getString("art"), rs.getString("rasse"),
-					rs.getString("name"), rs.getInt("tieralter"),
-					rs.getInt("groesseID"), rs.getString("krankheitsbild"),
-					rs.getString("essgewohnheit"), auslauf[0],
-					rs.getString("umgangTier"), rs.getString("umgangMensch"),
-					rs.getString("anmerkungen"), rs.getDouble("zusatzkosten"));
+			Pet tier = new Pet(rs.getInt("petId"), rs.getInt("fkCustomer"),
+					rs.getString("species"), rs.getString("race"),
+					rs.getString("name"), rs.getInt("age"),
+					rs.getInt("sizeId"), rs.getString("diseasePattern"),
+					rs.getString("eatingHabits"), run[0],
+					rs.getString("contactOtherPets"), rs.getString("contactPeople"),
+					rs.getString("remarks"), rs.getDouble("additionalCosts"));
 
 			return tier;
 		}
@@ -177,9 +165,15 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 		return null;
 	}
 
-	public ArrayList<Pet> getTiereZuKunde(int kundeID) throws SQLException {
+	/**
+	 * Returns a list with all pets which belongs the the given customer
+	 * @param customerId the given customer
+	 * @return a List with all Pets which belongs to the given customer
+	 * @throws SQLException
+	 */
+	public ArrayList<Pet> getPetsFromCustomer(int customerId) throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'tier' WHERE fkKunde = " + kundeID + ";";
+		sql = "SELECT * FROM 'pet' WHERE fkCustomer = " + customerId + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);

@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.backend.Petplace;
+import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.gui.listings.CustomerOverview;
 import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
 import ch.hszt.tierverwaltung.gui.listings.PetOverview;
@@ -58,7 +58,7 @@ public class MainGui {
 			cards = new JPanel(new CardLayout());
 			cards.add(to, Pet.class.getSimpleName());
 			cards.add(ko, Customer.class.getSimpleName());
-			cards.add(pso, Petplace.class.getSimpleName());
+			cards.add(pso, Petspace.class.getSimpleName());
 						
 			frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);
 		} catch (SQLException e1) {

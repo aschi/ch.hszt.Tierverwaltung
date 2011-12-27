@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.listings.AssignedPetsOverview;
 import ch.hszt.tierverwaltung.gui.listings.Overview;
@@ -75,7 +75,7 @@ public class AddPetToCustomerDialog {
 				t.setFkCustomer(customer.getID());
 				
 				try {
-					new TierDataMapper().save(t);
+					new PetDataMapper().save(t);
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(frame, "SQL Exception. Stirb");
 				} catch (ValidationException e) {

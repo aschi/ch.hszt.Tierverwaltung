@@ -7,13 +7,13 @@ import javax.swing.JPanel;
 
 import ch.hszt.tierverwaltung.backend.Config;
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class PetOverview extends Overview<Pet> {
 	public PetOverview(MainGui gui) throws SQLException {
 		super(gui);
-		setMapper(new TierDataMapper());
+		setMapper(new PetDataMapper());
 		setInput(getMapper().getList());
 		setUpTable();
 	}
@@ -55,7 +55,7 @@ public class PetOverview extends Overview<Pet> {
 	public void updateTableValues() {
 		try {
 			if (getMapper() == null) {
-				setMapper(new TierDataMapper());
+				setMapper(new PetDataMapper());
 			}
 			updateTableValues(getMapper().getList());
 		} catch (SQLException e1) {

@@ -20,8 +20,8 @@ import javax.swing.SpringLayout;
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.customer.CustomerDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 import ch.hszt.tierverwaltung.gui.listings.AssignedPetsOverview;
 
@@ -138,7 +138,7 @@ public class GuiCustomerEntry {
 						customer = new Customer();
 					}
 					createKundeValue();
-					new KundeDataMapper().save(customer);
+					new CustomerDataMapper().save(customer);
 
 					synchronized (gui.getOverviewUpdater()) {
 						gui.getOverviewUpdater().notify();
@@ -169,7 +169,7 @@ public class GuiCustomerEntry {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new KundeDataMapper().delete(customer);
+					new CustomerDataMapper().delete(customer);
 
 					synchronized (gui.getOverviewUpdater()) {
 						gui.getOverviewUpdater().notify();
@@ -249,7 +249,7 @@ public class GuiCustomerEntry {
 				Pet t = customer.getPets().get(petTable.getSelectedRow());
 				t.setFkCustomer(-1);
 				try {
-					new TierDataMapper().save(t);
+					new PetDataMapper().save(t);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

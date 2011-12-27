@@ -6,11 +6,11 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class PetplaceTest {
+public class PetspaceTest {
 	
 	@Test
 	public void validateOkTest() {
-		Petplace tierplatz = new Petplace(2, 200, "Schöne Möbel zum Verkratzen", 7, '1', 300);
+		Petspace tierplatz = new Petspace(2, 200, "Schöne Möbel zum Verkratzen", 7, '1', 300);
 		
 		ValidationException ve = null;
 		try {
@@ -25,7 +25,7 @@ public class PetplaceTest {
 
 	@Test
 	public void validateGeeignetFuerTierIDNokTest() {
-		Petplace tierplatz = new Petplace(0, 200, "Schöne Möbel zum Verkratzen", 7, '1', 300);
+		Petspace tierplatz = new Petspace(0, 200, "Schöne Möbel zum Verkratzen", 7, '1', 300);
 		
 		List<String> ve = null;
 		try {
@@ -39,7 +39,7 @@ public class PetplaceTest {
 	
 	@Test
 	public void validateGroesseNokTest() {
-		Petplace tierplatz = new Petplace(2, 0, "Schöne Möbel zum Verkratzen", 7, '1', 300);
+		Petspace tierplatz = new Petspace(2, 0, "Schöne Möbel zum Verkratzen", 7, '1', 300);
 		
 		List<String> ve = null;
 		try {
@@ -52,7 +52,7 @@ public class PetplaceTest {
 
 	@Test
 	public void validateAusstattungNokTest() {
-		Petplace tierplatz = new Petplace(2, 10, "", 7, '1', 300);
+		Petspace tierplatz = new Petspace(2, 10, "", 7, '1', 300);
 		
 		List<String> ve = null;
 		try {
@@ -66,7 +66,7 @@ public class PetplaceTest {
 	
 	@Test
 	public void validateAnzahlTiereNokTest() {
-		Petplace tierplatz = new Petplace(2, 10, "Schöne Möbel zum Verkratzen", 0, '1', 300);
+		Petspace tierplatz = new Petspace(2, 10, "Schöne Möbel zum Verkratzen", 0, '1', 300);
 		
 		List<String> ve = null;
 		try {
@@ -80,7 +80,7 @@ public class PetplaceTest {
 	
 	@Test
 	public void validateAuslaufNokTest() {
-		Petplace tierplatz = new Petplace(2, 10, "Schöne Möbel zum Verkratzen", 10, '5', 300);
+		Petspace tierplatz = new Petspace(2, 10, "Schöne Möbel zum Verkratzen", 10, '5', 300);
 		
 		List<String> ve = null;
 		try {
@@ -94,7 +94,7 @@ public class PetplaceTest {
 
 	@Test
 	public void validateAuslaufOhneGroesseNokTest() {
-		Petplace tierplatz = new Petplace(2, 10, "Schöne Möbel zum Verkratzen", 10, '1', 0);
+		Petspace tierplatz = new Petspace(2, 10, "Schöne Möbel zum Verkratzen", 10, '1', 0);
 		
 		List<String> ve = null;
 		try {
@@ -109,7 +109,7 @@ public class PetplaceTest {
 
 	@Test
 	public void validateAuslaufGroesseMitAuslaufNeinNokTest() {
-		Petplace tierplatz = new Petplace(2, 10, "Schöne Möbel zum Verkratzen", 10, '0', 20);
+		Petspace tierplatz = new Petspace(2, 10, "Schöne Möbel zum Verkratzen", 10, '0', 20);
 		
 		List<String> ve = null;
 		try {

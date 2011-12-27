@@ -10,7 +10,7 @@ import javax.swing.tree.TreePath;
 
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.backend.Petplace;
+import ch.hszt.tierverwaltung.backend.Petspace;
 
 public class Navigation {
 	private JTree tree;
@@ -59,7 +59,7 @@ public class Navigation {
 						} else if (node.toString().equals("Kunden")) {
 							gui.selectOverview(Customer.class.getSimpleName());
 						} else if (node.toString().equals("Tierplatz")) {
-							gui.selectOverview(Petplace.class.getSimpleName());
+							gui.selectOverview(Petspace.class.getSimpleName());
 						}
 					}
 				}

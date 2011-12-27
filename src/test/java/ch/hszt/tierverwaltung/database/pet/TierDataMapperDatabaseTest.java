@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.tier;
+package ch.hszt.tierverwaltung.database.pet;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 
 public class TierDataMapperDatabaseTest {
 
@@ -18,7 +18,7 @@ public class TierDataMapperDatabaseTest {
 		String fehlertext = "";
 		Pet tier =  null;
 
-		TierDataMapper tba = new TierDataMapper();
+		PetDataMapper tba = new PetDataMapper();
 
 
 		// INSERT Test
@@ -140,7 +140,7 @@ public class TierDataMapperDatabaseTest {
 	}
 
 //	public static void main(String[] args) {
-//		TierDatabaseAccessTest test = new TierDatabaseAccessTest();
+//		TierDataMapperDatabaseTest test = new TierDataMapperDatabaseTest();
 //		try {
 //			test.testInsertUpdateDeleteTier();
 //		} catch (Exception e) {

@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.tierplatz;
+package ch.hszt.tierverwaltung.database.petspace;
 
 
 import java.util.List;
@@ -7,38 +7,39 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Petplace;
+import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 
-public class PetplaceDataMapperDatabaseTest {
+public class PetspaceDataMapperDatabaseTest {
 
 	@Test
 	public void testInsertUpdateDeletePetplace() throws Exception {
 
 		boolean testOk = true;
 		String errorMessage = "";
-		Petplace petplace =  null;
+		Petspace petplace =  null;
 
-		PetplaceDataMapper tba = new PetplaceDataMapper();
+		PetspaceDataMapper tba = new PetspaceDataMapper();
 
 
 		// INSERT Test
 		//--------------
-		petplace = new Petplace(1, 10, "2 Hütte, Wasserspender", 4, '1', 30);
+		petplace = new Petspace(1, 10, "2 Hütte, Wasserspender", 4, '1', 30);
 
 		// Tier in Datenbank schreiben
 		int id = tba.insert(petplace);
 		System.out.println("petplace id " + id);
 
-		List<Petplace> petplaceList = tba.getList();
+		List<Petspace> petplaceList = tba.getList();
 		if (petplaceList == null || petplaceList.isEmpty()) {
 			testOk = false;
 			errorMessage = errorMessage + " \n method call getList was not successful";
 		}
 
-		Petplace petplaceFromDb = null;
+		Petspace petplaceFromDb = null;
 
 		// Tier aus DB ermitteln
-		for (Petplace t : petplaceList) {
+		for (Petspace t : petplaceList) {
 			if (petplace.getAdaptedForPetID() == t.getAdaptedForPetID()
 					&& petplace.getSize() == t.getSize()
 					&& petplace.getEquipment().equals(t.getEquipment())
@@ -62,12 +63,12 @@ public class PetplaceDataMapperDatabaseTest {
 		petplaceFromDb.setEquipment(petplaceFromDb.getEquipment() + " + Futternapf");
 		tba.update(petplaceFromDb);
 
-		List<Petplace> petplaceListUpdate = tba.getList();
-		Petplace tierplatzDBUpdate = null;
+		List<Petspace> petplaceListUpdate = tba.getList();
+		Petspace tierplatzDBUpdate = null;
 		if (petplaceListUpdate != null || !petplaceListUpdate.isEmpty()) {
 
 			// Tier aus DB ermitteln
-			for (Petplace t : petplaceListUpdate) {
+			for (Petspace t : petplaceListUpdate) {
 				if ((petplaceFromDb.getAdaptedForPetID() == t.getAdaptedForPetID()
 						&& petplaceFromDb.getSize() == t.getSize()
 						&& petplaceFromDb.getEquipment().equals(t.getEquipment())
@@ -86,7 +87,7 @@ public class PetplaceDataMapperDatabaseTest {
 
 		//Test der Methode getEntry
 		//----------------------------------
-		Petplace t = tba.getEntry(petplaceFromDb.getID());
+		Petspace t = tba.getEntry(petplaceFromDb.getID());
 
 		// Wenn das Tier von getEntry nicht gleich unserem Tier ist, war Test
 		// falsch
@@ -107,8 +108,8 @@ public class PetplaceDataMapperDatabaseTest {
 
 		// Wenn Tier nun immernoch in Liste ist, war Test delete nicht
 		// erfolgreich
-		List<Petplace> nachDeleteList = tba.getList();
-		for (Petplace t2 : nachDeleteList) {
+		List<Petspace> nachDeleteList = tba.getList();
+		for (Petspace t2 : nachDeleteList) {
 			if (petplaceFromDb.getID() == t2.getID()) {
 				testOk = false;
 				errorMessage = errorMessage + " \n Delete method call was not successfully";

@@ -3,7 +3,7 @@ package ch.hszt.tierverwaltung.gui.forms;
 import ch.hszt.tierverwaltung.backend.IPublicCloneable;
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.backend.Petplace;
+import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class FormBuilder<T extends IPublicCloneable> {
@@ -19,8 +19,8 @@ public class FormBuilder<T extends IPublicCloneable> {
 			new GuiPetEntry((Pet)object, gui);
 		}else if(object instanceof Customer){
 			new GuiCustomerEntry((Customer)object, gui);
-		}else if(object instanceof Petplace){
-			new GuiPetplaceEntry((Petplace)object, gui);
+		}else if(object instanceof Petspace){
+			new GuiPetspaceEntry((Petspace)object, gui);
 		}else{
 			System.out.println("NYI");
 		}

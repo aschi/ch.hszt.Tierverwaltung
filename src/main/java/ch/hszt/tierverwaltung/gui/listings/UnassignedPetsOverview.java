@@ -7,16 +7,16 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class UnassignedPetsOverview extends Overview<Pet> {
 	
 	public UnassignedPetsOverview(MainGui gui, JPanel buttonPane) throws SQLException {
 		super(gui);
-		setMapper(new TierDataMapper());
-		setInput(((TierDataMapper)getMapper()).getUnassignedPets());
-		System.out.println("Unassigned pets: " + ((TierDataMapper)getMapper()).getUnassignedPets().size());
+		setMapper(new PetDataMapper());
+		setInput(((PetDataMapper)getMapper()).getUnassignedPets());
+		System.out.println("Unassigned pets: " + ((PetDataMapper)getMapper()).getUnassignedPets().size());
 		setUpTable(buttonPane);		
 	}
 
@@ -42,10 +42,10 @@ public class UnassignedPetsOverview extends Overview<Pet> {
 	public void updateTableValues() {
 		try {
 			if(getMapper() == null){
-				setMapper(new TierDataMapper());
+				setMapper(new PetDataMapper());
 			}
-			updateTableValues(((TierDataMapper)getMapper()).getUnassignedPets());
-			System.out.println("Unassigned pets: " + ((TierDataMapper)getMapper()).getUnassignedPets().size());
+			updateTableValues(((PetDataMapper)getMapper()).getUnassignedPets());
+			System.out.println("Unassigned pets: " + ((PetDataMapper)getMapper()).getUnassignedPets().size());
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

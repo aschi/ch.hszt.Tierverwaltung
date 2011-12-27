@@ -5,14 +5,14 @@ import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
-import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
+import ch.hszt.tierverwaltung.database.customer.CustomerDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class CustomerOverview extends Overview<Customer>{
 
 	public CustomerOverview(MainGui gui) throws SQLException{
 		super(gui);
-		setMapper(new KundeDataMapper());
+		setMapper(new CustomerDataMapper());
 		setInput(getMapper().getList());
 		setUpTable();
 	}
@@ -58,7 +58,7 @@ public class CustomerOverview extends Overview<Customer>{
 	public void updateTableValues(){
 		try {
 			if(getMapper() == null){
-				setMapper(new KundeDataMapper());
+				setMapper(new CustomerDataMapper());
 			}
 			updateTableValues(getMapper().getList());
 		} catch (SQLException e1) {

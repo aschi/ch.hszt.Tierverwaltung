@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.kunde;
+package ch.hszt.tierverwaltung.database.customer;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import ch.hszt.tierverwaltung.backend.Customer;
-import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 
 public class CustomerDataMapperDatabaseTest {
 
@@ -18,7 +17,7 @@ public class CustomerDataMapperDatabaseTest {
 		String errorMessage = "";
 		Customer customer =  null;
 
-		KundeDataMapper tba = new KundeDataMapper();
+		CustomerDataMapper tba = new CustomerDataMapper();
 
 
 		// INSERT Test
@@ -119,11 +118,11 @@ public class CustomerDataMapperDatabaseTest {
 		TestCase.assertEquals(errorMessage, true, testOk);
 
 	}
-
+//
 //	public static void main(String[] args) {
-//		KundeDatabaseAccessTest test = new KundeDatabaseAccessTest();
+//		CustomerDataMapperDatabaseTest test = new CustomerDataMapperDatabaseTest();
 //		try {
-//			test.testInsertUpdateDeleteKunde();
+//			test.testInsertUpdateDeleteCustomer();
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			  e.printStackTrace();

@@ -23,7 +23,7 @@ import javax.swing.SpringLayout;
 import ch.hszt.tierverwaltung.backend.Config;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class GuiPetEntry {
@@ -48,7 +48,7 @@ public class GuiPetEntry {
       private JButton saveButton;
       private JButton deleteButton;
       
-      private TierDataMapper tdm;
+      private PetDataMapper tdm;
       
      
 
@@ -56,7 +56,7 @@ public class GuiPetEntry {
 
           this.gui = gui;  
     	  fensterErzeugen();
-    	  tdm = new TierDataMapper();
+    	  tdm = new PetDataMapper();
             
       }
       
@@ -64,7 +64,7 @@ public class GuiPetEntry {
     	  this(gui);
     	  this.tier = tier;
     	  loadTierValue();
-    	  tdm = new TierDataMapper();
+    	  tdm = new PetDataMapper();
     	  
       }
       

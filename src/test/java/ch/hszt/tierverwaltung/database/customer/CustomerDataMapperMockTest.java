@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.kunde;
+package ch.hszt.tierverwaltung.database.customer;
 
 import java.sql.SQLException;
 

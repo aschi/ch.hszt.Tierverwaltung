@@ -1,4 +1,4 @@
-package ch.hszt.tierverwaltung.database.kunde;
+package ch.hszt.tierverwaltung.database.customer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,29 +12,30 @@ import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
-import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 
-public final class KundeDataMapper implements IDataMapper<Customer> {
+/**
+ * 
+ * @author prisi
+ *
+ */
+public final class CustomerDataMapper implements IDataMapper<Customer> {
 
 	DBConnection dbConnection = DBConnection.getInstance();
 
-	public KundeDataMapper() {
+	/**
+	 * Constructor
+	 */
+	public CustomerDataMapper() {
 
 	}
 
-	/**
-	 * Fügt einen neuen Kundeneintrag in die Datenbank kunde ein.
-	 * 
-	 * @param kunde
-	 *            Kundeneintrag welcher in die Datenbank eingefügt werden soll
-	 * @throws SQLException
-	 */
 	@Override
 	public int insert(Customer entry) throws SQLException {
 
 		String sql;
 		ResultSet rs = null;
-		sql = "INSERT INTO 'kunde' VALUES (null, '" + entry.getName() + "', "
+		sql = "INSERT INTO 'customer' VALUES (null, '" + entry.getName() + "', "
 				+ "\'" + entry.getFirstName() + "\', \'" + entry.getAddress()
 				+ "\', '" + entry.getZip() + "\', \'" + entry.getCity()
 				+ "\', \'" + entry.getPhoneNo() + "\', \'" + entry.getEMail()
@@ -44,7 +45,7 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 		stmt.executeUpdate(sql);
 
 		PreparedStatement pstmt = dbConnection.getConn().prepareStatement(
-				"select max(kundeID) max from 'kunde';");
+				"select max(customerId) max from 'customer';");
 		rs = pstmt.executeQuery();
 		if (rs.next()) {
 			;
@@ -57,13 +58,13 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 	@Override
 	public void update(Customer entry) throws SQLException {
 		String sql;
-		sql = "UPDATE 'kunde' SET " + "name = \'" + entry.getName() + "\', "
-				+ "vorname = '" + entry.getFirstName() + "', " + "adresse = \'"
-				+ entry.getAddress() + "\', " + "plz = \'" + entry.getZip()
-				+ "\', " + "ort = \'" + entry.getCity() + "\', "
-				+ "telefon = \'" + entry.getPhoneNo() + "\', " + "eMail = \'"
+		sql = "UPDATE 'customer' SET " + "name = \'" + entry.getName() + "\', "
+				+ "firstName = '" + entry.getFirstName() + "', " + "address = \'"
+				+ entry.getAddress() + "\', " + "zip = \'" + entry.getZip()
+				+ "\', " + "city = \'" + entry.getCity() + "\', "
+				+ "phoneNo = \'" + entry.getPhoneNo() + "\', " + "eMail = \'"
 				+ entry.getEMail() + "\'" + 
-				"WHERE kundeID = " + entry.getID() + ";";
+				"WHERE customerId = " + entry.getID() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -71,20 +72,13 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 
 	}
 
-	/**
-	 * Diese Methode löscht einen Kundeneintrag aus der Tabelle kunde
-	 * 
-	 * @param kunde
-	 *            Kundeneintrag, welcher gelöscht werden soll
-	 * @throws SQLException
-	 */
 	@Override
 	public void delete(Customer entry) throws SQLException {
 		//Beziehungen zum Tier entfernen
 		for(Pet t : entry.getPets()){
 			t.setFkCustomer(-1);
 			try {
-				new TierDataMapper().save(t);
+				new PetDataMapper().save(t);
 			} catch (ValidationException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -92,23 +86,17 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 		}
 		
 		String sql;
-		sql = "DELETE FROM 'kunde' WHERE kundeID = " + entry.getCustomerId() + ";";
+		sql = "DELETE FROM 'customer' WHERE customerId = " + entry.getCustomerId() + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
 	}
 
-	/**
-	 * Diese Methode liefert eine ArrayList aller Kundeneinträge zurück, welche
-	 * in der Tabelle kunde enthalten sind
-	 * 
-	 * @return Kundeneinträge, welche in der Tabelle kunde enthalten sind
-	 * @throws SQLException
-	 */
+
 	@Override
 	public List<Customer> getList() throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'kunde';";
+		sql = "SELECT * FROM 'customer';";
 		System.out.println(sql);
 
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -117,12 +105,12 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 
 		while (rs.next()) {
 
-			Customer kunde = new Customer(rs.getInt("kundeID"), rs.getString("name"),
-					rs.getString("vorname"), rs.getString("adresse"),
-					rs.getString("plz"), rs.getString("ort"),
-					rs.getString("telefon"), rs.getString("eMail"));
+			Customer kunde = new Customer(rs.getInt("customerId"), rs.getString("name"),
+					rs.getString("firstName"), rs.getString("address"),
+					rs.getString("zip"), rs.getString("city"),
+					rs.getString("phoneNo"), rs.getString("eMail"));
 
-			kunde.setPets(new TierDataMapper().getTiereZuKunde(kunde
+			kunde.setPets(new PetDataMapper().getPetsFromCustomer(kunde
 					.getCustomerId()));
 
 			kundenarray.add(kunde);
@@ -133,7 +121,7 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 	@Override
 	public Customer getEntry(int id) throws SQLException {
 		String sql;
-		sql = "SELECT * FROM 'kunde' WHERE kundeID = " + id + ";";
+		sql = "SELECT * FROM 'customer' WHERE customerId = " + id + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
@@ -141,10 +129,10 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 
 		while (rs.next()) {
 
-			Customer kunde = new Customer(rs.getInt("kundeID"), rs.getString("name"),
-					rs.getString("vorname"), rs.getString("adresse"),
-					rs.getString("plz"), rs.getString("ort"),
-					rs.getString("telefon"), rs.getString("eMail"));
+			Customer kunde = new Customer(rs.getInt("customerId"), rs.getString("name"),
+					rs.getString("firstName"), rs.getString("address"),
+					rs.getString("zip"), rs.getString("city"),
+					rs.getString("phoneNo"), rs.getString("eMail"));
 
 			return kunde;
 		}

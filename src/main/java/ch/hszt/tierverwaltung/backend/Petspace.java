@@ -7,7 +7,7 @@ package ch.hszt.tierverwaltung.backend;
  * 
  */
 
-public class Petplace implements IDataRecord {
+public class Petspace implements IDataRecord {
 	
 	private int adaptedForPetID;
 	private int size;
@@ -20,7 +20,7 @@ public class Petplace implements IDataRecord {
 	/**
 	 * Default constructor
 	 */
-	public Petplace() {
+	public Petspace() {
 		//Initialise String
 		equipment = "";
 	}
@@ -34,7 +34,7 @@ public class Petplace implements IDataRecord {
 	 * @param run
 	 * @param runSize
 	 */
-	public Petplace(int adaptedForPetID, int size, String equipment,
+	public Petspace(int adaptedForPetID, int size, String equipment,
 			int noOfPets, char run, int runSize) {
 		this.adaptedForPetID = adaptedForPetID;
 		this.size = size;
@@ -54,7 +54,7 @@ public class Petplace implements IDataRecord {
 	 * @param runSize
 	 * @param id
 	 */
-	public Petplace(int adaptedForPetID, int size, String equipment,
+	public Petspace(int adaptedForPetID, int size, String equipment,
 			int noOfPets, char run, int runSize, int id) {
 		this(adaptedForPetID, size, equipment, noOfPets, run, runSize);
 		this.id = id;
@@ -211,7 +211,7 @@ public class Petplace implements IDataRecord {
 	
 	@Override
 	public Object clone(){
-		return new Petplace(this.getAdaptedForPetID(), this.getSize(), new String(this.getEquipment()), 
+		return new Petspace(this.getAdaptedForPetID(), this.getSize(), new String(this.getEquipment()), 
 				this.getNoOfPets(), this.getRun(), this.getRunSize());
 	}
 	

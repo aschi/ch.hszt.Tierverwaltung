@@ -20,9 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import ch.hszt.tierverwaltung.backend.Config;
-import ch.hszt.tierverwaltung.backend.Petplace;
+import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.backend.ValidationException;
-import ch.hszt.tierverwaltung.database.tierplatz.PetplaceDataMapper;
+import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 /**
@@ -30,7 +30,7 @@ import ch.hszt.tierverwaltung.gui.MainGui;
  * @author Corinne
  *
  */
-public class GuiPetplaceEntry {
+public class GuiPetspaceEntry {
 	private JFrame frame;
 	private JPanel panel;
 
@@ -44,17 +44,17 @@ public class GuiPetplaceEntry {
 	private JButton saveButton;
 	private JButton deleteButton;
 
-	private PetplaceDataMapper tdm;
+	private PetspaceDataMapper tdm;
 	private MainGui gui;
-	private Petplace petSpace;
+	private Petspace petSpace;
 
-	public GuiPetplaceEntry(MainGui gui) {
+	public GuiPetspaceEntry(MainGui gui) {
 		this.gui = gui;
 		fensterErzeugen();
-		tdm = new PetplaceDataMapper();
+		tdm = new PetspaceDataMapper();
 	}
 
-	public GuiPetplaceEntry(Petplace petSpace, MainGui gui) {
+	public GuiPetspaceEntry(Petspace petSpace, MainGui gui) {
 		this(gui);
 		this.petSpace = petSpace;
 		loadPetSpace();
@@ -180,7 +180,7 @@ public class GuiPetplaceEntry {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (petSpace == null) {
-						petSpace = new Petplace();
+						petSpace = new Petspace();
 					}
 					writePetSpace();
 					tdm.save(petSpace);
