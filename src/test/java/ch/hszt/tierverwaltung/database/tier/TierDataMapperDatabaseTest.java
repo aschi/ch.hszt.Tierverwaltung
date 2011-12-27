@@ -52,7 +52,7 @@ public class TierDataMapperDatabaseTest {
 					&& tier.getContactPeople().equals(t.getContactPeople())
 					&& tier.getContactOtherPets().equals(t.getContactOtherPets())
 					&& tier.getRemarks().equals(t.getRemarks()) && tier
-						.getZusatzkosten() == t.getZusatzkosten())) {
+						.getAdditionalCosts() == t.getAdditionalCosts())) {
 				tierDB = t;
 			}
 		}
@@ -87,7 +87,7 @@ public class TierDataMapperDatabaseTest {
 						&& tierDB.getContactPeople().equals(t.getContactPeople())
 						&& tierDB.getContactOtherPets().equals(t.getContactOtherPets())
 						&& tierDB.getRemarks().equals(t.getRemarks()) 
-						&& tierDB.getZusatzkosten() == t.getZusatzkosten())) {
+						&& tierDB.getAdditionalCosts() == t.getAdditionalCosts())) {
 					tierDBUpdate = t;
 				}
 			}
@@ -116,7 +116,7 @@ public class TierDataMapperDatabaseTest {
 						&& tierDB.getContactPeople().equals(t.getContactPeople())
 						&& tierDB.getContactOtherPets().equals(t.getContactOtherPets())
 						&& tierDB.getRemarks().equals(t.getRemarks()) 
-						&& tierDB.getZusatzkosten() == t.getZusatzkosten())) {
+						&& tierDB.getAdditionalCosts() == t.getAdditionalCosts())) {
 			testOk = false;
 			fehlertext = fehlertext + " \n getEntry Aufruf war falsch, nicht richtiges Tier ermittelt";
 		}
