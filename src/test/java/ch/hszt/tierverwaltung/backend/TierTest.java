@@ -6,14 +6,14 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
 public class TierTest {
 
 	@Test
 	public void validateOkTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -30,7 +30,7 @@ public class TierTest {
 
 	@Test
 	public void validateArtNokTest() {
-		Tier tier = new Tier(null, "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet(null, "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -46,7 +46,7 @@ public class TierTest {
 	
 	@Test
 	public void validateRasseNokTest() {
-		Tier tier = new Tier("Hund", "", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -62,7 +62,7 @@ public class TierTest {
 
 	@Test
 	public void validateNameNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -78,7 +78,7 @@ public class TierTest {
 	
 	@Test
 	public void validateAuslaufNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '3', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -94,7 +94,7 @@ public class TierTest {
 	
 	@Test
 	public void validateAnmerkungNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", null, 3.80);
 		
@@ -110,7 +110,7 @@ public class TierTest {
 
 	@Test
 	public void validateEssgewohnheitNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", null, '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -127,7 +127,7 @@ public class TierTest {
 
 	@Test
 	public void validateGroesseNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 0,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 0,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -144,7 +144,7 @@ public class TierTest {
 
 	@Test
 	public void validateTieralterNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", -1, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", -1, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", 3.80);
 		
@@ -161,7 +161,7 @@ public class TierTest {
 
 	@Test
 	public void validateUmgangMenschNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "freundlich",
 				null, "keine", 3.80);
 		
@@ -178,7 +178,7 @@ public class TierTest {
 
 	@Test
 	public void validateUmgangTierNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', null,
 				"Boese", "keine", 3.80);
 		
@@ -195,7 +195,7 @@ public class TierTest {
 	
 	@Test
 	public void validateZusatzkostenNokTest() {
-		Tier tier = new Tier("Hund", "BobTail", "Percy", 8, 1,
+		Pet tier = new Pet("Hund", "BobTail", "Percy", 8, 1,
 				"Nierenprobleme", "Abends Nassfutter", '1', "Freundlich",
 				"Boese", "keine", -3.80);
 		

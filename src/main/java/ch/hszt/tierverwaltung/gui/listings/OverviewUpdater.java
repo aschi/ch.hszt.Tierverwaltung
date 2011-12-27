@@ -22,7 +22,7 @@ public class OverviewUpdater implements Runnable {
 				}
 				
 				for(Overview o : oList){
-					o.updateTableValues(null);
+					o.updateTableValues();
 				}
 			}
 		}

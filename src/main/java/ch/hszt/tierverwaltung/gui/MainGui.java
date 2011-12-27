@@ -11,11 +11,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
-import ch.hszt.tierverwaltung.gui.listings.KundenOverview;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
+import ch.hszt.tierverwaltung.backend.Tierplatz;
+import ch.hszt.tierverwaltung.gui.listings.CustomerOverview;
 import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
-import ch.hszt.tierverwaltung.gui.listings.TierOverview;
+import ch.hszt.tierverwaltung.gui.listings.PetOverview;
+import ch.hszt.tierverwaltung.gui.listings.PetSpaceOverview;
 
 public class MainGui {
 	private JFrame frame;
@@ -45,14 +47,18 @@ public class MainGui {
 		frame.getContentPane().add(new JScrollPane(new Navigation(this).getTree()), BorderLayout.WEST);
 		
 		try {
-			KundenOverview ko = new KundenOverview(this);
-			TierOverview to = new TierOverview(this);
+			CustomerOverview ko = new CustomerOverview(this);
+			PetOverview to = new PetOverview(this);
+			PetSpaceOverview pso = new PetSpaceOverview(this);
+			
 			overviewUpdater.registerOverview(to);
 			overviewUpdater.registerOverview(ko);
+			overviewUpdater.registerOverview(pso);
 			
 			cards = new JPanel(new CardLayout());
-			cards.add(to, Tier.class.getSimpleName());
-			cards.add(ko, Kunde.class.getSimpleName());
+			cards.add(to, Pet.class.getSimpleName());
+			cards.add(ko, Customer.class.getSimpleName());
+			cards.add(pso, Tierplatz.class.getSimpleName());
 						
 			frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);
 		} catch (SQLException e1) {

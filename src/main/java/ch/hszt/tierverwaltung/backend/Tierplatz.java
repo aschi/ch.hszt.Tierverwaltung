@@ -190,26 +190,36 @@ public class Tierplatz implements IDataRecord {
 	public void validate() throws ValidationException {
 		ValidationException ve = new ValidationException();
 		
-		if (getGeeignetFuerTierID() > 1 && getGeeignetFuerTierID() < 4) {
+		if (getGeeignetFuerTierID() < 1 || getGeeignetFuerTierID() > 4) {
 			ve.addErrorMessage("GeeignetFuerTierID muss Wert 1 (Hamster, Hase), 2 (Katze), 3 (kleine Hunde), 4 (grosse Hunde) enthalten");
 		}
-		if (getGroesse() < 0) {
+		
+		if (getGroesse() <= 0) {
 			ve.addErrorMessage("Groesse muss > 0 sein");
 		}
+		
 		if (getAusstattung() == null || getAusstattung().equals("")) {
 			ve.addErrorMessage("Ausstattung ist NULL");
 		}
-		if (getAnzahlTiere() < 0) {
+		
+		if (getAnzahlTiere() <= 0) {
 			ve.addErrorMessage("Anzahl Tiere nicht abgefüllt");
 		}
+		
 		if (getAuslauf() != '1' && getAuslauf() != '0') {
 			ve.addErrorMessage("Auslauf muss 0 (Nein) oder 1 (Ja) sein");
 		}
+		
 		if (getAuslauf() == '1' && getAuslaufGroesse() <= 0) {
 			ve.addErrorMessage("Wenn Auslauf auf 1 (Ja) ist, dann muss die Auslaufgroesse abgefüllt werden");
 		}
+		
 		if (getAuslauf() == '0' && getAuslaufGroesse() >=0) {
 			ve.addErrorMessage("Wenn Auslauf auf 0 (Nein) ist, dann muss die Auslaufgroesse leer sein");
+		}
+		
+		if (!ve.getErrorMsgs().isEmpty()) {
+			throw ve;
 		}
 		
 	}

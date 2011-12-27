@@ -1,10 +1,13 @@
 package ch.hszt.tierverwaltung.gui.forms;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -17,17 +20,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Config;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class GuiTierEintrag {
 
-      private JFrame fenster;
+      private JFrame frame;
       private JPanel panel;
       private JPanel areaPanel;
-      private Tier tier;
+      private Pet tier;
       private MainGui gui;
       private JTextField nameText;
       private JTextField rasseText;
@@ -41,8 +45,8 @@ public class GuiTierEintrag {
       private JTextArea umgangMenschText;
       private JTextArea sonstigesText;
       private JTextField zusatzText;
-      private JButton speichern;
-      private JButton loeschen;
+      private JButton saveButton;
+      private JButton deleteButton;
       
       private TierDataMapper tdm;
       
@@ -56,7 +60,7 @@ public class GuiTierEintrag {
             
       }
       
-      public GuiTierEintrag(Tier tier, MainGui gui) {
+      public GuiTierEintrag(Pet tier, MainGui gui) {
     	  this(gui);
     	  this.tier = tier;
     	  loadTierValue();
@@ -65,130 +69,128 @@ public class GuiTierEintrag {
       }
       
       private void loadTierValue() {
-    	  tierCombo.setSelectedItem(tier.getArt());
-    	  rasseText.setText(tier.getRasse());
+    	  tierCombo.setSelectedItem(tier.getSpecies());
+    	  rasseText.setText(tier.getRace());
     	  nameText.setText(tier.getName());
-    	  alterText.setText(String.valueOf(tier.getTieralter()));
-    	  groesseCombo.setSelectedIndex(tier.getGroesseID());
-    	  tierCombo.setName(tier.getArt());
-    	  krankText.setText(tier.getKrankheitsbild());
-    	  essText.setText(tier.getEssgewohnheit());
-    	  if (tier.getAuslauf() == '1') {
+    	  alterText.setText(String.valueOf(tier.getAge()));
+    	  groesseCombo.setSelectedIndex(tier.getSizeId());
+    	  tierCombo.setName(tier.getSpecies());
+    	  krankText.setText(tier.getDiseasePattern());
+    	  essText.setText(tier.getEatingHabits());
+    	  if (tier.getRun() == '1') {
     		  auslaufText.setSelected(true);
     	  } else {
     		  auslaufText.setSelected(false);
     	  }
-    	  auslaufText.setText(String.valueOf(tier.getAuslauf()));
-    	  umgangTierText.setText(tier.getUmgangTier());
-    	  umgangMenschText.setText(tier.getUmgangMensch());
-    	  sonstigesText.setText(tier.getAnmerkungen());
-    	  zusatzText.setText(String.valueOf(tier.getZusatzkosten()));
+    	  auslaufText.setText(String.valueOf(tier.getRun()));
+    	  umgangTierText.setText(tier.getContactOtherPets());
+    	  umgangMenschText.setText(tier.getContactPeople());
+    	  sonstigesText.setText(tier.getRemarks());
+    	  zusatzText.setText(String.valueOf(tier.getAdditionalCosts()));
       }
       
       private void createTierValue() {
-    	  tier.setArt(tierCombo.getSelectedItem().toString());
-    	  tier.setRasse(rasseText.getText());
+    	  tier.setSpecies(tierCombo.getSelectedItem().toString());
+    	  tier.setRace(rasseText.getText());
     	  tier.setName(nameText.getText());
     	  if (alterText.getText() == null || alterText.getText().equals("")) {
-    		  tier.setTieralter(-1);
+    		  tier.setAge(-1);
     	  } else {
-    		  tier.setTieralter(Integer.parseInt(alterText.getText()));
+    		  tier.setAge(Integer.parseInt(alterText.getText()));
     	  }
-    	  tier.setGroesseID(groesseCombo.getSelectedIndex());
-    	  tier.setKrankheitsbild(krankText.getText());
-    	  tier.setEssgewohnheit(essText.getText());
+    	  tier.setSizeId(groesseCombo.getSelectedIndex());
+    	  tier.setDiseasePattern(krankText.getText());
+    	  tier.setEatingHabits(essText.getText());
     	  if (auslaufText.isSelected()) {
-    		  tier.setAuslauf('1');
+    		  tier.setRun('1');
     	  } else {
-    		  tier.setAuslauf('0');
+    		  tier.setRun('0');
     	  }
-    	  tier.setUmgangTier(umgangTierText.getText());
-    	  tier.setUmgangMensch(umgangMenschText.getText());
-    	  tier.setAnmerkungen(sonstigesText.getText());
+    	  tier.setContactOtherPets(umgangTierText.getText());
+    	  tier.setContactPeople(umgangMenschText.getText());
+    	  tier.setRemarks(sonstigesText.getText());
     	  if (zusatzText.getText() == null) {
-    		  tier.setZusatzkosten(-1);
+    		  tier.setAdditionalCosts(-1);
     	  }
     	  else if (zusatzText.getText().equals("")) {
-    		  tier.setZusatzkosten(0);
+    		  tier.setAdditionalCosts(0);
     	  } else {
-    		  tier.setZusatzkosten(Double.parseDouble(zusatzText.getText()));
+    		  tier.setAdditionalCosts(Double.parseDouble(zusatzText.getText()));
     	  }
     	  
       }
       
       private void closeFenster() {
-    	  	fenster.dispose();
+    	  	frame.dispose();
       }
       
       private void fensterErzeugen() {
 
-            fenster = new JFrame("Tiereintrag");
-            fenster.setLocation(400, 300);
-            fenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            fenster.setLayout(new BorderLayout());
+            frame = new JFrame("Tiereintrag");
+            frame.setLocation(400, 300);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
             
             JPanel contentPane = new JPanel(new BorderLayout());
-           
+            JPanel buttonPane = new JPanel();
+            
             panel = new JPanel(new SpringLayout());
             areaPanel = new JPanel(new SpringLayout());
-
-            String[] petStrings = {"", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen"};
-            String[] petHeights = {"", "< 30cm", "< 60cm", "> 100cm"};
-           
-            JLabel tierart = new JLabel("Tierart");
-            JLabel rasse = new JLabel("Rasse");
-            JLabel name = new JLabel("Name");  
-            JLabel alter = new JLabel("Alter");
-            JLabel groesse = new JLabel("Groesse");
-            JLabel krankheitsBild = new JLabel("Krankheitsbild");
-            JLabel gewohnheiten = new JLabel("Gewohnheiten / Verhalten:");
-            JLabel essen = new JLabel("Essen");
-            JLabel auslauf = new JLabel("Auslauf");
-            JLabel umgangTier = new JLabel("Umgang mit anderen Tieren");
-            JLabel umgangMensch = new JLabel("Umgang mit Menschen");
-            JLabel sonstiges = new JLabel("Sonstige Anmerkungen");
-            JLabel zusatz = new JLabel("Zusätzliche Kosten");
             
-            speichern = new JButton("Speichern");
-            loeschen = new JButton("Loeschen");
+            JLabel speciesLbl = new JLabel("Tierart");
+            JLabel raceLbl = new JLabel("Rasse");
+            JLabel nameLbl = new JLabel("Name");  
+            JLabel ageLbl = new JLabel("Alter");
+            JLabel sizeLbl = new JLabel("Groesse");
+            JLabel diseaseLbl = new JLabel("Krankheitsbild");
+            JLabel habbitsLbl = new JLabel("Gewohnheiten / Verhalten:");
+            JLabel foodLbl = new JLabel("Essen");
+            JLabel runLbl = new JLabel("Auslauf");
+            JLabel contactAnimalsLbl = new JLabel("Umgang mit anderen Tieren");
+            JLabel contactHumanLbl = new JLabel("Umgang mit Menschen");
+            JLabel miscLbl = new JLabel("Sonstige Anmerkungen");
+            JLabel additionalCostsLbl = new JLabel("Zusätzliche Kosten");
+            
+            saveButton = new JButton("Speichern");
+            deleteButton = new JButton("Loeschen");
             
             rasseText = new JTextField();
-            rasse.setLabelFor(rasseText);
+            raceLbl.setLabelFor(rasseText);
             nameText = new JTextField();
-            name.setLabelFor(nameText);
+            nameLbl.setLabelFor(nameText);
             alterText = new JTextField();
-            alter.setLabelFor(alterText);
+            ageLbl.setLabelFor(alterText);
             krankText = new JTextField();
-            krankheitsBild.setLabelFor(krankText);
+            diseaseLbl.setLabelFor(krankText);
             essText = new JTextField();
             essText.setSize(20, 100);
-            essen.setLabelFor(essText);
+            foodLbl.setLabelFor(essText);
             auslaufText = new JCheckBox("Ja");
-            auslauf.setLabelFor(auslaufText);
+            runLbl.setLabelFor(auslaufText);
             umgangTierText = new JTextArea(3, 20);
             JScrollPane scrollTier = new JScrollPane(umgangTierText);
-            umgangTier.setLabelFor(umgangTierText);
+            contactAnimalsLbl.setLabelFor(umgangTierText);
             umgangMenschText = new JTextArea(3, 20);
             JScrollPane scrollMensch = new JScrollPane(umgangMenschText);
-            umgangMensch.setLabelFor(umgangMenschText);
+            contactHumanLbl.setLabelFor(umgangMenschText);
             sonstigesText = new JTextArea(3, 20);
             JScrollPane scrollSonst = new JScrollPane(sonstigesText);
-            sonstiges.setLabelFor(sonstigesText);
+            miscLbl.setLabelFor(sonstigesText);
             zusatzText = new JTextField();
-            zusatz.setLabelFor(zusatzText);
+            additionalCostsLbl.setLabelFor(zusatzText);
             
-            tierCombo = new JComboBox(petStrings);
-            tierart.setLabelFor(tierCombo);
+            tierCombo = new JComboBox(Config.species);
+            speciesLbl.setLabelFor(tierCombo);
             
-            groesseCombo = new JComboBox(petHeights);
-            groesse.setLabelFor(groesseCombo);
+            groesseCombo = new JComboBox(Config.petSize);
+            sizeLbl.setLabelFor(groesseCombo);
             
-            speichern.addActionListener(new ActionListener() {
+            saveButton.addActionListener(new ActionListener() {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
 	              			if(tier == null){
-	              				tier = new Tier();
+	              				tier = new Pet();
 	              			}
               				createTierValue();
 							tdm.save(tier);
@@ -210,7 +212,7 @@ public class GuiTierEintrag {
               	}
               });
               
-              loeschen.addActionListener(new ActionListener() {
+              deleteButton.addActionListener(new ActionListener() {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
@@ -228,43 +230,50 @@ public class GuiTierEintrag {
               	}
               });  
            
-            panel.add(tierart);
+            panel.add(speciesLbl);
             panel.add(tierCombo);
-            panel.add(rasse);
+            panel.add(raceLbl);
             panel.add(rasseText);
-            panel.add(name);
+            panel.add(nameLbl);
             panel.add(nameText);
-            panel.add(alter);
+            panel.add(ageLbl);
             panel.add(alterText);
-            panel.add(groesse);
+            panel.add(sizeLbl);
             panel.add(groesseCombo);
-            panel.add(krankheitsBild);
+            panel.add(diseaseLbl);
             panel.add(krankText);
-            panel.add(gewohnheiten);
+            panel.add(habbitsLbl);
             panel.add(new JLabel());
-            panel.add(essen);
+            panel.add(foodLbl);
             panel.add(essText);
-            panel.add(auslauf);
+            panel.add(runLbl);
             panel.add(auslaufText);
-            panel.add(zusatz);
+            panel.add(additionalCostsLbl);
             panel.add(zusatzText);
-            areaPanel.add(umgangTier);
+            areaPanel.add(contactAnimalsLbl);
             areaPanel.add(scrollTier);
-            areaPanel.add(umgangMensch);
+            areaPanel.add(contactHumanLbl);
             areaPanel.add(scrollMensch);
-            areaPanel.add(sonstiges);
+            areaPanel.add(miscLbl);
             areaPanel.add(scrollSonst);
-            areaPanel.add(speichern, 6);
-            areaPanel.add(loeschen, 7);
             
-            fenster.getContentPane().add(contentPane);
+            frame.getContentPane().add(contentPane);
             SpringUtilities.makeCompactGrid(panel, 10, 2, 5, 5, 5, 5);
-            SpringUtilities.makeCompactGrid(areaPanel, 4, 2, 5, 5, 5, 5);
+            SpringUtilities.makeCompactGrid(areaPanel, 3, 2, 5, 5, 5, 5);
+            
+            
+    		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+    		buttonPane.add(Box.createHorizontalGlue());
+    		buttonPane.add(saveButton);
+    		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+    		buttonPane.add(deleteButton);
+            
             contentPane.add(panel, BorderLayout.NORTH);
             contentPane.add(areaPanel, BorderLayout.CENTER);
+            contentPane.add(buttonPane, BorderLayout.SOUTH);
             
-            fenster.setVisible(true);
-            fenster.pack();
+            frame.setVisible(true);
+            frame.pack();
       }    
 
 } 

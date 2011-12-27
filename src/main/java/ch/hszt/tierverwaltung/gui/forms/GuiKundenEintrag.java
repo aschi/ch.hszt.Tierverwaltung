@@ -17,21 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.kunde.KundeDataMapper;
 import ch.hszt.tierverwaltung.database.tier.TierDataMapper;
 import ch.hszt.tierverwaltung.gui.MainGui;
-import ch.hszt.tierverwaltung.gui.listings.AssignedTierOverview;
-import ch.hszt.tierverwaltung.gui.listings.Overview;
-import ch.hszt.tierverwaltung.gui.listings.UnassignedPetsOverview;
+import ch.hszt.tierverwaltung.gui.listings.AssignedPetsOverview;
 
 public class GuiKundenEintrag {
 
 	private JFrame frame;
 	private JPanel panel;
-	private Kunde customer;
+	private Customer customer;
 	private MainGui gui;
 	private JTextField nameText;
 	private JTextField vornameText;
@@ -40,16 +38,21 @@ public class GuiKundenEintrag {
 	private JTextField ortText;
 	private JTextField telnoText;
 	private JTextField emailText;
-	private AssignedTierOverview petTable;
+	private AssignedPetsOverview petTable;
 	private JButton save;
 	private JButton delete;
-
+	private JButton addPetButton;
+	private JButton removePetButton;
+	
+	
 	public GuiKundenEintrag(MainGui gui) {
+		this.gui = gui;
 		createFrame();
 	}
 
-	public GuiKundenEintrag(Kunde kunde, MainGui gui) {
+	public GuiKundenEintrag(Customer kunde, MainGui gui) {
 		this.customer = kunde;
+		this.gui = gui;
 		createFrame();
 		loadKundeValue();
 	}
@@ -57,24 +60,24 @@ public class GuiKundenEintrag {
 	private void loadKundeValue() {
 
 		nameText.setText(customer.getName());
-		vornameText.setText(customer.getVorname());
-		adresseText.setText(customer.getAdresse());
-		plzText.setText(customer.getPlz());
-		ortText.setText(customer.getOrt());
-		telnoText.setText(customer.getTelefon());
+		vornameText.setText(customer.getFirstName());
+		adresseText.setText(customer.getAddress());
+		plzText.setText(customer.getZip());
+		ortText.setText(customer.getCity());
+		telnoText.setText(customer.getPhoneNo());
 		emailText.setText(customer.getEMail());
-		petTable.updateTableValues(customer.getTiere());
+		petTable.updateTableValues(customer.getPets());
 
 	}
 
 	private void createKundeValue() {
 
 		customer.setName(nameText.getText());
-		customer.setVorname(vornameText.getText());
-		customer.setAdresse(adresseText.getText());
-		customer.setPlz(plzText.getText());
-		customer.setOrt(ortText.getText());
-		customer.setTelefon(telnoText.getText());
+		customer.setFirstName(vornameText.getText());
+		customer.setAddress(adresseText.getText());
+		customer.setZip(plzText.getText());
+		customer.setCity(ortText.getText());
+		customer.setPhoneNo(telnoText.getText());
 		customer.setEMail(emailText.getText());
 
 	}
@@ -86,13 +89,11 @@ public class GuiKundenEintrag {
 	private void createFrame() {
 
 		frame = new JFrame("Kundeneintrag");
-		frame.setLocation(400, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
 		JPanel contentPane = new JPanel(new BorderLayout());
 
-		JPanel tblPane = new JPanel();
 		JPanel buttonPane = new JPanel();
 
 		panel = new JPanel(new SpringLayout());
@@ -124,7 +125,7 @@ public class GuiKundenEintrag {
 		emailText = new JTextField();
 		email.setLabelFor(emailText);
 
-		petTable = new AssignedTierOverview(gui, customer.getTiere(),
+		petTable = new AssignedPetsOverview(gui, customer.getPets(),
 				createPetTableButtonPane());
 		// tiereTable.updateTableValues(new ArrayList<Tier>());
 		// tiereTable.setButtonPane(createButtonPane());
@@ -134,7 +135,7 @@ public class GuiKundenEintrag {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (customer == null) {
-						customer = new Kunde();
+						customer = new Customer();
 					}
 					createKundeValue();
 					new KundeDataMapper().save(customer);
@@ -143,6 +144,8 @@ public class GuiKundenEintrag {
 						gui.getOverviewUpdater().notify();
 					}
 
+					checkPetButtonVisibility();
+					
 					String meldung = "Erfolgreich gespeichert";
 					JOptionPane.showMessageDialog(null, meldung, "Information",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -154,7 +157,7 @@ public class GuiKundenEintrag {
 							JOptionPane.ERROR_MESSAGE);
 
 				} catch (ValidationException e1) {
-					String meldung2 = e1.createErrorMsg(e1);
+					String meldung2 = ValidationException.createErrorMsg(e1);
 					JOptionPane.showMessageDialog(null, meldung2,
 							"Betriebliche Benachrichtigung",
 							JOptionPane.ERROR_MESSAGE);
@@ -201,12 +204,16 @@ public class GuiKundenEintrag {
 		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonPane.add(delete);
 
-		tblPane.add(petTable);
+		petTable.setPreferredSize(new Dimension(300, 100));
 
 		frame.getContentPane().add(contentPane);
 		SpringUtilities.makeCompactGrid(panel, 7, 2, 5, 5, 5, 5);
-		contentPane.add(panel, BorderLayout.CENTER);
-		contentPane.add(tblPane, BorderLayout.EAST);
+		
+		JPanel sa = new JPanel(new BorderLayout());
+		sa.add(panel, BorderLayout.NORTH);
+		
+		contentPane.add(sa, BorderLayout.CENTER);
+		contentPane.add(petTable, BorderLayout.EAST);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 		frame.setVisible(true);
 		frame.pack();
@@ -218,98 +225,56 @@ public class GuiKundenEintrag {
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		JButton addButton = new JButton("Hinzufügen");
-		JButton removeButton = new JButton("Entfernen");
+		addPetButton = new JButton("Hinzufügen");
+		removePetButton = new JButton("Entfernen");
 
-		buttonPane.add(addButton);
+		buttonPane.add(addPetButton);
 		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-		buttonPane.add(removeButton);
-
+		buttonPane.add(removePetButton);
+		
 		// Add
-		addButton.addActionListener(new ActionListener() {
+		addPetButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				showAddPetDialog();
+				new AddPetToCustomerDialog(gui, customer, petTable);
 			}
 
 		});
 
 		// Remove
-		removeButton.addActionListener(new ActionListener() {
+		removePetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				customer.getTiere().remove(petTable.getSelectedRow());
-				petTable.updateTableValues(customer.getTiere());
-			}
-		});
-		return buttonPane;
-	}
-
-	private JPanel createPetDialogButtonPane(final JFrame popup, final Overview<Tier> o) {
-		// Buttons
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-		buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-		JButton addButton = new JButton("Dem Kunden hinzufügen");
-		JButton cancelButton = new JButton("Abbrechen");
-
-		buttonPane.add(addButton);
-		buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-		buttonPane.add(cancelButton);
-
-		// Add
-		addButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Tier t = o.getInput().get(o.getSelectedRow());
-				t.setFkKunde(customer.getID());
-				
+				Pet t = customer.getPets().get(petTable.getSelectedRow());
+				t.setFkKunde(-1);
 				try {
 					new TierDataMapper().save(t);
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(frame, "SQL Exception. Stirb");
-				} catch (ValidationException e) {
-					JOptionPane.showMessageDialog(frame, "Validation Exception. Stirb");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ValidationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
-				customer.getTiere().add(t);
-				
-				popup.dispose();
-				petTable.updateTableValues(customer.getTiere());
-			}
-
-		});
-
-		// Remove
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				popup.dispose();
+				customer.getPets().remove(t);
+				petTable.updateTableValues(customer.getPets());
 			}
 		});
-
+		
+		checkPetButtonVisibility();
+		
 		return buttonPane;
 	}
-
-	private void showAddPetDialog() {
-		JFrame popup = new JFrame("Tier auswählen...");
-		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		UnassignedPetsOverview po = null;
-		try {
-			po = new UnassignedPetsOverview(gui,
-					createPetDialogButtonPane(popup, po));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+	private void checkPetButtonVisibility(){
+		if(customer.getID() > 0){
+			addPetButton.setVisible(true);
+			removePetButton.setVisible(true);
+		}else{
+			addPetButton.setVisible(false);
+			removePetButton.setVisible(false);
 		}
-
-		popup.getContentPane().add(po, BorderLayout.CENTER);
-		popup.setSize(300, 400);
-		popup.setVisible(true);
 	}
 
 }

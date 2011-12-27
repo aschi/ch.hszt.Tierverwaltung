@@ -3,7 +3,7 @@ package ch.hszt.tierverwaltung.database;
 import java.sql.SQLException;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
 public interface IDataMapper <T> {

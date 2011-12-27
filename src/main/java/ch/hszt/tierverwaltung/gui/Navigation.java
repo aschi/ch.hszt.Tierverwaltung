@@ -8,8 +8,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
-import ch.hszt.tierverwaltung.backend.Tier;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.Pet;
+import ch.hszt.tierverwaltung.backend.Tierplatz;
 
 public class Navigation {
 	private JTree tree;
@@ -30,9 +31,12 @@ public class Navigation {
 		// Nodes for listings
 		DefaultMutableTreeNode tierList = new DefaultMutableTreeNode("Tiere");
 		DefaultMutableTreeNode kundeList = new DefaultMutableTreeNode("Kunden");
+		DefaultMutableTreeNode tierPlatz = new DefaultMutableTreeNode(
+				"Tierplatz");
 
 		top.add(tierList);
 		top.add(kundeList);
+		top.add(tierPlatz);
 
 		tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
 		addListener();
@@ -44,22 +48,23 @@ public class Navigation {
 				if (e.getClickCount() == 2) {
 					// Get location
 					TreePath p = tree.getPathForLocation(e.getX(), e.getY());
-					TreeNode node = (TreeNode) p.getLastPathComponent();
+					if (p != null) {
+						TreeNode node = (TreeNode) p.getLastPathComponent();
 
-					// Add actions
-					// TODO: Better way to do this without if / else if?
-					System.out.println(node.toString());
-					if (node.toString().equals("Tiere")) {
-						System.out.println("load tier overview...");
-						gui.selectOverview(Tier.class.getSimpleName());
-					} else if (node.toString().equals("Kunden")) {
-						System.out.println("load kunden overview...");
-						gui.selectOverview(Kunde.class.getSimpleName());
+						// Add actions
+						// TODO: Better way to do this without if / else if?
+						System.out.println(node.toString());
+						if (node.toString().equals("Tiere")) {
+							gui.selectOverview(Pet.class.getSimpleName());
+						} else if (node.toString().equals("Kunden")) {
+							gui.selectOverview(Customer.class.getSimpleName());
+						} else if (node.toString().equals("Tierplatz")) {
+							gui.selectOverview(Tierplatz.class.getSimpleName());
+						}
 					}
 				}
 			}
 		});
-
 	}
 
 	/**
