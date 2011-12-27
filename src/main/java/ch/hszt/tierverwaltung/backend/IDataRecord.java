@@ -1,30 +1,29 @@
 package ch.hszt.tierverwaltung.backend;
 
-import java.sql.SQLException;
 
 
 /**
- * Dieses Interface wird von allen DataRecords (Tier, Kunde, Aufenthalt, Tierplatz) implementiert und beinhaltet
- * die Methoden save und delete 
+ * This interface will be implemented from all data-records (pet, customer, stay, petplace)
+ * It includes the methods getID and validate
+ * 
  * @author prisi
  *
- * @param <T> Ein dataRecord vom Typ Tier, Kunde, Tierplatz oder Aufenthalt
+ * @param <T> a data-record of type pet, customer, stay or petplace
  */
 public interface IDataRecord extends IPublicCloneable{
 	
 	/**
-	 * Diese Methode liefert die Datenbank-ID des DataRecords zurück. Ist sie > 0, ist
-	 * das Objekt in der Datenbank abgelegt. Ist sie <= 0, so ist das Objekt noch nicht in der
-	 * Datenbank enthalten.
+	 * This method returns the id of the data-record in the table. If the id is > 0, the
+	 * object is saved in the table. if the id s <= 0, the object isn't saved in the database yet
 	 * @return id
 	 */
 	public int getID();
 	
 	/**
-	 * Die Methode validate validiert die Eingaben welche von der Benutzerschnittstelle gesetzt wurden.
-	 * Bei Fehlerhaften Eingaben wird eine Nachricht für den Benutzer lesbar aufbereitet und kann auf 
-	 * der Exception selber aufgerufen werden.
-	 * @throws ValidationException Wenn die validierung fehl schlug
+	 * This method validates the input from the user-interface. if the validation isn't successful, a
+	 * validation-exception will be thrown. The validation exception includes a message for the user.
+	 * 
+	 * @throws ValidationException if the validation was not successful
 	 */
 	public void validate() throws ValidationException;
 

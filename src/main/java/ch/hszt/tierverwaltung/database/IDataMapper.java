@@ -3,51 +3,53 @@ package ch.hszt.tierverwaltung.database;
 import java.sql.SQLException;
 import java.util.List;
 
-import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
 public interface IDataMapper <T> {
 	
 	
 	/**
-	 * Diese Methode speichert den DataRecord in die entsprechende Tabelle.
-	 * Sie unterscheidet selbstständig, ob der DataRecord bereits in der Tabelle ist (UPDATE)
-	 * oder ob der DataRecord eingefügt werden muss (INSERT). 
-	 * @throws SQLException wenn der Datenbankzugriff fehlerhaft war
-	 * @throws ValidationException wenn die Validierung, welche vor dem Speichern gemacht
-	 * wird fehl schlug
+	 * This method saves a data-record into the table.
+	 * The method decides by his own, if the data-record is still in the table (UPDATE) or if the data-record 
+	 * is new (INSERT)
+	 * @throws SQLException if database-access was not successful
+	 * @throws ValidationException if the validation was not successful
 	 */
 	public void save(T entry) throws SQLException, ValidationException;
 	
 	/**
-	 * Fügt einen neuen Satz in die Tabelle ein
-	 * @param entry
-	 * @return id ID des neuen Satzes in der Tabelle
+	 * Inserts a new enty into the table
+	 * @param entry entry to be inserted
+	 * @return id the id from the new data-record in the table
 	 * @throws SQLException
 	 */
 	public int insert(T entry) throws SQLException;
+	
 	/**
-	 * Macht einen UPDATE auf dem entsprechenden Satz inder Tabelle
-	 * @param entry
+	 * Updates the given entry in the table
+	 * @param entry to be updated
 	 * @throws SQLException
 	 */
 	public void update(T entry) throws SQLException;
+	
 	/**
-	 * Löscht den entry aus der Tabelle
-	 * @param entry
+	 * Deletes the given entry from the table
+	 * @param entry to be deleted
 	 * @throws SQLException
 	 */
 	public void delete(T entry) throws SQLException;
+	
 	/**
-	 * Selektiert alle Einträge der Tabelle, und liefert diese als Liste zurück
-	 * @return
+	 * Selects all entries in the table, returns a list including all entries
+	 * @return List including all entries from table
 	 * @throws SQLException
 	 */
 	public List<T> getList() throws SQLException;
+	
 	/**
-	 * Ermittelt anhand der ID den Datensatz aus der Tabelle
-	 * @param id
-	 * @return
+	 * Selects the data-record with the given id from the table
+	 * @param id of the record which is looked for
+	 * @return the entry which belongs to the given id
 	 * @throws SQLException
 	 */
 	public T getEntry(int id) throws SQLException;

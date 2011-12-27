@@ -72,7 +72,7 @@ public class AddPetToCustomerDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Pet t = o.getInput().get(o.getSelectedRow());
-				t.setFkKunde(customer.getID());
+				t.setFkCustomer(customer.getID());
 				
 				try {
 					new TierDataMapper().save(t);

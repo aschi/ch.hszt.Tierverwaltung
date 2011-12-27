@@ -6,18 +6,19 @@ import java.sql.SQLException;
 public interface ICreateDB {
 	
 	/**
-	 * Führt die Methoden delete() und creatae() aus.
-	 * Somit wird die bestehende Tabelle gedroppt, und die Tabelle neu erstellt.
+	 * Runs the methods delete() and create() to create the new tables.
+	 * the current tables will be deleted and built new.
 	 */
 	public void createTable() throws ClassNotFoundException, SQLException;
 	
 	/**
-	 * Dropt die Tabelle
+	 * Drops the table
 	 * @throws SQLException
 	 */
 	abstract  void delete(Connection conn) throws SQLException;
+	
 	/**
-	 * Erstellt die Tabelle neu
+	 * creates the new table
 	 * @throws SQLException
 	 */
 	abstract void create(Connection conn) throws SQLException;

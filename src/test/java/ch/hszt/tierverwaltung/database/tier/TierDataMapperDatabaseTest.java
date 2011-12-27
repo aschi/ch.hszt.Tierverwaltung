@@ -62,7 +62,7 @@ public class TierDataMapperDatabaseTest {
 			testOk = false;
 			fehlertext = fehlertext + " \n Insert war falsch, Tier nicht in Liste enthalten";
 		} else {
-			System.out.println("tier id dbtier " + tierDB.getTierID());
+			System.out.println("tier id dbtier " + tierDB.getPetId());
 		}
 
 		// Test UPDATE
@@ -100,7 +100,7 @@ public class TierDataMapperDatabaseTest {
 
 		//Test der Methode getEntry
 		//----------------------------------
-		Pet t = tba.getEntry(tierDB.getTierID());
+		Pet t = tba.getEntry(tierDB.getPetId());
 
 		// Wenn das Tier von getEntry nicht gleich unserem Tier ist, war Test
 		// falsch
@@ -129,7 +129,7 @@ public class TierDataMapperDatabaseTest {
 		// erfolgreich
 		List<Pet> nachDeleteList = tba.getList();
 		for (Pet t2 : nachDeleteList) {
-			if (tierDB.getTierID() == t2.getTierID()) {
+			if (tierDB.getPetId() == t2.getPetId()) {
 				testOk = false;
 				fehlertext = fehlertext + " \n Deletemethode war falsch, tier immernoch in DB";
 			}

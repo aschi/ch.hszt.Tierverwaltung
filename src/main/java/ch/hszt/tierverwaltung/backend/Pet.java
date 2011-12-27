@@ -2,7 +2,7 @@ package ch.hszt.tierverwaltung.backend;
 
 
 /**
- * Klasse Tiereintrag, verwaltet einen einzelnen Eintrag aus der Datenbank Tier
+ * Class pet, manages all data of a pet
  * 
  * @author prisi
  * 
@@ -25,10 +25,9 @@ public class Pet implements IDataRecord {
 	private double additionalCosts;
 
 	/**
-	 * Konstruktor der Klasse Tiereintrag
+	 * Default Constructor
 	 */
 	public Pet() {
-		//Initialise strings
 		species = "";
 		race = "";
 		name = "";
@@ -40,32 +39,19 @@ public class Pet implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor der Klasse Tiereintrag
-	 * 
+	 * Constructor
 	 * @param species
-	 *            Tabbbellenfeld art
 	 * @param race
-	 *            Tabellenfeld rasse
 	 * @param name
-	 *            Tabellenfeld name
 	 * @param age
-	 *            Tabellenfeld tieralter
 	 * @param sizeId
-	 *            Tabellenfeld groesseID
 	 * @param dieseasePattern
-	 *            Tabellenfeld krankheitsbild
 	 * @param eatingHabits
-	 *            Tabellenfeld essgewohnheit
 	 * @param run
-	 *            Tabellenfeld auslauf
 	 * @param contactOtherPets
-	 *            Tabellenfeld umgangTier
 	 * @param contactPeople
-	 *            Tabellenfeld umgangMensch
 	 * @param remarks
-	 *            Tabellenfeld anmerkungen
 	 * @param additionalCosts
-	 *            Tabellenfeld zusatztkosten
 	 */
 	public Pet(String species, String race, String name, int age,
 			int sizeId, String dieseasePattern, String eatingHabits,
@@ -86,34 +72,21 @@ public class Pet implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor der Klasse Tiereintrag
-	 * 
+	 * Constructor
 	 * @param petId
-	 *            ID des Tabelleneintrages Tier
+	 * @param fkCustomer
 	 * @param species
-	 *            Tabbbellenfeld art
 	 * @param race
-	 *            Tabellenfeld rasse
 	 * @param name
-	 *            Tabellenfeld name
 	 * @param age
-	 *            Tabellenfeld tieralter
 	 * @param sizeId
-	 *            Tabellenfeld groesseID
 	 * @param diseasePattern
-	 *            Tabellenfeld krankheitsbild
 	 * @param eatingHabits
-	 *            Tabellenfeld essgewohnheit
 	 * @param run
-	 *            Tabellenfeld auslauf
 	 * @param contactOtherPets
-	 *            Tabellenfeld umgangTier
 	 * @param contactPeople
-	 *            Tabellenfeld umgangMensch
 	 * @param remarks
-	 *            Tabellenfeld anmerkungen
 	 * @param additionalCosts
-	 *            Tabellenfeld zusatztkosten
 	 */
 	public Pet(Integer petId, Integer fkCustomer, String species, String race,
 			String name, int age, int sizeId, String diseasePattern,
@@ -188,27 +161,27 @@ public class Pet implements IDataRecord {
 	}
 
 	/**
-	 * Sets art
-	 * @param art to be set
+	 * Sets species
+	 * @param species to be set
 	 */
-	public void setSpecies(String art) {
-		this.species = art;
+	public void setSpecies(String species) {
+		this.species = species;
 	}
 
 	/**
-	 * Returns rasse
-	 * @return rasse
+	 * Returns race
+	 * @return race
 	 */
 	public String getRace() {
 		return race;
 	}
 
 	/**
-	 * Sets rasse
-	 * @param rasse to bet set
+	 * Sets race
+	 * @param race to bet set
 	 */
-	public void setRace(String rasse) {
-		this.race = rasse;
+	public void setRace(String race) {
+		this.race = race;
 	}
 
 	/**
@@ -228,40 +201,40 @@ public class Pet implements IDataRecord {
 	}
 
 	/**
-	 * Returns tieralter
-	 * @return tieralter
+	 * Returns age
+	 * @return age
 	 */
 	public int getAge() {
 		return age;
 	}
 
 	/**
-	 * sets tieralter
-	 * @param tieralter to be set
+	 * sets age
+	 * @param age to be set
 	 */
-	public void setAge(int tieralter) {
-		this.age = tieralter;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	/**
-	 * returns groesseID
-	 * @return groesseID
+	 * returns sizeId
+	 * @return sizeId
 	 */
 	public int getSizeId() {
 		return sizeId;
 	}
 
 	/**
-	 * Sets groesseID
-	 * @param groesseID to be set
+	 * Sets sizeId
+	 * @param sizeId to be set
 	 */
-	public void setSizeId(int groesseID) {
-		this.sizeId = groesseID;
+	public void setSizeId(int sizeId) {
+		this.sizeId = sizeId;
 	}
 
 	/**
-	 * returns Krankheitsbild
-	 * @return krankheitsbild
+	 * returns diseasePattern
+	 * @return diseasePattern
 	 */
 	public String getDiseasePattern() {
 		return diseasePattern;
@@ -271,29 +244,29 @@ public class Pet implements IDataRecord {
 	 * 
 	 * @param krankheitsbild
 	 */
-	public void setDiseasePattern(String krankheitsbild) {
-		this.diseasePattern = krankheitsbild;
+	public void setDiseasePattern(String diseasePattern) {
+		this.diseasePattern = diseasePattern;
 	}
 
 	/**
-	 * Returns essgewohnheit
-	 * @return essgewohnheit
+	 * Returns eatingHabits
+	 * @return eatingHabits
 	 */
 	public String getEatingHabits() {
 		return eatingHabits;
 	}
 
 	/**
-	 * Sets essgewohnheit
-	 * @param essgewohnheit to be set
+	 * Sets eatingHabits
+	 * @param eatingHabits to be set
 	 */
-	public void setEatingHabits(String essgewohnheit) {
-		this.eatingHabits = essgewohnheit;
+	public void setEatingHabits(String eatingHabits) {
+		this.eatingHabits = eatingHabits;
 	}
 
 	/**
-	 * Returns auslauf
-	 * @return auslauf
+	 * Returns run
+	 * @return run
 	 */
 	public char getRun() {
 		return run;
@@ -303,13 +276,13 @@ public class Pet implements IDataRecord {
 	 * Sets auslauf
 	 * @param auslauf to be set
 	 */
-	public void setRun(char auslauf) {
-		this.run = auslauf;
+	public void setRun(char run) {
+		this.run = run;
 	}
 
 	/**
-	 * Returns umgangTier
-	 * @return umgangTier
+	 * Returns contactOtherPets
+	 * @return contactOtherPets
 	 */
 	public String getContactOtherPets() {
 		return contactOtherPets;
@@ -319,40 +292,40 @@ public class Pet implements IDataRecord {
 	 * Sets umgangTier
 	 * @param umgangTier to be set
 	 */
-	public void setContactOtherPets(String umgangTier) {
-		this.contactOtherPets = umgangTier;
+	public void setContactOtherPets(String contactOtherPets) {
+		this.contactOtherPets = contactOtherPets;
 	}
 
 	/**
-	 * returns umgangMensch
-	 * @return umgangMensch
+	 * returns contactPeople
+	 * @return contactPeople
 	 */
 	public String getContactPeople() {
 		return contactPeople;
 	}
 
 	/**
-	 * Sets umgangMensch
-	 * @param umgangMensch to be set
+	 * Sets contactPeople
+	 * @param contactPeople to be set
 	 */
-	public void setContactPeople(String umgangMensch) {
-		this.contactPeople = umgangMensch;
+	public void setContactPeople(String contactPeople) {
+		this.contactPeople = contactPeople;
 	}
 
 	/**
-	 * Returns anmerkungen
-	 * @return anmerkungen
+	 * Returns remarks
+	 * @return remarks
 	 */
 	public String getRemarks() {
 		return remarks;
 	}
 
 	/**
-	 * Sets anmerkungen
-	 * @param anmerkungen to be set
+	 * Sets remarks
+	 * @param remarks to be set
 	 */
-	public void setRemarks(String anmerkungen) {
-		this.remarks = anmerkungen;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	/**
@@ -372,27 +345,35 @@ public class Pet implements IDataRecord {
 	}
 
 	/**
-	 * Returns tierID
-	 * @return tierID
+	 * Returns petID
+	 * @return petID
 	 */
-	public int getTierID() {
+	public int getPetId() {
 		return petID;
 	}
 	
 	/**
-	 * Returns fkKunde
-	 * @return fkKunde
+	 * Returns fkCustomer
+	 * @return fkCustomer
 	 */
-	public int getFkKunde() {
+	public int getFkCustomer() {
 		return fkCustomer;
 	}
 	
-	public void setFkKunde(int fkKunde) {
-		this.fkCustomer = fkKunde;
+	/**
+	 * Sets fkCustomer
+	 * @param fkCustomer
+	 */
+	public void setFkCustomer(int fkCustomer) {
+		this.fkCustomer = fkCustomer;
 	}
 	
-	public void setTierID(int tierID) {
-		this.petID = tierID;
+	/**
+	 * Sets petID
+	 * @param petID
+	 */
+	public void setPetID(int petID) {
+		this.petID = petID;
 	}
 
 	@Override

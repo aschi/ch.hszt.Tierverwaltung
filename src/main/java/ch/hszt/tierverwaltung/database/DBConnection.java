@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * An Instance of the database-connection from tierverwaltung.db
+ * @author prisi
+ *
+ */
 public class DBConnection {
 	
 	private static DBConnection instance;
@@ -14,6 +19,10 @@ public class DBConnection {
 		openConnection();
 	}
 	
+	/**
+	 * returns an instance of this class
+	 * @return instance of this class
+	 */
 	public static synchronized DBConnection getInstance() {
 		if (instance == null) {
 			instance = new DBConnection();
@@ -45,6 +54,10 @@ public class DBConnection {
 		}
 	}
 
+	/**
+	 * returns the connection to the database tierverwaltung.db
+	 * @return
+	 */
 	public Connection getConn() {
 		return conn;
 	}

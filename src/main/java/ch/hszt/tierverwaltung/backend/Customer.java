@@ -2,7 +2,12 @@ package ch.hszt.tierverwaltung.backend;
 
 import java.util.ArrayList;
 
-
+/**
+ * Class of the entry customer
+ * Handles all data of a customer
+ * @author prisi
+ *
+ */
 public class Customer implements IDataRecord {
 
 	private int customerId;
@@ -16,7 +21,7 @@ public class Customer implements IDataRecord {
 	private ArrayList<Pet> pets;
 
 	/**
-	 * Leerer Konstruktor. Initialisiert alle Werte
+	 * Empty Consrtucor
 	 */
 	public Customer() {
 		name = "";
@@ -30,7 +35,7 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor zum direkten setzen aller Felder (ausgenommen id & tierliste)
+	 * Constructor
 	 * @param name
 	 * @param firstName
 	 * @param address
@@ -53,7 +58,7 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor zum direkten setzen aller Felder (inklusive id, ausgenommen tierliste)
+	 * Constructor
 	 * @param id
 	 * @param name
 	 * @param firstName
@@ -71,7 +76,7 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor zum direkten setzen aller Felder (ausgenommen id, inklusive tierliste)
+	 * Constructor
 	 * @param name
 	 * @param firstName
 	 * @param address
@@ -88,7 +93,7 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Konstruktor zum direkten setzen aller Felder (inklusive id, inklusive tierliste)
+	 * Constructor
 	 * @param name
 	 * @param fristName
 	 * @param address
@@ -106,7 +111,9 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Prüft das aktuelle Kundenobjekt auf seine Gültigkeit. Wirft eine ValidationException falls nicht
+	 * Validates all fields from customer-object
+	 * 
+	 * @throws ValidationException in case the validation is not successful
 	 */
 	@Override
 	public void validate() throws ValidationException {
@@ -146,153 +153,137 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Gibt die Kunden Id zurück
-	 * @return id des Kunden
+	 * Returns the id from the customer-object
+	 * @return id
 	 */
 	public int getCustomerId() {
 		return customerId;
 	}
 
 	/**
-	 * Setzt die Kunden Id
-	 * @param customerId Neue Id
+	 * @param customerId the new id
 	 */
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 
 	/**
-	 * Gibt den Namen des Kunden zurück
-	 * @return Name des Kunden
+	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Setzt den Namen des Kunden
-	 * @param name Neuer Name
+	 * @param name new customer-name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Gibt den Vornamen des Kunden zurück
-	 * @return Vorname des Kunden
+	 * @return firstName
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
-	 * Setzt den Vornamen des Kunden
-	 * @param firstName Neuer Vorname
+	 * @param firstName new first name from customer
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 	/**
-	 * Gibt die Adresse des Kunden zurück
-	 * @return Adresse des Kunden
+	 * @return address
 	 */
 	public String getAddress() {
 		return address;
 	}
 
 	/**
-	 * Setzt die Adresse des Kunden
-	 * @param addresse Neue Adresse
+	 * @param address new customer address
 	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
 	/**
-	 * Gibt die PLZ des Kunden zurück
-	 * @return PLZ des Kunden
+	 * @return zip code
 	 */
 	public String getZip() {
 		return zip;
 	}
 
 	/**
-	 * Setzt die PLZ des Kunden
-	 * @param zip Neue PLZ
+	 * @param zip new customer zipcode
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
 
 	/**
-	 * Gibt den Wohnort des Kunden zurück
-	 * @return Wohnort des Kunden
+	 * @return city
 	 */
 	public String getCity() {
 		return city;
 	}
 
 	/**
-	 * Setzt den Wohnort des Kunden
-	 * @param city Neuer Wohnort
+	 * @param city new customer city
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * Gibt die Telefon Nr des Kunden zurück
-	 * @return Telefon Nr des Kunden
+	 * @return phone number
 	 */
 	public String getPhoneNo() {
 		return phoneNo;
 	}
 
 	/**
-	 * Setzt die Telefon Nr des Kunden
-	 * @param phoneNo Neue Telefon Nr
+	 * @param phoneNo new customer phone number
 	 */
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 
 	/**
-	 * Gibt die Email Adresse des Kunden zurück
-	 * @return Email Adresse des Kunden
+	 * @return Email 
 	 */
 	public String getEMail() {
 		return eMail;
 	}
 
 	/**
-	 * Setzt die Email Adresse des Kunden
-	 * @param eMail Neue Email Adresse
+	 * @param eMail new customer e-mail-address
 	 */
 	public void setEMail(String eMail) {
 		this.eMail = eMail;
 	}
 
 	/**
-	 * Gibt eine Liste der dem Kunden zugewiesenen Tiere zurück
-	 * @return Liste der dem Kunden zugewiesenen Tiere
+	 * @return pet list
 	 */
 	public ArrayList<Pet> getPets() {
 		return pets;
 	}
 
 	/**
-	 * Überschreibt die Liste der dem Kunden zugewiesenen Tiere
-	 * @param pets Neue Liste
+	 * @param pets new list including all pets
 	 */
 	public void setPets(ArrayList<Pet> pets) {
 		this.pets = pets;
 	}
 
 	/**
-	 * Erstellt eine exakte kopie des Kundenobjekts
+	 * Creates an exact copy of the object customer (new instance)
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public Object clone() {
 		return new Customer(customerId, new String(name), new String(firstName),
 				new String(address), new String(zip), new String(city), new String(phoneNo),
@@ -300,7 +291,8 @@ public class Customer implements IDataRecord {
 	}
 
 	/**
-	 * Gibt die Id des Kunden zurück
+	 * 
+	 *@return id
 	 */
 	@Override
 	public int getID() {

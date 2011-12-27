@@ -1,8 +1,14 @@
 package ch.hszt.tierverwaltung.backend;
 
+/**
+ * 
+ * @author Aschi
+ *
+ */
 public interface IPublicCloneable extends Cloneable {
+	
 	/**
-	 * Erstellt eine exakte Kopie des Objekts
+	 *  Creates an exact copy of the object (new instance)
 	 * @return
 	 */
 	public Object clone();

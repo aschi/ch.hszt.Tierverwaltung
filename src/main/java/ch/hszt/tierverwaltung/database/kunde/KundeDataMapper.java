@@ -82,7 +82,7 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 	public void delete(Customer entry) throws SQLException {
 		//Beziehungen zum Tier entfernen
 		for(Pet t : entry.getPets()){
-			t.setFkKunde(-1);
+			t.setFkCustomer(-1);
 			try {
 				new TierDataMapper().save(t);
 			} catch (ValidationException e1) {

@@ -57,7 +57,7 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	@Override
 	public void update(Pet entry) throws SQLException {
 		String sql;
-		sql = "UPDATE 'tier' SET " + "fkKunde = " + entry.getFkKunde() + ", "
+		sql = "UPDATE 'tier' SET " + "fkKunde = " + entry.getFkCustomer() + ", "
 				+ "art = '" + entry.getSpecies() + "', " + "rasse = \'"
 				+ entry.getRace() + "\', " + "name = \'" + entry.getName()
 				+ "\', " + "tieralter = " + entry.getAge() + ", "
@@ -69,7 +69,7 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 				+ "umgangMensch = \'" + entry.getContactPeople() + "\', "
 				+ "anmerkungen = \'" + entry.getRemarks() + "\', "
 				+ "zusatzkosten = " + entry.getAdditionalCosts()
-				+ " WHERE tierID = " + entry.getTierID() + ";";
+				+ " WHERE tierID = " + entry.getPetId() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
@@ -126,7 +126,7 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	@Override
 	public void delete(Pet entry) throws SQLException {
 		String sql;
-		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getTierID() + ";";
+		sql = "DELETE FROM 'tier' WHERE tierID = " + entry.getPetId() + ";";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
@@ -191,8 +191,8 @@ public final class TierDataMapper implements IDataMapper<Pet> {
 	@Override
 	public void save(Pet entry) throws SQLException, ValidationException {
 		entry.validate();
-		if (entry.getTierID() <= 0) {
-			entry.setTierID(insert(entry));
+		if (entry.getPetId() <= 0) {
+			entry.setPetID(insert(entry));
 		} else {
 			update(entry);
 		}

@@ -1,5 +1,10 @@
 package ch.hszt.tierverwaltung.backend;
 
+/**
+ * 
+ * @author prisi
+ *
+ */
 public class Config {
 	public static String petSize[] = {"", "< 30cm", "< 60cm", "> 100cm"};
 	public static String species[] = { "", "Katze", "Hund", "Hamster", "Hase", "Meerschweinchen" };
