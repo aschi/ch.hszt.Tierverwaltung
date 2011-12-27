@@ -1,13 +1,15 @@
 package ch.hszt.tierverwaltung.database.kunde;
 
+import java.sql.SQLException;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.*;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.hszt.tierverwaltung.backend.Kunde;
+import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.IDataMapper;
 
 public class KundeDataMapperMockTest {
@@ -15,97 +17,66 @@ public class KundeDataMapperMockTest {
 	/** jmock context */
 	Mockery context;
 	/** instance under test */
-	Kunde instance;
+	Customer instance;
 
-	
 	@Before
 	public void setUp() {
 		context = new JUnit4Mockery();
-		instance = new Kunde();
+		instance = new Customer();
 	}
 
 	@Test
-	public void inserTest() {
-		final IDataMapper<Kunde> dba = (IDataMapper<Kunde>)context.mock(IDataMapper.class);
-		
+	@SuppressWarnings("unchecked")
+	public void insertCustomerTest() throws SQLException {
+		final IDataMapper<Customer> dba = (IDataMapper<Customer>) context
+				.mock(IDataMapper.class);
+
 		context.checking(new Expectations() {
-			oneOf (dba).insert(instance);
+			{
+				// Check if insert did work on the interface
+				one(dba).insert(instance);
+			}
 		});
 		
+		dba.insert(instance);
 	}
-	
-	// @Test
-	// public void saveKundeTest() throws SQLException {
-	// final IDataMapper<Kunde> dba = (IDataMapper<Kunde>)
-	// context.mock(IDataMapper.class);
-	//
-	// context.checking(new Expectations() {{
-	// // one and all the other invocation count methods
-	// // return an instance of the same class as it's
-	// // argument
-	// one (dba).update(instance);
-	// }});
-	//
-	// try {
-	// instance.save();
-	// } catch (ValidationException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
-	
-	
 	
 	@Test
-	public void saveTest() {
+	@SuppressWarnings("unchecked")
+	public void updateCustomerTest() throws SQLException {
+		final IDataMapper<Customer> dba = (IDataMapper<Customer>) context
+				.mock(IDataMapper.class);
 
+		instance.setAddress("newAdress");
+		context.checking(new Expectations() {
+			{
+				// Check if the instance will be updatet
+				one(dba).update(instance);
+			}
+		});
+		
+		dba.update(instance);
+			
 	}
 
-	// public int insert(T entry) throws SQLException;
-	// public void update(T entry) throws SQLException;
-	// public void delete(T entry) throws SQLException;
-	// public List<T> getList() throws SQLException;
-	// public T getEntry(int id) throws SQLException;
+	@Test
+	@SuppressWarnings("unchecked")
+	public void deleteCustomerTest() throws SQLException {
+		final IDataMapper<Customer> dba = (IDataMapper<Customer>) context
+				.mock(IDataMapper.class);
+		
+		context.checking(new Expectations() {
+			{
+				// Check if the instance will be deleted
+				one(dba).delete(instance);
+			}
+		});
+		
+		try {
+			dba.delete(instance);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	//
-	// @Before
-	// public void setUp() {
-	// context = new JUnit4Mockery();
-	// instance = new Kunde();
-	// }
-	//
-	// @Test
-	// public void saveKundeTest() throws SQLException {
-	// final IDataMapper<Kunde> dba = (IDataMapper<Kunde>)
-	// context.mock(IDataMapper.class);
-	//
-	// context.checking(new Expectations() {{
-	// // one and all the other invocation count methods
-	// // return an instance of the same class as it's
-	// // argument
-	// one (dba).update(instance);
-	// }});
-	//
-	// try {
-	// instance.save();
-	// } catch (ValidationException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
-	//
-	// @Test
-	// public void deleteKundeTest() throws SQLException {
-	// final IDataMapper<Kunde> dba = (IDataMapper<Kunde>)
-	// context.mock(IDataMapper.class);
-	//
-	// context.checking(new Expectations() {{
-	// // one and all the other invocation count methods
-	// // return an instance of the same class as it's
-	// // argument
-	// one (dba).delete(instance);
-	// }});
-	//
-	// instance.delete();
-	// }
 }

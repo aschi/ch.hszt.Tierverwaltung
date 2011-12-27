@@ -58,20 +58,12 @@ public final class KundeDataMapper implements IDataMapper<Customer> {
 	public void update(Customer entry) throws SQLException {
 		String sql;
 		sql = "UPDATE 'kunde' SET " + "name = \'" + entry.getName() + "\', "
-<<<<<<< HEAD
-				+ "vorname = '" + entry.getVorname() + "', " + "adresse = \'"
-				+ entry.getAdresse() + "\', " + "plz = \'" + entry.getPlz()
-				+ "\', " + "ort = \'" + entry.getOrt() + "\', "
-				+ "telefon = \'" + entry.getTelefon() + "\', " + "eMail = \'"
-				+ entry.getEMail() + "\'" + 
-				"WHERE kundeID = " + entry.getID() + ";";
-=======
 				+ "vorname = '" + entry.getFirstName() + "', " + "adresse = \'"
 				+ entry.getAddress() + "\', " + "plz = \'" + entry.getZip()
 				+ "\', " + "ort = \'" + entry.getCity() + "\', "
 				+ "telefon = \'" + entry.getPhoneNo() + "\', " + "eMail = \'"
-				+ entry.getEMail() + "\'" + ";";
->>>>>>> 4485b4a8192685f95c4f0d0d06432fbd04fce64a
+				+ entry.getEMail() + "\'" + 
+				"WHERE kundeID = " + entry.getID() + ";";
 
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
