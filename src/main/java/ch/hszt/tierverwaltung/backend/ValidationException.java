@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Die ValidationException wird dann geworden, wenn eine Benutzeeingabe  bei der Validierung
- * durchgefallen ist. Sie gibt die entsprechende Meldungen der fehlerhaften Validierungen zurück.
+ * The ValidationException is thrown if a User-Input-Validation was not successful. 
+ * It includes a message readable for the user
+ * 
  * @author prisi
  *
  */
@@ -28,12 +29,12 @@ public class ValidationException extends Exception {
 	}
 
 	/**
-	 * Generiert eine Benutzerlesbare Message
+	 * generates a message for a user
 	 * @param e ValidationException
-	 * @return Für den Benutzer lesbare Exceptionnachricht
+	 * @return message for user
 	 */
 	public static String createErrorMsg(ValidationException e) {
-		String errMsg = "Fehler beim Validieren der Eingaben: "
+		String errMsg = "Error at Validation: "
 				+ System.getProperty("line.separator");
 		for (String err : e.getErrorMsgs()) {
 			errMsg += "- " + err + System.getProperty("line.separator");
