@@ -15,15 +15,25 @@ public class ValidationException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private List<String> errorMsgs;
 
+	/**
+	 *  Constructor
+ 	*/
 	public ValidationException() {
 		super();
 		errorMsgs = new ArrayList<String>();
 	}
 
+	/**
+	 *  Adds a new ErrorMessage to the messageList
+ 	*/
 	public void addErrorMessage(String errorMsg) {
 		errorMsgs.add(errorMsg);
 	}
 	
+	/**
+	*  Returns the list with all errormessages
+	* @return List includes all error messages
+ 	*/
 	public List<String> getErrorMsgs() {
 		return errorMsgs;
 	}
@@ -31,7 +41,7 @@ public class ValidationException extends Exception {
 	/**
 	 * generates a message for a user
 	 * @param e ValidationException
-	 * @return message for user
+	 * @return message for user as String
 	 */
 	public static String createErrorMsg(ValidationException e) {
 		String errMsg = "Error at Validation: "
