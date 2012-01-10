@@ -17,8 +17,7 @@ public class Navigation {
 	private MainGui gui;
 
 	/**
-	 * Builds the Tree. GUI is used to
-	 * 
+	 * Builds the Tree. GUI is used to add the action listener to switch overviews
 	 * @param gui
 	 */
 	public Navigation(MainGui gui) {
