@@ -3,6 +3,11 @@ package ch.hszt.tierverwaltung.database;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This interface creates each table
+ * @author prisi
+ *
+ */
 public interface ICreateDB {
 	
 	/**
