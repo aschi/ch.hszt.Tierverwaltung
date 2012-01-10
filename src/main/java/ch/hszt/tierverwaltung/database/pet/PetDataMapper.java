@@ -14,6 +14,10 @@ import ch.hszt.tierverwaltung.database.IDataMapper;
 
 /**
  * 
+ *  * This class implements the IDataMapper-Interface. It handles all Dataaccess to table
+ * pet
+ * @author prisi
+ *
  * @author prisi
  *
  */

@@ -290,10 +290,6 @@ public class Customer implements IDataRecord {
 				new String(eMail), (ArrayList<Pet>) pets.clone());
 	}
 
-	/**
-	 * 
-	 *@return id
-	 */
 	@Override
 	public int getID() {
 		return customerId;

@@ -5,6 +5,12 @@ import java.util.List;
 
 import ch.hszt.tierverwaltung.backend.ValidationException;
 
+/**
+ * This Interface handles all tableaccess from each table with objects <T>
+ * @author prisi
+ *
+ * @param <T> object which is a entry of the table
+ */
 public interface IDataMapper <T> {
 	
 	

@@ -1,8 +1,8 @@
 package ch.hszt.tierverwaltung.backend;
 
 /**
- * 
- * @author prisi
+ * Several configuration
+ * @author Aschi
  *
  */
 public class Config {
