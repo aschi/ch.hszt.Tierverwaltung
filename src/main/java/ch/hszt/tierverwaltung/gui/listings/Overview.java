@@ -61,7 +61,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	}
 	
 	/**
-	 * Standartbuttons verwenden
+	 * Use default buttons
 	 * @param columnNames
 	 * @param input
 	 * @param emptyObject
@@ -71,7 +71,7 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	}
 	
 	/**
-	 * Eigene Buttons mitgeben
+	 * Use custom buttons
 	 * @param columnNames
 	 * @param input
 	 * @param emptyObject
@@ -163,8 +163,8 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	}
 	
 	/**
-	 * Aktualisiere die Listenansicht
-	 * @param input List welche die Daten enthält
+	 * Upadte the overview
+	 * @param input List containing the data
 	 */
 	public void updateTableValues(List<T> input){
 		this.input = input;
@@ -177,8 +177,8 @@ public abstract class Overview <T extends IDataRecord> extends JPanel {
 	public abstract void updateTableValues();
 	
 	/**
-	 * Gibt den Index der ausgewählten Zeile der Tabelle zurück
-	 * @return Index der ausgewählten Zeile
+	 * Returns the index of the selected row
+	 * @return index of selected row
 	 */
 	public int getSelectedRow(){
 		return overview.getSelectedRow();

@@ -33,8 +33,7 @@ public class PetSpaceOverview extends Overview<Petspace>{
 	}
 
 	/**
-	 * Constructors
-	 * 
+	 * Constructor
 	 * @param gui
 	 * @param input
 	 */
@@ -44,13 +43,16 @@ public class PetSpaceOverview extends Overview<Petspace>{
 	}
 
 	/**
-	 * sets a table with all petplaces up
+	 * Set up table for pet spaces
 	 */
 	private void setUpTable() {
 		String[] columnNames = {"Geeignet für", "Grösse", "Anzahl Tiere", "Ausstattung", "Auslauf", "Auslauf Grösse"};
 		createTable(columnNames, getInput(), new Petspace(), null);
 	}
 	
+	/**
+	 * Update this overview using a given list
+	 */
 	@Override
 	public void updateTableValues(List<Petspace> input) {
 		super.updateTableValues(input);
@@ -69,6 +71,9 @@ public class PetSpaceOverview extends Overview<Petspace>{
 		}
 	}
 	
+	/**
+	 * Update overview using the database
+	 */
 	@Override
 	public void updateTableValues() {
 		try {

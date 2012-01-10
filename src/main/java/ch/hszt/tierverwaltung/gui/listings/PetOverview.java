@@ -23,13 +23,16 @@ public class PetOverview extends Overview<Pet> {
 		setUpTable();
 	}
 
+	/**
+	 * Set up the table
+	 */
 	private void setUpTable() {
 		String[] columnNames = { "Name", "Art", "Rasse", "Alter", "Grösse" };
 		createTable(columnNames, getInput(), new Pet(), null);
 	}
 
 	/**
-	 * Aktualisiere die Tabelle mit den Werten aus der gegebenen ArrayList
+	 * Update Overview using a given arraylist
 	 */
 	@Override
 	public void updateTableValues(List<Pet> input) {
@@ -49,7 +52,7 @@ public class PetOverview extends Overview<Pet> {
 	}
 
 	/**
-	 * Aktualisiere Tabelle mit Werten aus der Datenbank
+	 * Update Overview with database values
 	 */
 	@Override
 	public void updateTableValues() {
