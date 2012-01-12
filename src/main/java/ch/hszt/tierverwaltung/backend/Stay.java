@@ -53,6 +53,10 @@ public class Stay implements IDataRecord {
 	public int getPetId() {
 		return petId;
 	}
+	
+	public void setID(int id){
+		this.id = id;
+	}
 
 	public void setPetId(int petId) {
 		this.petId = petId;

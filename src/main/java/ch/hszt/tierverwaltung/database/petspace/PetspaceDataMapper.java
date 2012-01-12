@@ -6,12 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.backend.Stay;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
+import ch.hszt.tierverwaltung.database.stay.StayDataMapper;
 
 /**
  * This class implements the IDataMapper-Interface. It handles all Dataaccess to table
@@ -117,7 +121,6 @@ public final class PetspaceDataMapper implements IDataMapper<Petspace> {
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
-		;
 
 		while (rs.next()) {
 			char[] run = rs.getString("run").toCharArray();
@@ -141,6 +144,55 @@ public final class PetspaceDataMapper implements IDataMapper<Petspace> {
 			update(entry);
 		}
 
+	}
+	
+	/**
+	 * Returns a List with all free Petspace during the date from and date to which are adapted for the given pet
+	 * @return the list with Petspaces
+	 * @param Pet entry
+	 * @param Date dateFrom
+	 * @param Date dateTo
+	 */
+	public List<Petspace> getFreePetspaces(Pet pet, Date dateFrom, Date dateTo) throws SQLException {
+		List<Petspace> petspaceList = null;
+		List<Petspace> avaiablePetspaces = null;
+		
+		String sql;
+		sql = "SELECT * FROM 'petspace' WHERE adaptedForPetID = " + pet.getPetId() + ";";
+		System.out.println(sql);
+		Statement stmt = dbConnection.getConn().createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		petspaceList = fillPetplaces(rs);
+		
+		boolean newList = true;
+		for (Petspace petspace: petspaceList) {
+			if (isPetspaceAvaiable(dateFrom, dateTo, petspace)) {
+				if (newList) {
+					newList = false;
+					avaiablePetspaces = new ArrayList<Petspace>();
+				}
+				avaiablePetspaces.add(petspace);
+			}
+		}
+		
+		return avaiablePetspaces;
+	}
+	
+	//Checks, if a petspace is free during the given dateFrom and dateTo
+	private boolean isPetspaceAvaiable(Date dateFrom, Date dateTo, Petspace petspace) throws SQLException{
+		StayDataMapper dm = new StayDataMapper();
+		List<Stay> staysToPetspace = dm.getStaysToSpace(petspace.getID());
+		int anzStays = 0;
+		
+		for (Stay stay: staysToPetspace) {
+			if (dateFrom.after(stay.getDateFrom()) && dateFrom.before(stay.getDateTo()) ||
+					dateTo.after(stay.getDateFrom()) && dateTo.before(stay.getDateTo())) {
+				anzStays ++;
+			}
+		}
+		
+		return anzStays < petspace.getSize();
 	}
 
 }
