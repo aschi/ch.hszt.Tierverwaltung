@@ -100,7 +100,7 @@ public class Stay implements IDataRecord {
 		}
 
 		if (getPetspaceId() <= 0) {
-			ve.addErrorMessage("Pespace-ID missed");
+			ve.addErrorMessage("Petspace-ID missed");
 		}
 
 		if (getDateFrom() == null) {
