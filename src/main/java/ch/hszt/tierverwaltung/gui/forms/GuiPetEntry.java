@@ -48,27 +48,27 @@ public class GuiPetEntry {
       private JButton saveButton;
       private JButton deleteButton;
       
-      private PetDataMapper tdm;
+      private PetDataMapper pdm;
       
      
 
       public GuiPetEntry(MainGui gui) {
 
           this.gui = gui;  
-    	  fensterErzeugen();
-    	  tdm = new PetDataMapper();
+    	  createFrame();
+    	  pdm = new PetDataMapper();
             
       }
       
       public GuiPetEntry(Pet tier, MainGui gui) {
     	  this(gui);
     	  this.tier = tier;
-    	  loadTierValue();
-    	  tdm = new PetDataMapper();
+    	  loadPetValues();
+    	  pdm = new PetDataMapper();
     	  
       }
       
-      private void loadTierValue() {
+      private void loadPetValues() {
     	  tierCombo.setSelectedItem(tier.getSpecies());
     	  rasseText.setText(tier.getRace());
     	  nameText.setText(tier.getName());
@@ -89,7 +89,7 @@ public class GuiPetEntry {
     	  zusatzText.setText(String.valueOf(tier.getAdditionalCosts()));
       }
       
-      private void createTierValue() {
+      private void readPetValues() {
     	  tier.setSpecies(tierCombo.getSelectedItem().toString());
     	  tier.setRace(rasseText.getText());
     	  tier.setName(nameText.getText());
@@ -120,11 +120,11 @@ public class GuiPetEntry {
     	  
       }
       
-      private void closeFenster() {
+      private void closeWindow() {
     	  	frame.dispose();
       }
       
-      private void fensterErzeugen() {
+      private void createFrame() {
 
             frame = new JFrame("Tiereintrag");
             frame.setLocation(400, 300);
@@ -192,8 +192,8 @@ public class GuiPetEntry {
 	              			if(tier == null){
 	              				tier = new Pet();
 	              			}
-              				createTierValue();
-							tdm.save(tier);
+              				readPetValues();
+							pdm.save(tier);
 							
 							synchronized (gui.getOverviewUpdater()) {
         						gui.getOverviewUpdater().notify();
@@ -216,13 +216,13 @@ public class GuiPetEntry {
               	@Override
               	public void actionPerformed(ActionEvent e) {
               		try {
-              				tdm.delete(tier);
+              				pdm.delete(tier);
         					
         					synchronized (gui.getOverviewUpdater()) {
         						gui.getOverviewUpdater().notify();
 							}
         					
-        					closeFenster();
+        					closeWindow();
         				} catch (SQLException e1) {
         					// TODO Auto-generated catch block
         					e1.printStackTrace();

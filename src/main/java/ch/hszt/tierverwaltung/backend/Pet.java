@@ -388,5 +388,10 @@ public class Pet implements IDataRecord {
 	public int getID() {
 		return petID;
 	}
+	
+	@Override
+	public String toString(){
+		return getName() + " - " + getSpecies();
+	}
 
 }
