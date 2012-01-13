@@ -1,9 +1,10 @@
 package ch.hszt.tierverwaltung.gui.forms;
 
-import ch.hszt.tierverwaltung.backend.IPublicCloneable;
 import ch.hszt.tierverwaltung.backend.Customer;
+import ch.hszt.tierverwaltung.backend.IPublicCloneable;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.backend.Stay;
 import ch.hszt.tierverwaltung.gui.MainGui;
 
 public class FormBuilder<T extends IPublicCloneable> {
@@ -14,16 +15,16 @@ public class FormBuilder<T extends IPublicCloneable> {
 	 * @param gui Referenz zum Hauptfenster
 	 */
 	public void buildForm(T object, MainGui gui){
-		
 		if(object instanceof Pet){
 			new GuiPetEntry((Pet)object, gui);
 		}else if(object instanceof Customer){
 			new GuiCustomerEntry((Customer)object, gui);
 		}else if(object instanceof Petspace){
 			new GuiPetspaceEntry((Petspace)object, gui);
+		}else if(object instanceof Stay){
+			new GuiStayEntry((Stay)object, gui);
 		}else{
 			System.out.println("NYI");
 		}
-		
 	}
 }

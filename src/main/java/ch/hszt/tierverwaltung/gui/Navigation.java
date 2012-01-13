@@ -11,13 +11,16 @@ import javax.swing.tree.TreePath;
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.backend.Stay;
 
 public class Navigation {
 	private JTree tree;
 	private MainGui gui;
 
 	/**
-	 * Builds the Tree. GUI is used to add the action listener to switch overviews
+	 * Builds the Tree. GUI is used to add the action listener to switch
+	 * overviews
+	 * 
 	 * @param gui
 	 */
 	public Navigation(MainGui gui) {
@@ -28,14 +31,18 @@ public class Navigation {
 		tree = new JTree(top);
 
 		// Nodes for listings
-		DefaultMutableTreeNode tierList = new DefaultMutableTreeNode("Tiere");
-		DefaultMutableTreeNode kundeList = new DefaultMutableTreeNode("Kunden");
-		DefaultMutableTreeNode tierPlatz = new DefaultMutableTreeNode(
+		DefaultMutableTreeNode petList = new DefaultMutableTreeNode("Tiere");
+		DefaultMutableTreeNode customerList = new DefaultMutableTreeNode(
+				"Kunden");
+		DefaultMutableTreeNode petSpaceList = new DefaultMutableTreeNode(
 				"Tierplatz");
+		DefaultMutableTreeNode stayList = new DefaultMutableTreeNode(
+				"Aufenthalt");
 
-		top.add(tierList);
-		top.add(kundeList);
-		top.add(tierPlatz);
+		top.add(petList);
+		top.add(customerList);
+		top.add(petSpaceList);
+		top.add(stayList);
 
 		tree.scrollPathToVisible(new TreePath(top.getLastLeaf().getPath()));
 		addListener();
@@ -59,6 +66,8 @@ public class Navigation {
 							gui.selectOverview(Customer.class.getSimpleName());
 						} else if (node.toString().equals("Tierplatz")) {
 							gui.selectOverview(Petspace.class.getSimpleName());
+						} else if (node.toString().equals("Aufenthalt")) {
+							gui.selectOverview(Stay.class.getSimpleName());
 						}
 					}
 				}

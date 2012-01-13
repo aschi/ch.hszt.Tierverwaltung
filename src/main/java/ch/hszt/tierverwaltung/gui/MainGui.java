@@ -14,10 +14,12 @@ import javax.swing.JScrollPane;
 import ch.hszt.tierverwaltung.backend.Customer;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.backend.Stay;
 import ch.hszt.tierverwaltung.gui.listings.CustomerOverview;
 import ch.hszt.tierverwaltung.gui.listings.OverviewUpdater;
 import ch.hszt.tierverwaltung.gui.listings.PetOverview;
 import ch.hszt.tierverwaltung.gui.listings.PetSpaceOverview;
+import ch.hszt.tierverwaltung.gui.listings.StayOverview;
 
 public class MainGui {
 	private JFrame frame;
@@ -50,16 +52,19 @@ public class MainGui {
 			CustomerOverview ko = new CustomerOverview(this);
 			PetOverview to = new PetOverview(this);
 			PetSpaceOverview pso = new PetSpaceOverview(this);
+			StayOverview so = new StayOverview(this);
 			
 			overviewUpdater.registerOverview(to);
 			overviewUpdater.registerOverview(ko);
 			overviewUpdater.registerOverview(pso);
+			overviewUpdater.registerOverview(so);
 			
 			cards = new JPanel(new CardLayout());
 			cards.add(to, Pet.class.getSimpleName());
 			cards.add(ko, Customer.class.getSimpleName());
 			cards.add(pso, Petspace.class.getSimpleName());
-						
+			cards.add(so, Stay.class.getSimpleName());			
+			
 			frame.getContentPane().add(new JScrollPane(cards), BorderLayout.CENTER);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

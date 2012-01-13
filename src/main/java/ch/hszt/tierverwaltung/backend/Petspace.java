@@ -215,5 +215,9 @@ public class Petspace implements IDataRecord {
 				this.getNoOfPets(), this.getRun(), this.getRunSize());
 	}
 	
+	@Override
+	public String toString(){
+		return "Grösse: " + getSize() + "m² - max Anzahl Tiere: " + getNoOfPets() + ((getRun() == '1') ? (" - Auslauf "+ getRunSize() + "m²") : " - Kein Auslauf");
+	}
 
 }

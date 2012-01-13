@@ -6,7 +6,12 @@ public class Stay implements IDataRecord {
 
 	private int id;
 	private int petId;
+	private Pet pet;
 	private int petspaceId;
+	private Petspace petspace;
+
+
+
 	private Date dateFrom;
 	private Date dateTo;
 
@@ -84,6 +89,22 @@ public class Stay implements IDataRecord {
 
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
+	}
+	
+	public Pet getPet() {
+		return pet;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
+
+	public Petspace getPetspace() {
+		return petspace;
+	}
+
+	public void setPetspace(Petspace petspace) {
+		this.petspace = petspace;
 	}
 
 	@Override

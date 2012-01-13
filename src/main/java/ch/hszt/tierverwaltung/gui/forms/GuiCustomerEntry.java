@@ -70,7 +70,7 @@ public class GuiCustomerEntry {
 
 	}
 
-	private void createKundeValue() {
+	private void readCustomerValues() {
 
 		customer.setName(nameText.getText());
 		customer.setFirstName(vornameText.getText());
@@ -137,7 +137,7 @@ public class GuiCustomerEntry {
 					if (customer == null) {
 						customer = new Customer();
 					}
-					createKundeValue();
+					readCustomerValues();
 					new CustomerDataMapper().save(customer);
 
 					synchronized (gui.getOverviewUpdater()) {
@@ -146,19 +146,19 @@ public class GuiCustomerEntry {
 
 					checkPetButtonVisibility();
 					
-					String meldung = "Erfolgreich gespeichert";
-					JOptionPane.showMessageDialog(null, meldung, "Information",
+					String message = "Erfolgreich gespeichert";
+					JOptionPane.showMessageDialog(null, message, "Information",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (SQLException e1) {
-					String meldung = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: "
+					String message = "Beim Speichern in die Datenbank ist ein Fehler aufgetreten: "
 							+ e1.getStackTrace();
-					JOptionPane.showMessageDialog(null, meldung,
+					JOptionPane.showMessageDialog(null, message,
 							"Betriebliche Benachrichtigung",
 							JOptionPane.ERROR_MESSAGE);
 
 				} catch (ValidationException e1) {
-					String meldung2 = ValidationException.createErrorMsg(e1);
-					JOptionPane.showMessageDialog(null, meldung2,
+					String message2 = ValidationException.createErrorMsg(e1);
+					JOptionPane.showMessageDialog(null, message2,
 							"Betriebliche Benachrichtigung",
 							JOptionPane.ERROR_MESSAGE);
 				}

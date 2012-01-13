@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
@@ -22,6 +23,8 @@ import org.jdesktop.swingx.JXDatePicker;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.backend.Stay;
+import ch.hszt.tierverwaltung.backend.ValidationException;
+import ch.hszt.tierverwaltung.database.customer.CustomerDataMapper;
 import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 import ch.hszt.tierverwaltung.database.stay.StayDataMapper;
@@ -37,7 +40,6 @@ public class GuiStayEntry {
 	private JPanel dateSelectionPane;
 	private JPanel buttonPane;
 
-	private JLabel petInfo;
 	private JComboBox spaceSelector;
 	private JComboBox petSelector;
 
@@ -60,19 +62,30 @@ public class GuiStayEntry {
 		createFrame();
 	}
 
-	public GuiStayEntry(MainGui gui, Stay stay) {
+	public GuiStayEntry(Stay stay, MainGui gui) {
 		this(gui);
 		this.stay = stay;
-
+		
 		loadStayValues();
 	}
 
 	private void loadStayValues() {
-
+		checkAndUpdateAvailableSpaces();
+		dateFrom.setDate(stay.getDateFrom());
+		dateTo.setDate(stay.getDateTo());
+		petSelector.setSelectedItem(stay.getPet());
+		spaceSelector.setSelectedItem(stay.getPetspace());
 	}
 
 	private void readStayValues() {
-
+		stay.setDateFrom(dateFrom.getDate());
+		stay.setDateTo(dateTo.getDate());
+		if(petSelector.getSelectedItem() instanceof Pet){
+			stay.setPet((Pet)petSelector.getSelectedItem());
+		}
+		if(spaceSelector.getSelectedItem() instanceof Petspace){
+			stay.setPetspace((Petspace)spaceSelector.getSelectedItem());
+		}
 	}
 
 	private void createFrame() {
@@ -139,6 +152,52 @@ public class GuiStayEntry {
 		saveButton = new JButton("Speichern");
 		deleteButton = new JButton("Loeschen");
 
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(stay == null){
+					stay = new Stay();
+				}
+				
+				readStayValues();
+				try {
+					sdm.save(stay);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ValidationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				synchronized (gui.getOverviewUpdater()) {
+					gui.getOverviewUpdater().notify();
+				}
+				
+				String message = "Erfolgreich gespeichert";
+				JOptionPane.showMessageDialog(null, message, "Information",
+						JOptionPane.INFORMATION_MESSAGE);	
+			}
+		});
+		
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					sdm.delete(stay);
+
+					synchronized (gui.getOverviewUpdater()) {
+						gui.getOverviewUpdater().notify();
+					}
+
+					closeWindow();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 		buttonPane.add(Box.createHorizontalGlue());
 		buttonPane.add(saveButton);
@@ -169,6 +228,10 @@ public class GuiStayEntry {
 		new GuiStayEntry(null);
 	}
 
+	private void closeWindow(){
+		frame.dispose();
+	}
+	
 	private void checkAndUpdateAvailableSpaces() {
 		if (dateFrom.getDate() != null && dateTo.getDate() != null
 				&& (dateFrom.getDate().getTime() < dateTo.getDate().getTime())
@@ -189,12 +252,18 @@ public class GuiStayEntry {
 					spaceSelector.setEnabled(true);
 				} else {
 					spaceSelectorModel.addElement("- keine Freien Tierplätze gefunden! -");
+					spaceSelector.setEnabled(false);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+		}else{
+			DefaultComboBoxModel spaceSelectorModel = new DefaultComboBoxModel();
+			spaceSelector.setModel(spaceSelectorModel);
+			spaceSelectorModel.addElement("- Sie müssen zuerst Tier & Datum auswählen -");
+			spaceSelector.setEnabled(false);
 		}
 	}
 }
