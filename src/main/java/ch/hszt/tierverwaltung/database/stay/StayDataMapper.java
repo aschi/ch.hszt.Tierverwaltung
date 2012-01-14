@@ -13,6 +13,8 @@ import ch.hszt.tierverwaltung.backend.Stay;
 import ch.hszt.tierverwaltung.backend.ValidationException;
 import ch.hszt.tierverwaltung.database.DBConnection;
 import ch.hszt.tierverwaltung.database.IDataMapper;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
+import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 
 /**
  * 
@@ -23,13 +25,16 @@ import ch.hszt.tierverwaltung.database.IDataMapper;
  */
 public final class StayDataMapper implements IDataMapper<Stay> {
 
-	DBConnection dbConnection = DBConnection.getInstance();
-
+	private DBConnection dbConnection = DBConnection.getInstance();
+	private PetDataMapper pdm;
+	private PetspaceDataMapper psdm;
+	
 	/**
 	 * Default Constructor
 	 */
 	public StayDataMapper() {
-
+		pdm = new PetDataMapper();
+		psdm = new PetspaceDataMapper();
 	}
 
 
@@ -37,8 +42,8 @@ public final class StayDataMapper implements IDataMapper<Stay> {
 	public int insert(Stay entry) throws SQLException {
 		String sql;
 		ResultSet rs = null;
-		sql = "INSERT INTO 'stay' VALUES (null, " + entry.getPetId() + ", " + 
-				entry.getPetspaceId() + "," + entry.getDateFrom().getTime() + ", " + entry.getDateTo().getTime() + ");";
+		sql = "INSERT INTO 'stay' VALUES (null, " + entry.getPet().getID() + ", " + 
+				entry.getPetspace().getID() + "," + entry.getDateFrom().getTime() + ", " + entry.getDateTo().getTime() + ");";
 		System.out.println(sql);
 		Statement stmt = dbConnection.getConn().createStatement();
 		stmt.executeUpdate(sql);
@@ -58,8 +63,8 @@ public final class StayDataMapper implements IDataMapper<Stay> {
 	public void update(Stay entry) throws SQLException {
 		String sql;
 		sql = "UPDATE 'stay' SET " 
-				+ "fkPet = " + entry.getPetId() + ", "
-				+ "fkPetspace = " + entry.getPetspaceId() + ", " 
+				+ "fkPet = " + entry.getPet().getID() + ", "
+				+ "fkPetspace = " + entry.getPetspace().getID() + ", " 
 				+ "dateFrom = "	+ entry.getDateFrom().getTime() + ", " 
 				+ "dateTo = " + entry.getDateTo().getTime()
 				+ " WHERE stayId = " + entry.getID() + ";";
@@ -77,8 +82,8 @@ public final class StayDataMapper implements IDataMapper<Stay> {
 		
 		while (rs.next()) {
 
-			Stay stay = new Stay(rs.getInt("stayId"), rs.getInt("fkPet"),
-					rs.getInt("fkPetspace"), new Date(rs.getTimestamp("dateFrom").getTime()),
+			Stay stay = new Stay(rs.getInt("stayId"), pdm.getEntry(rs.getInt("fkPet")),
+					psdm.getEntry(rs.getInt("fkPetspace")), new Date(rs.getTimestamp("dateFrom").getTime()),
 					new Date(rs.getTimestamp("DateTo").getTime()));
 
 			stayArray.add(stay);
@@ -119,8 +124,8 @@ public final class StayDataMapper implements IDataMapper<Stay> {
 
 		while (rs.next()) {
 
-			Stay stay = new Stay(rs.getInt("stayId"), rs.getInt("fkPet"),
-					rs.getInt("fkPetspace"), new Date(rs.getTimestamp("dateFrom").getTime()),
+			Stay stay = new Stay(rs.getInt("stayId"), pdm.getEntry(rs.getInt("fkPet")),
+					psdm.getEntry(rs.getInt("fkPetspace")), new Date(rs.getTimestamp("dateFrom").getTime()),
 					new Date(rs.getTimestamp("DateTo").getTime()));
 
 			return stay;

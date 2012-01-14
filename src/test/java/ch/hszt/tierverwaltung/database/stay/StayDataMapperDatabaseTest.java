@@ -8,6 +8,8 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Pet;
+import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.backend.Stay;
 
 public class StayDataMapperDatabaseTest {
@@ -24,7 +26,7 @@ public class StayDataMapperDatabaseTest {
 
 		// INSERT Test
 		//--------------
-		stay = new Stay(1, 1, new Date(), new Date());
+		stay = new Stay(new Pet(), new Petspace(), new Date(), new Date());
 
 		// Stay in Datenbank schreiben
 		int id = tba.insert(stay);
@@ -44,8 +46,8 @@ public class StayDataMapperDatabaseTest {
 			System.out.println(stay.getDateFrom().getTime());
 			System.out.println(t.getDateFrom());
 			System.out.println(stay.getDateFrom());
-			if (stay.getPetId() == t.getPetId() &&
-					stay.getPetspaceId() == t.getPetspaceId()
+			if (stay.getPet().getID() == t.getPet().getID() &&
+					stay.getPetspace().getID() == t.getPetspace().getID()
 							&& stay.getDateFrom().getTime() == t.getDateFrom().getTime()
 							&& stay.getDateTo().getTime() == t.getDateTo().getTime()) {
 				stayFromDb = t;
@@ -71,8 +73,8 @@ public class StayDataMapperDatabaseTest {
 
 			// Tier aus DB ermitteln
 			for (Stay t : stayListUpdate) {
-				if (stayFromDb.getPetId() == t.getPetId()
-						&& stayFromDb.getPetspaceId() == t.getPetspaceId()
+				if (stayFromDb.getPet().getID() == t.getPet().getID()
+						&& stayFromDb.getPetspace().getID() == t.getPetspace().getID()
 								&& stayFromDb.getDateFrom().getTime() == t.getDateFrom().getTime()
 								&& stayFromDb.getDateTo().getTime() == t.getDateTo().getTime()) {
 					stayBUpdate = t;
@@ -92,8 +94,8 @@ public class StayDataMapperDatabaseTest {
 		// Wenn das Tier von getEntry nicht gleich unserem Tier ist, war Test
 		// falsch
 		if (t == null
-				|| !(stayFromDb.getPetId() == t.getPetId()
-						&& stayFromDb.getPetspaceId() == t.getPetspaceId()
+				|| !(stayFromDb.getPet().getID() == t.getPet().getID()
+						&& stayFromDb.getPetspace().getID() == t.getPetspace().getID()
 								&& stayFromDb.getDateFrom().getTime() == t.getDateFrom().getTime()
 								&& stayFromDb.getDateTo().getTime() == t.getDateTo().getTime())) {
 			testOk = false;

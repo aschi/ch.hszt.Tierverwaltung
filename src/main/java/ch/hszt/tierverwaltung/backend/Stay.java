@@ -5,13 +5,8 @@ import java.util.Date;
 public class Stay implements IDataRecord {
 
 	private int id;
-	private int petId;
 	private Pet pet;
-	private int petspaceId;
 	private Petspace petspace;
-
-
-
 	private Date dateFrom;
 	private Date dateTo;
 
@@ -25,54 +20,39 @@ public class Stay implements IDataRecord {
 	/**
 	 * Constructor
 	 * 
-	 * @param petId
-	 * @param petspaceId
+	 * @param pet
+	 * @param petspace
 	 * @param dateFrom
 	 * @param dateTo
 	 */
-	public Stay(int petId, int petspaceId, Date dateFrom, Date dateTo) {
+	public Stay(Pet pet, Petspace petspace, Date dateFrom, Date dateTo) {
 		super();
-		this.petId = petId;
-		this.petspaceId = petspaceId;
+		this.pet = pet;
+		this.petspace = petspace;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 	}
 
+	
 	/**
 	 * Constructor
 	 * @param id
-	 * @param petId
-	 * @param petspaceId
+	 * @param pet
+	 * @param petspace
 	 * @param dateFrom
 	 * @param dateTo
 	 */
-	public Stay(int id, int petId, int petspaceId, Date dateFrom, Date dateTo) {
+	public Stay(int id, Pet pet, Petspace petspace, Date dateFrom, Date dateTo) {
 		super();
 		this.id = id;
-		this.petId = petId;
-		this.petspaceId = petspaceId;
+		this.pet = pet;
+		this.petspace = petspace;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 	}
-	
-	public int getPetId() {
-		return petId;
-	}
-	
+
 	public void setID(int id){
 		this.id = id;
-	}
-
-	public void setPetId(int petId) {
-		this.petId = petId;
-	}
-
-	public int getPetspaceId() {
-		return petspaceId;
-	}
-
-	public void setPetspaceId(int petspaceId) {
-		this.petspaceId = petspaceId;
 	}
 
 	public Date getDateFrom() {
@@ -116,11 +96,11 @@ public class Stay implements IDataRecord {
 	public void validate() throws ValidationException {
 		ValidationException ve = new ValidationException();
 
-		if (getPetId() <= 0) {
+		if (getPet()==null || getPet().getID() <= 0) {
 			ve.addErrorMessage("Pet-ID missed");
 		}
 
-		if (getPetspaceId() <= 0) {
+		if (getPetspace()==null || getPetspace().getID() <= 0) {
 			ve.addErrorMessage("Petspace-ID missed");
 		}
 
@@ -140,7 +120,7 @@ public class Stay implements IDataRecord {
 
 	@Override
 	public Object clone(){
-		return new Stay(getPetId(), getPetspaceId(), new Date(getDateFrom().getTime()), new Date(getDateTo().getTime()));
+		return new Stay(getPet(), getPetspace(), getDateFrom()!=null?(Date)getDateFrom().clone():null, getDateTo()!=null?(Date)getDateTo().clone():null);
 	}
 
 }
