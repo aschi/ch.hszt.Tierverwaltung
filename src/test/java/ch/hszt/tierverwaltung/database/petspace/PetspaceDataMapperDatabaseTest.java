@@ -7,14 +7,18 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
 import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
+import ch.hszt.tierverwaltung.gui.listings.PetSpaceOverview;
 
 public class PetspaceDataMapperDatabaseTest {
 
 	@Test
 	public void testInsertUpdateDeletePetplace() throws Exception {
-
+		
+		
 		boolean testOk = true;
 		String errorMessage = "";
 		Petspace petplace =  null;

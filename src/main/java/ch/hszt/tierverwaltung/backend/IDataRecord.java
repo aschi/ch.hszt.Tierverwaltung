@@ -26,5 +26,4 @@ public interface IDataRecord extends IPublicCloneable{
 	 * @throws ValidationException if the validation was not successful
 	 */
 	public void validate() throws ValidationException;
-
 }

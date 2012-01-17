@@ -70,13 +70,14 @@ public class GuiStayEntry {
 	}
 
 	private void loadStayValues() {
-		checkAndUpdateAvailableSpaces();
+		petSelector.setSelectedItem(stay.getPet());
 		dateFrom.setDate(stay.getDateFrom());
 		dateTo.setDate(stay.getDateTo());
-		petSelector.setSelectedItem(stay.getPet());
+		checkAndUpdateAvailableSpaces();
 		spaceSelector.setSelectedItem(stay.getPetspace());
 	}
 
+	//Reads values from gui
 	private void readStayValues() {
 		stay.setDateFrom(dateFrom.getDate());
 		stay.setDateTo(dateTo.getDate());

@@ -219,5 +219,46 @@ public class Petspace implements IDataRecord {
 	public String toString(){
 		return "Grösse: " + getSize() + "m² - max Anzahl Tiere: " + getNoOfPets() + ((getRun() == '1') ? (" - Auslauf "+ getRunSize() + "m²") : " - Kein Auslauf");
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Petspace){
+			Petspace p = (Petspace)o;
+			boolean rv = true;
+			
+			if(getID() > 0 && getID() != p.getID()){
+				rv = false;
+			}
+			
+			if(getAdaptedForPetID() != p.getAdaptedForPetID()){
+				rv = false;
+			}
+			
+			if(getSize() != p.getSize()){
+				rv = false;
+			}
+			
+			if(getEquipment().equals(p.getEquipment())){
+				rv = false;
+			}
+			
+			if(getNoOfPets() != p.getNoOfPets()){
+				rv = false;
+			}
+			
+			if(getRun() != p.getRun()){
+				rv = false;
+			}
+			
+			if(getRunSize() != p.getRunSize()){
+				rv = false;
+			}
+			
+			return rv;
+		}else{
+			return false;
+		}
+		
+	}
 
 }

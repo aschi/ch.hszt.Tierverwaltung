@@ -11,12 +11,23 @@ import org.junit.Test;
 import ch.hszt.tierverwaltung.backend.Pet;
 import ch.hszt.tierverwaltung.backend.Petspace;
 import ch.hszt.tierverwaltung.backend.Stay;
+import ch.hszt.tierverwaltung.database.pet.PetDataMapper;
+import ch.hszt.tierverwaltung.database.petspace.PetspaceDataMapper;
 
 public class StayDataMapperDatabaseTest {
 
 	@Test
 	public void testInsertUpdateDeleteStay() throws Exception {
-
+		Pet pet = new Pet("Hund", "Mischling", "Hugo", 10, 1, "", "", '1', "gut", "gut", "", 0);
+		Petspace petSpace = new Petspace(1, 10, "equipment", 5, '1', 10);
+		
+		PetDataMapper pdm = new PetDataMapper();
+		PetspaceDataMapper psdm = new PetspaceDataMapper();
+		
+		pdm.save(pet);
+		psdm.save(petSpace);
+		
+		
 		boolean testOk = true;
 		String errorMessage = "";
 		Stay stay =  null;
@@ -26,7 +37,9 @@ public class StayDataMapperDatabaseTest {
 
 		// INSERT Test
 		//--------------
-		stay = new Stay(new Pet(), new Petspace(), new Date(), new Date());
+		
+		
+		stay = new Stay(pet, petSpace, new Date(2012, 01, 01) , new Date(2012, 01,05));
 
 		// Stay in Datenbank schreiben
 		int id = tba.insert(stay);
@@ -116,6 +129,9 @@ public class StayDataMapperDatabaseTest {
 			}
 		}
 
+		pdm.delete(pet);
+		psdm.delete(petSpace);
+		
 		TestCase.assertEquals(errorMessage, true, testOk);
 
 	}

@@ -122,5 +122,35 @@ public class Stay implements IDataRecord {
 	public Object clone(){
 		return new Stay(getPet(), getPetspace(), getDateFrom()!=null?(Date)getDateFrom().clone():null, getDateTo()!=null?(Date)getDateTo().clone():null);
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Stay){
+			Stay s = (Stay)o;
+			boolean rv = true;
+			
+			if(getID() > 0){
+				if(getID() != s.getID()){
+					rv = false;
+				}
+			}
+			
+			if(!getPet().equals(s.getPet())){
+				rv = false;
+			}
+			
+			if(!getPetspace().equals(s.getPetspace())){
+				rv = false;
+			}
+			
+			if(!getDateFrom().equals(s.getDateFrom())){
+				rv = false;
+			}
+			
+			return rv;
+		}else{
+			return false;
+		}
+	}
 
 }

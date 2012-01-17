@@ -394,4 +394,72 @@ public class Pet implements IDataRecord {
 		return getName() + " - " + getSpecies();
 	}
 
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Pet){
+			Pet p = (Pet)o;
+			boolean rv = true;
+			
+			if(getPetId() > 0 && getPetId() != p.getPetId()){
+				rv = false;
+			}
+			
+			if(getFkCustomer() != p.getFkCustomer()){
+				rv = false;
+			}
+	
+			if(!getSpecies().equals(p.getSpecies())){
+				rv = false;
+			}
+			
+			if(!getRace().equals(p.getRace())){
+				rv = false;
+			}
+			
+			if(!getName().equals(p.getName())){
+				rv = false;
+			}
+			
+			if(getAge() != p.getAge()){
+				rv = false;
+			}
+			
+			if(getSizeId() != p.getSizeId()){
+				rv = false;
+			}
+			
+			if(!getDiseasePattern().equals(p.getDiseasePattern())){
+				rv = false;
+			}
+			
+			if(!getEatingHabits().equals(p.getEatingHabits())){
+				rv = false;
+			}
+			
+			if(getRun() != p.getRun()){
+				rv = false;
+			}
+			
+			if(!getContactOtherPets().equals(p.getContactOtherPets())){
+				rv = false;
+			}
+			
+			if(!getContactPeople().equals(p.getContactPeople())){
+				rv = false;
+			}
+			
+			if(!getRemarks().equals(p.getRemarks())){
+				rv = false;
+			}
+
+			if(getAdditionalCosts() != p.getAdditionalCosts()){
+				rv = false;
+			}
+			
+			return rv;
+		}else{
+			return false;
+		}
+	}
+	
 }

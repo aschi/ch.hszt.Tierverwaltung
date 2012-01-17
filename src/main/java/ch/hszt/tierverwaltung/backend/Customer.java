@@ -294,5 +294,45 @@ public class Customer implements IDataRecord {
 	public int getID() {
 		return customerId;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Customer){
+			Customer c = (Customer)o;
+			boolean rv = true;
+			
+			if(getCustomerId() > 0 && getCustomerId() != c.getCustomerId()){
+				rv = false;
+			}
+			if(!getName().equals(c.getName())){
+				rv = false;
+			}
+			if(!getFirstName().equals(c.getFirstName())){
+				rv = false;
+			}
+			if(!getAddress().equals(c.getAddress())){
+				rv = false;
+			}
+			if(!getZip().equals(c.getZip())){
+				rv = false;
+			}
+			if(!getCity().equals(c.getCity())){
+				rv = false;
+			}
+			if(!getPhoneNo().equals(c.getPhoneNo())){
+				rv = false;
+			}
+			if(!getEMail().equals(c.getEMail())){
+				rv = false;
+			}
+			if(!getPets().equals(c.getPets())){
+				rv = false;
+			}
+			
+			return rv;
+		}else{
+			return false;
+		}
+	}
 
 }
